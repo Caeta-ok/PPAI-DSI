@@ -8,49 +8,92 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PPAI_DSI.Clases;
+using PPAI_DSI.Negocio;
 
 namespace PPAI_DSI
 {
     public partial class Form1 : Form
     {
+        Ng_FormularioReserva formularioReserva = new Ng_FormularioReserva();
         public Form1()
         {
             InitializeComponent();
         }
-
+        DataTable table = new DataTable();
         private void Form1_Load(object sender, EventArgs e)
         {
             using (PPAIEntities db = new PPAIEntities())
             {
                 var lista = db.ESCUELAS.ToList();
-                dgv1.DataSource = lista;                
+                DataTable item = new DataTable();
+                item.Columns.Add("Id");
+                item.Columns.Add("Nombre");
+                int i = 0;
+                foreach (var l in lista)
+                {
+                    item.Rows.Add();
+                    item.Rows[i]["Id"] = l.Id_Escuela;
+                    item.Rows[i]["Nombre"] = l.Nombre;
+                    i++;
+                }
+                cmb_escuelas.DataSource = item;
+                cmb_escuelas.DisplayMember = "Nombre";
+                cmb_escuelas.ValueMember = "Id";
             }
         }
 
-        private void btn_nuevaReserva_Click(object sender, EventArgs e)
+        private void cmb_escuelas_Enter(object sender, EventArgs e)
         {
-
+            if (cmb_escuelas.Text != "")
+            {
+                txtVisitantes.Enabled = true;
+            }
+        }
+        private void cmb_escuelas_TextChanged(object sender, EventArgs e)
+        {
+            dgv1.Rows.Clear();
+            dgv2.Rows.Clear();
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void txtVisitantes_Enter(object sender, EventArgs e)
         {
-
+            if (txtVisitantes.Text != "")
+            {
+                using (PPAIEntities db = new PPAIEntities())
+                {
+                    var lista = (from emp in db.SEDES.ToList()
+                                 join Exp in db.EXPOSICIONES on emp.Id_Exposicion equals Exp.Id_Exposicion
+                                 select new
+                                 {
+                                     emp.Nombre,
+                                     emp.CantidadMaximaVisitantes,
+                                     emp.CantidadMaximaPorGuia,
+                                     Exposicion = Exp.Nombre
+                                 }).ToList();
+                    dgv1.DataSource = lista;
+                }
+            }
+            else
+            {
+                dgv1.Rows.Clear();
+            }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgv1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var lista = db.TIPOSVISITA.ToList();
+                dgv2.DataSource = lista;
+            }
         }
 
-        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void dgv2_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
+            dgv1.Enabled = false;
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
 
-        }
 
         // Ejecutar cadena de consultas en la base de datos
         // SqlQuery: Retorna datos
