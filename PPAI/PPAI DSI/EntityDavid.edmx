@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PPAIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PPAI_DSIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ASIGNACIONESVISITA">
           <Key>
             <PropertyRef Name="Id_AsignacionVisita" />
@@ -388,7 +388,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PPAIModelStoreContainer">
+        <EntityContainer Name="PPAI_DSIModelStoreContainer">
           <EntitySet Name="ASIGNACIONESVISITA" EntityType="Self.ASIGNACIONESVISITA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAMBIOSESTADOS" EntityType="Self.CAMBIOSESTADOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARGOS" EntityType="Self.CARGOS" Schema="dbo" store:Type="Tables" />
@@ -476,7 +476,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="PPAIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="PPAI_DSIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="ASIGNACIONESVISITA">
           <Key>
             <PropertyRef Name="Id_AsignacionVisita" />
@@ -981,9 +981,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PPAIModelStoreContainer" CdmEntityContainer="PPAIEntities">
+        <EntityContainerMapping StorageEntityContainer="PPAI_DSIModelStoreContainer" CdmEntityContainer="PPAIEntities">
           <EntitySetMapping Name="ASIGNACIONESVISITA">
-            <EntityTypeMapping TypeName="PPAIModel.ASIGNACIONESVISITA">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.ASIGNACIONESVISITA">
               <MappingFragment StoreEntitySet="ASIGNACIONESVISITA">
                 <ScalarProperty Name="Id_AsignacionVisita" ColumnName="Id_AsignacionVisita" />
                 <ScalarProperty Name="FechaHoraInicio" ColumnName="FechaHoraInicio" />
@@ -993,7 +993,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CAMBIOSESTADOS">
-            <EntityTypeMapping TypeName="PPAIModel.CAMBIOSESTADOS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.CAMBIOSESTADOS">
               <MappingFragment StoreEntitySet="CAMBIOSESTADOS">
                 <ScalarProperty Name="Id_CambioEstado" ColumnName="Id_CambioEstado" />
                 <ScalarProperty Name="FechaHoraInicio" ColumnName="FechaHoraInicio" />
@@ -1003,7 +1003,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CARGOS">
-            <EntityTypeMapping TypeName="PPAIModel.CARGOS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.CARGOS">
               <MappingFragment StoreEntitySet="CARGOS">
                 <ScalarProperty Name="Id_Cargo" ColumnName="Id_Cargo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1012,7 +1012,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DETALLESEXPOSICION">
-            <EntityTypeMapping TypeName="PPAIModel.DETALLESEXPOSICION">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.DETALLESEXPOSICION">
               <MappingFragment StoreEntitySet="DETALLESEXPOSICION">
                 <ScalarProperty Name="Id_DetalleExposicion" ColumnName="Id_DetalleExposicion" />
                 <ScalarProperty Name="LugarAsignado" ColumnName="LugarAsignado" />
@@ -1021,7 +1021,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DIAS">
-            <EntityTypeMapping TypeName="PPAIModel.DIAS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.DIAS">
               <MappingFragment StoreEntitySet="DIAS">
                 <ScalarProperty Name="Id_Dia" ColumnName="Id_Dia" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1029,7 +1029,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EMPLEADOS">
-            <EntityTypeMapping TypeName="PPAIModel.EMPLEADOS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.EMPLEADOS">
               <MappingFragment StoreEntitySet="EMPLEADOS">
                 <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1049,7 +1049,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ESCUELAS">
-            <EntityTypeMapping TypeName="PPAIModel.ESCUELAS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.ESCUELAS">
               <MappingFragment StoreEntitySet="ESCUELAS">
                 <ScalarProperty Name="Id_Escuela" ColumnName="Id_Escuela" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1060,7 +1060,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ESTADOS">
-            <EntityTypeMapping TypeName="PPAIModel.ESTADOS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.ESTADOS">
               <MappingFragment StoreEntitySet="ESTADOS">
                 <ScalarProperty Name="Id_Estado" ColumnName="Id_Estado" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1069,7 +1069,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EXPOSICIONES">
-            <EntityTypeMapping TypeName="PPAIModel.EXPOSICIONES">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.EXPOSICIONES">
               <MappingFragment StoreEntitySet="EXPOSICIONES">
                 <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1086,7 +1086,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HORARIOSTRABAJOS">
-            <EntityTypeMapping TypeName="PPAIModel.HORARIOSTRABAJOS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.HORARIOSTRABAJOS">
               <MappingFragment StoreEntitySet="HORARIOSTRABAJOS">
                 <ScalarProperty Name="Id_HorarioTrabajo" ColumnName="Id_HorarioTrabajo" />
                 <ScalarProperty Name="HoraEntrada" ColumnName="HoraEntrada" />
@@ -1096,7 +1096,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OBRAS">
-            <EntityTypeMapping TypeName="PPAIModel.OBRAS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.OBRAS">
               <MappingFragment StoreEntitySet="OBRAS">
                 <ScalarProperty Name="Id_Obra" ColumnName="Id_Obra" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1114,7 +1114,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PUBLICOSDESTINO">
-            <EntityTypeMapping TypeName="PPAIModel.PUBLICOSDESTINO">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.PUBLICOSDESTINO">
               <MappingFragment StoreEntitySet="PUBLICOSDESTINO">
                 <ScalarProperty Name="Id_PublicoDestino" ColumnName="Id_PublicoDestino" />
                 <ScalarProperty Name="Caracteristicas" ColumnName="Caracteristicas" />
@@ -1123,7 +1123,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RESERVAS">
-            <EntityTypeMapping TypeName="PPAIModel.RESERVAS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.RESERVAS">
               <MappingFragment StoreEntitySet="RESERVAS">
                 <ScalarProperty Name="Id_Reserva" ColumnName="Id_Reserva" />
                 <ScalarProperty Name="DuracionEstimada" ColumnName="DuracionEstimada" />
@@ -1142,7 +1142,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SEDES">
-            <EntityTypeMapping TypeName="PPAIModel.SEDES">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.SEDES">
               <MappingFragment StoreEntitySet="SEDES">
                 <ScalarProperty Name="Id_Sede" ColumnName="Id_Sede" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1153,7 +1153,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SESION">
-            <EntityTypeMapping TypeName="PPAIModel.SESION">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.SESION">
               <MappingFragment StoreEntitySet="SESION">
                 <ScalarProperty Name="Id_Sesion" ColumnName="Id_Sesion" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
@@ -1165,7 +1165,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPOSEXPOSICION">
-            <EntityTypeMapping TypeName="PPAIModel.TIPOSEXPOSICION">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.TIPOSEXPOSICION">
               <MappingFragment StoreEntitySet="TIPOSEXPOSICION">
                 <ScalarProperty Name="Id_TipoExposicion" ColumnName="Id_TipoExposicion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1174,7 +1174,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPOSVISITA">
-            <EntityTypeMapping TypeName="PPAIModel.TIPOSVISITA">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.TIPOSVISITA">
               <MappingFragment StoreEntitySet="TIPOSVISITA">
                 <ScalarProperty Name="Id_TipoVisita" ColumnName="Id_TipoVisita" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1182,7 +1182,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USUARIOS">
-            <EntityTypeMapping TypeName="PPAIModel.USUARIOS">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.USUARIOS">
               <MappingFragment StoreEntitySet="USUARIOS">
                 <ScalarProperty Name="Id_Usuario" ColumnName="Id_Usuario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />

@@ -56,85 +56,86 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASIGNACIONESVISITA.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="CAMBIOSESTADOS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="CARGOS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="Clases\Empleado.cs" />
     <Compile Include="DETALLESEXPOSICION.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="DIAS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="EMPLEADOS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityData.Context.cs">
+    <Compile Include="EntityDavid.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EntityData.Context.tt</DependentUpon>
+      <DependentUpon>EntityDavid.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityData.cs">
+    <Compile Include="EntityDavid.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityData.Designer.cs">
+    <Compile Include="EntityDavid.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EntityData.edmx</DependentUpon>
+      <DependentUpon>EntityDavid.edmx</DependentUpon>
     </Compile>
     <Compile Include="ESCUELAS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="ESTADOS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="EXPOSICIONES.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Formularios\FormularioNuevaVisita.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Formularios\FormularioNuevaVisita.Designer.cs">
+      <DependentUpon>FormularioNuevaVisita.cs</DependentUpon>
     </Compile>
     <Compile Include="HORARIOSTRABAJOS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
+    <Compile Include="Negocio\Ng_FormularioReserva.cs" />
     <Compile Include="OBRAS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PUBLICOSDESTINO.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="RESERVAS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="SEDES.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="SESION.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="TIPOSEXPOSICION.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="TIPOSVISITA.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="USUARIOS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FormularioNuevaVisita.resx">
+      <DependentUpon>FormularioNuevaVisita.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -145,12 +146,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EntityDeploy Include="EntityData.edmx">
+    <EntityDeploy Include="EntityDavid.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EntityData.Designer.cs</LastGenOutput>
+      <LastGenOutput>EntityDavid.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="EntityData.edmx.diagram">
-      <DependentUpon>EntityData.edmx</DependentUpon>
+    <None Include="App.Config" />
+    <None Include="EntityDavid.edmx.diagram">
+      <DependentUpon>EntityDavid.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -164,18 +166,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="EntityData.Context.tt">
+    <Content Include="EntityDavid.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EntityData.edmx</DependentUpon>
-      <LastGenOutput>EntityData.Context.cs</LastGenOutput>
+      <DependentUpon>EntityDavid.edmx</DependentUpon>
+      <LastGenOutput>EntityDavid.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="EntityData.tt">
+    <Content Include="EntityDavid.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EntityData.edmx</DependentUpon>
-      <LastGenOutput>EntityData.cs</LastGenOutput>
+      <DependentUpon>EntityDavid.edmx</DependentUpon>
+      <LastGenOutput>EntityDavid.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\ScriptDatos.sql" />
     <Content Include="Scripts\ScriptTablas.sql" />
@@ -183,5 +182,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
