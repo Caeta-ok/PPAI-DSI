@@ -165,11 +165,11 @@ set identity_insert ASIGNACIONESVISITA off
 
 ---------------- Insert Sede ------------------------ si
 set identity_insert SEDES on
-INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia) VALUES (1, 'Alvear', 50, 25)
-INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia) VALUES (2, 'Carlos Paz', 100, 20)
-INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia) VALUES (3, 'Villa Cabrera', 200, 40)
-INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia) VALUES (4, 'San Carlos', 50, 10)
-INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia) VALUES (5, 'Materos', 500, 50)
+INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia, Id_Exposicion) VALUES (1, 'Alvear', 50, 25, 1)
+INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia, Id_Exposicion) VALUES (2, 'Carlos Paz', 100, 20, 3)
+INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia, Id_Exposicion) VALUES (3, 'Villa Cabrera', 200, 40, 4)
+INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia, Id_Exposicion) VALUES (4, 'San Carlos', 50, 10, 6)
+INSERT INTO SEDES(Id_Sede, Nombre, CantidadMaximaVisitantes, CantidadMaximaPorGuia, Id_Exposicion) VALUES (5, 'Materos', 500, 50, 8)
 set identity_insert SEDES off
 
 ---------------- Insert Estado ------------------------ si

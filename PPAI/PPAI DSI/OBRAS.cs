@@ -18,6 +18,7 @@ namespace PPAI_DSI
         public OBRAS()
         {
             this.DETALLESEXPOSICION = new HashSet<DETALLESEXPOSICION>();
+            this.OBRASPOREXPOSICION = new HashSet<OBRASPOREXPOSICION>();
         }
     
         public int Id_Obra { get; set; }
@@ -25,8 +26,8 @@ namespace PPAI_DSI
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public Nullable<System.DateTime> FechaPrimerIngreso { get; set; }
         public string Descripcion { get; set; }
-        public string DuracionExtendida { get; set; }
-        public string DuracionResumida { get; set; }
+        public Nullable<int> DuracionExtendida { get; set; }
+        public Nullable<int> DuracionResumida { get; set; }
         public Nullable<int> Alto { get; set; }
         public Nullable<int> Ancho { get; set; }
         public Nullable<int> Peso { get; set; }
@@ -35,5 +36,7 @@ namespace PPAI_DSI
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DETALLESEXPOSICION> DETALLESEXPOSICION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OBRASPOREXPOSICION> OBRASPOREXPOSICION { get; set; }
     }
 }

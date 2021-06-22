@@ -89,6 +89,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityDavid.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EntityDavid1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityDavid.tt</DependentUpon>
+    </Compile>
     <Compile Include="ESCUELAS.cs">
       <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
@@ -107,8 +112,13 @@
     <Compile Include="HORARIOSTRABAJOS.cs">
       <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
-    <Compile Include="Negocio\Ng_FormularioReserva.cs" />
+    <Compile Include="Negocio\Exposicion.cs" />
+    <Compile Include="Negocio\GestorReserva.cs" />
+    <Compile Include="Negocio\Sede.cs" />
     <Compile Include="OBRAS.cs">
+      <DependentUpon>EntityDavid.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OBRASPOREXPOSICION.cs">
       <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -174,8 +184,9 @@
     <Content Include="EntityDavid.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EntityDavid.edmx</DependentUpon>
-      <LastGenOutput>EntityDavid.cs</LastGenOutput>
+      <LastGenOutput>EntityDavid1.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\ActualizacionesPPAI.sql" />
     <Content Include="Scripts\ScriptDatos.sql" />
     <Content Include="Scripts\ScriptTablas.sql" />
   </ItemGroup>

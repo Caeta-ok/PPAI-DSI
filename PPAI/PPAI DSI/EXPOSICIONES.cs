@@ -19,6 +19,7 @@ namespace PPAI_DSI
         {
             this.RESERVAS = new HashSet<RESERVAS>();
             this.SEDES = new HashSet<SEDES>();
+            this.OBRASPOREXPOSICION = new HashSet<OBRASPOREXPOSICION>();
         }
     
         public int Id_Exposicion { get; set; }
@@ -40,5 +41,7 @@ namespace PPAI_DSI
         public virtual ICollection<SEDES> SEDES { get; set; }
         public virtual PUBLICOSDESTINO PUBLICOSDESTINO { get; set; }
         public virtual TIPOSEXPOSICION TIPOSEXPOSICION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OBRASPOREXPOSICION> OBRASPOREXPOSICION { get; set; }
     }
 }
