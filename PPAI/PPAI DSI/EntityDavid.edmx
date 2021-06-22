@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PPAI_DSIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PPAI_DSIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ASIGNACIONESVISITA">
           <Key>
             <PropertyRef Name="Id_AsignacionVisita" />
@@ -117,13 +117,21 @@
           <Property Name="FechaCreacion" Type="date" />
           <Property Name="FechaPrimerIngreso" Type="date" />
           <Property Name="Descripcion" Type="varchar" MaxLength="150" />
-          <Property Name="DuracionExtendida" Type="varchar" MaxLength="50" />
-          <Property Name="DuracionResumida" Type="varchar" MaxLength="50" />
           <Property Name="Alto" Type="int" />
           <Property Name="Ancho" Type="int" />
           <Property Name="Peso" Type="int" />
           <Property Name="Valuacion" Type="int" />
           <Property Name="CodigoSensor" Type="int" />
+          <Property Name="DuracionExtendida" Type="int" />
+          <Property Name="DuracionResumida" Type="int" />
+        </EntityType>
+        <EntityType Name="OBRASPOREXPOSICION">
+          <Key>
+            <PropertyRef Name="Id_ObraPorExposicion" />
+          </Key>
+          <Property Name="Id_ObraPorExposicion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Obra" Type="int" />
+          <Property Name="Id_Exposicion" Type="int" />
         </EntityType>
         <EntityType Name="PUBLICOSDESTINO">
           <Key>
@@ -316,6 +324,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EXPOSICIONES1">
+          <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
+          <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXPOSICIONES">
+              <PropertyRef Name="Id_Exposicion" />
+            </Principal>
+            <Dependent Role="OBRASPOREXPOSICION">
+              <PropertyRef Name="Id_Exposicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HORARIOSTRABAJOS">
           <End Role="HORARIOSTRABAJOS" Type="Self.HORARIOSTRABAJOS" Multiplicity="0..1" />
           <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
@@ -336,6 +356,18 @@
               <PropertyRef Name="Id_Obra" />
             </Principal>
             <Dependent Role="DETALLESEXPOSICION">
+              <PropertyRef Name="Id_Obra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OBRAS1">
+          <End Role="OBRAS" Type="Self.OBRAS" Multiplicity="0..1" />
+          <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OBRAS">
+              <PropertyRef Name="Id_Obra" />
+            </Principal>
+            <Dependent Role="OBRASPOREXPOSICION">
               <PropertyRef Name="Id_Obra" />
             </Dependent>
           </ReferentialConstraint>
@@ -400,6 +432,7 @@
           <EntitySet Name="EXPOSICIONES" EntityType="Self.EXPOSICIONES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HORARIOSTRABAJOS" EntityType="Self.HORARIOSTRABAJOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OBRAS" EntityType="Self.OBRAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OBRASPOREXPOSICION" EntityType="Self.OBRASPOREXPOSICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PUBLICOSDESTINO" EntityType="Self.PUBLICOSDESTINO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESERVAS" EntityType="Self.RESERVAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SEDES" EntityType="Self.SEDES" Schema="dbo" store:Type="Tables" />
@@ -447,6 +480,10 @@
             <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
             <End Role="SEDES" EntitySet="SEDES" />
           </AssociationSet>
+          <AssociationSet Name="FK_EXPOSICIONES1" Association="Self.FK_EXPOSICIONES1">
+            <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
+            <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
+          </AssociationSet>
           <AssociationSet Name="FK_HORARIOSTRABAJOS" Association="Self.FK_HORARIOSTRABAJOS">
             <End Role="HORARIOSTRABAJOS" EntitySet="HORARIOSTRABAJOS" />
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
@@ -454,6 +491,10 @@
           <AssociationSet Name="FK_OBRAS0" Association="Self.FK_OBRAS0">
             <End Role="OBRAS" EntitySet="OBRAS" />
             <End Role="DETALLESEXPOSICION" EntitySet="DETALLESEXPOSICION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OBRAS1" Association="Self.FK_OBRAS1">
+            <End Role="OBRAS" EntitySet="OBRAS" />
+            <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
           </AssociationSet>
           <AssociationSet Name="FK_PUBLICOSDESTINO0" Association="Self.FK_PUBLICOSDESTINO0">
             <End Role="PUBLICOSDESTINO" EntitySet="PUBLICOSDESTINO" />
@@ -472,8 +513,7 @@
             <End Role="SESION" EntitySet="SESION" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPAI_DSIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -588,6 +628,7 @@
           <NavigationProperty Name="SEDES" Relationship="Self.FK_EXPOSICIONES0" FromRole="EXPOSICIONES" ToRole="SEDES" />
           <NavigationProperty Name="PUBLICOSDESTINO" Relationship="Self.FK_PUBLICOSDESTINO0" FromRole="EXPOSICIONES" ToRole="PUBLICOSDESTINO" />
           <NavigationProperty Name="TIPOSEXPOSICION" Relationship="Self.FK_TIPOSEXPOSICION0" FromRole="EXPOSICIONES" ToRole="TIPOSEXPOSICION" />
+          <NavigationProperty Name="OBRASPOREXPOSICION" Relationship="PPAI_DSIModel.FK_EXPOSICIONES1" FromRole="EXPOSICIONES" ToRole="OBRASPOREXPOSICION" />
         </EntityType>
         <EntityType Name="HORARIOSTRABAJOS">
           <Key>
@@ -608,14 +649,15 @@
           <Property Name="FechaCreacion" Type="DateTime" Precision="0" />
           <Property Name="FechaPrimerIngreso" Type="DateTime" Precision="0" />
           <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="DuracionExtendida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DuracionResumida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DuracionExtendida" Type="Int32" />
+          <Property Name="DuracionResumida" Type="Int32" />
           <Property Name="Alto" Type="Int32" />
           <Property Name="Ancho" Type="Int32" />
           <Property Name="Peso" Type="Int32" />
           <Property Name="Valuacion" Type="Int32" />
           <Property Name="CodigoSensor" Type="Int32" />
           <NavigationProperty Name="DETALLESEXPOSICION" Relationship="Self.FK_OBRAS0" FromRole="OBRAS" ToRole="DETALLESEXPOSICION" />
+          <NavigationProperty Name="OBRASPOREXPOSICION" Relationship="PPAI_DSIModel.FK_OBRAS1" FromRole="OBRAS" ToRole="OBRASPOREXPOSICION" />
         </EntityType>
         <EntityType Name="PUBLICOSDESTINO">
           <Key>
@@ -975,7 +1017,50 @@
             <End Role="USUARIOS" EntitySet="USUARIOS" />
             <End Role="SESION" EntitySet="SESION" />
           </AssociationSet>
+          <EntitySet Name="OBRASPOREXPOSICION" EntityType="PPAI_DSIModel.OBRASPOREXPOSICION" />
+          <AssociationSet Name="FK_EXPOSICIONES1" Association="PPAI_DSIModel.FK_EXPOSICIONES1">
+            <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
+            <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OBRAS1" Association="PPAI_DSIModel.FK_OBRAS1">
+            <End Role="OBRAS" EntitySet="OBRAS" />
+            <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="OBRASPOREXPOSICION">
+          <Key>
+            <PropertyRef Name="Id_ObraPorExposicion" />
+          </Key>
+          <Property Name="Id_ObraPorExposicion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Obra" Type="Int32" />
+          <Property Name="Id_Exposicion" Type="Int32" />
+          <NavigationProperty Name="EXPOSICIONES" Relationship="PPAI_DSIModel.FK_EXPOSICIONES1" FromRole="OBRASPOREXPOSICION" ToRole="EXPOSICIONES" />
+          <NavigationProperty Name="OBRAS" Relationship="PPAI_DSIModel.FK_OBRAS1" FromRole="OBRASPOREXPOSICION" ToRole="OBRAS" />
+        </EntityType>
+        <Association Name="FK_EXPOSICIONES1">
+          <End Type="PPAI_DSIModel.EXPOSICIONES" Role="EXPOSICIONES" Multiplicity="0..1" />
+          <End Type="PPAI_DSIModel.OBRASPOREXPOSICION" Role="OBRASPOREXPOSICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXPOSICIONES">
+              <PropertyRef Name="Id_Exposicion" />
+            </Principal>
+            <Dependent Role="OBRASPOREXPOSICION">
+              <PropertyRef Name="Id_Exposicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OBRAS1">
+          <End Type="PPAI_DSIModel.OBRAS" Role="OBRAS" Multiplicity="0..1" />
+          <End Type="PPAI_DSIModel.OBRASPOREXPOSICION" Role="OBRASPOREXPOSICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OBRAS">
+              <PropertyRef Name="Id_Obra" />
+            </Principal>
+            <Dependent Role="OBRASPOREXPOSICION">
+              <PropertyRef Name="Id_Obra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1188,6 +1273,15 @@
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
                 <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OBRASPOREXPOSICION">
+            <EntityTypeMapping TypeName="PPAI_DSIModel.OBRASPOREXPOSICION">
+              <MappingFragment StoreEntitySet="OBRASPOREXPOSICION">
+                <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
+                <ScalarProperty Name="Id_Obra" ColumnName="Id_Obra" />
+                <ScalarProperty Name="Id_ObraPorExposicion" ColumnName="Id_ObraPorExposicion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

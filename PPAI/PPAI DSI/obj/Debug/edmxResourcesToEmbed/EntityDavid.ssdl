@@ -112,13 +112,21 @@
     <Property Name="FechaCreacion" Type="date" />
     <Property Name="FechaPrimerIngreso" Type="date" />
     <Property Name="Descripcion" Type="varchar" MaxLength="150" />
-    <Property Name="DuracionExtendida" Type="varchar" MaxLength="50" />
-    <Property Name="DuracionResumida" Type="varchar" MaxLength="50" />
     <Property Name="Alto" Type="int" />
     <Property Name="Ancho" Type="int" />
     <Property Name="Peso" Type="int" />
     <Property Name="Valuacion" Type="int" />
     <Property Name="CodigoSensor" Type="int" />
+    <Property Name="DuracionExtendida" Type="int" />
+    <Property Name="DuracionResumida" Type="int" />
+  </EntityType>
+  <EntityType Name="OBRASPOREXPOSICION">
+    <Key>
+      <PropertyRef Name="Id_ObraPorExposicion" />
+    </Key>
+    <Property Name="Id_ObraPorExposicion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Obra" Type="int" />
+    <Property Name="Id_Exposicion" Type="int" />
   </EntityType>
   <EntityType Name="PUBLICOSDESTINO">
     <Key>
@@ -311,6 +319,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_EXPOSICIONES1">
+    <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
+    <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EXPOSICIONES">
+        <PropertyRef Name="Id_Exposicion" />
+      </Principal>
+      <Dependent Role="OBRASPOREXPOSICION">
+        <PropertyRef Name="Id_Exposicion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_HORARIOSTRABAJOS">
     <End Role="HORARIOSTRABAJOS" Type="Self.HORARIOSTRABAJOS" Multiplicity="0..1" />
     <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
@@ -331,6 +351,18 @@
         <PropertyRef Name="Id_Obra" />
       </Principal>
       <Dependent Role="DETALLESEXPOSICION">
+        <PropertyRef Name="Id_Obra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OBRAS1">
+    <End Role="OBRAS" Type="Self.OBRAS" Multiplicity="0..1" />
+    <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OBRAS">
+        <PropertyRef Name="Id_Obra" />
+      </Principal>
+      <Dependent Role="OBRASPOREXPOSICION">
         <PropertyRef Name="Id_Obra" />
       </Dependent>
     </ReferentialConstraint>
@@ -395,6 +427,7 @@
     <EntitySet Name="EXPOSICIONES" EntityType="Self.EXPOSICIONES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HORARIOSTRABAJOS" EntityType="Self.HORARIOSTRABAJOS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OBRAS" EntityType="Self.OBRAS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OBRASPOREXPOSICION" EntityType="Self.OBRASPOREXPOSICION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PUBLICOSDESTINO" EntityType="Self.PUBLICOSDESTINO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RESERVAS" EntityType="Self.RESERVAS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SEDES" EntityType="Self.SEDES" Schema="dbo" store:Type="Tables" />
@@ -442,6 +475,10 @@
       <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
       <End Role="SEDES" EntitySet="SEDES" />
     </AssociationSet>
+    <AssociationSet Name="FK_EXPOSICIONES1" Association="Self.FK_EXPOSICIONES1">
+      <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
+      <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
+    </AssociationSet>
     <AssociationSet Name="FK_HORARIOSTRABAJOS" Association="Self.FK_HORARIOSTRABAJOS">
       <End Role="HORARIOSTRABAJOS" EntitySet="HORARIOSTRABAJOS" />
       <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
@@ -449,6 +486,10 @@
     <AssociationSet Name="FK_OBRAS0" Association="Self.FK_OBRAS0">
       <End Role="OBRAS" EntitySet="OBRAS" />
       <End Role="DETALLESEXPOSICION" EntitySet="DETALLESEXPOSICION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OBRAS1" Association="Self.FK_OBRAS1">
+      <End Role="OBRAS" EntitySet="OBRAS" />
+      <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
     </AssociationSet>
     <AssociationSet Name="FK_PUBLICOSDESTINO0" Association="Self.FK_PUBLICOSDESTINO0">
       <End Role="PUBLICOSDESTINO" EntitySet="PUBLICOSDESTINO" />

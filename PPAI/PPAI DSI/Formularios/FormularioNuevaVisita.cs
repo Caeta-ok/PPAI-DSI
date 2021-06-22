@@ -9,16 +9,31 @@ namespace PPAI_DSI
 {
     public partial class Form1 : Form
     {
-        Ng_FormularioReserva formularioReserva = new Ng_FormularioReserva();
+        GestorReserva formularioReserva = new GestorReserva();
         string nombreExp;
         string horaI;
         string horaF;
+        int duracionReserva;
 
         public Form1()
         {
             InitializeComponent();
         }
+
+        private void habilitarVentana()
+        {
+            this.btn_registrar_reserva.Visible = false;
+            this.group_registrar_reserva.Visible = true;
+        }
+
+        private void opcionRegReservaVisitaGuiada(object sender, EventArgs e)
+        {
+            habilitarVentana();
+            //calcularDuracionReserva();
+        }
+
         DataTable table = new DataTable();
+
         private void Form1_Load(object sender, EventArgs e)
         {
             txt_hora.Text = "Formato '00:00' 24horas";
@@ -50,13 +65,14 @@ namespace PPAI_DSI
                 txtVisitantes.Enabled = true;
             }
         }
+
         private void cmb_escuelas_TextChanged(object sender, EventArgs e)
         {
             txtVisitantes.Text = "";
             cmbTipoVisita.Text = null;
             cmbTipoVisita.Enabled = false;
-            dgv1.Enabled = false;
-            dgv2.Enabled = false;
+            grid_sedes.Enabled = false;
+            grid_exposiciones.Enabled = false;
             dateTimePicker1.Enabled = false;
             txt_hora.Enabled = false;
         }
@@ -65,27 +81,27 @@ namespace PPAI_DSI
         {
             if (txtVisitantes.Text != "" && txtVisitantes.Text != null)
             {
-                dgv1.Enabled = true;
+                grid_sedes.Enabled = true;
                 using (PPAIEntities db = new PPAIEntities())
                 {
-                    var lista = (from emp in db.SEDES.ToList()
-                                 join Exp in db.EXPOSICIONES on emp.Id_Exposicion equals Exp.Id_Exposicion
-                                 where emp.CantidadMaximaVisitantes >= int.Parse(txtVisitantes.Text)
+                    var lista = (from sede in db.SEDES.ToList()
+                                 join exp in db.EXPOSICIONES on sede.Id_Exposicion equals exp.Id_Exposicion
+                                 where sede.CantidadMaximaVisitantes >= int.Parse(txtVisitantes.Text)
                                  select new
                                  {
-                                     emp.Nombre,
-                                     emp.CantidadMaximaVisitantes,
-                                     emp.CantidadMaximaPorGuia,
-                                     Exposicion = Exp.Nombre
+                                     sede.Nombre,
+                                     sede.CantidadMaximaVisitantes,
+                                     sede.CantidadMaximaPorGuia,
+                                     Exposicion = exp.Nombre
                                  }).ToList();
-                    dgv1.DataSource = lista;
+                    grid_sedes.DataSource = lista;
                 }
             }
             else
             {
                 cmbTipoVisita.Text = null;
                 cmbTipoVisita.Enabled = false;
-                dgv1.Enabled = false;
+                grid_sedes.Enabled = false;
             }
         }
 
@@ -115,7 +131,7 @@ namespace PPAI_DSI
 
         private void cmbTipoVisita_Enter(object sender, EventArgs e)
         {
-            dgv2.Enabled = true;
+            grid_exposiciones.Enabled = true;
             using (PPAIEntities db = new PPAIEntities())
             {
                 var lista = (from exp in db.EXPOSICIONES.ToList()
@@ -129,23 +145,24 @@ namespace PPAI_DSI
                                  exp.HoraCierre,
                                  Publico = pub.Nombre
                              }).ToList();
-                dgv2.DataSource = lista;
+                grid_exposiciones.DataSource = lista;
             }
         }
 
         private void dgv2_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            dgv1.Enabled = false;
+            grid_sedes.Enabled = false;
             cmbTipoVisita.Enabled = false;
-            nombreExp = dgv2.CurrentRow.Cells[0].Value.ToString();
-            horaI = dgv2.CurrentRow.Cells[1].Value.ToString();
-            horaF = dgv2.CurrentRow.Cells[2].Value.ToString();
+            nombreExp = grid_exposiciones.CurrentRow.Cells[0].Value.ToString();
+            horaI = grid_exposiciones.CurrentRow.Cells[1].Value.ToString();
+            horaF = grid_exposiciones.CurrentRow.Cells[2].Value.ToString();
             dateTimePicker1.Enabled = true;
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            dgv2.Enabled = false;
+            // Cambia la fecha
+            grid_exposiciones.Enabled = false;
             if (dateTimePicker1.Value > System.DateTime.Now)
             {
                 DateTime fechaFin = DateTime.Now;
@@ -177,11 +194,57 @@ namespace PPAI_DSI
             }
         }
 
+        
+        private void calcularDuracionReserva()
+        {
+            duracionReserva = 0;
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var lista = (from r in db.OBRASPOREXPOSICION.ToList()
+                             join e in db.EXPOSICIONES on r.Id_Exposicion equals e.Id_Exposicion
+                             join o in db.OBRAS on r.Id_Obra equals o.Id_Obra
+                             where e.Nombre == nombreExp
+                             //where e.Nombre == 'Clasica'
+                             //select new { (o.DuracionExtendida) as duracion }).ToList();
+                             select new
+                             {
+                                 o.DuracionExtendida
+                             }).ToList();
+                foreach(var d in lista)
+                {
+                    duracionReserva += int.Parse(d.DuracionExtendida.ToString());
+                }
+            }
+        }
+
+        private void buscarGuiasDisponiblesFechaReserva()
+        {
+            //using ()
+        }
+
         private void txt_hora_Enter(object sender, EventArgs e)
         {
             txt_hora.Text = null;
             txt_hora.ForeColor = Color.Black;
         }
+
+        private bool validarDuracion()
+        {
+            DateTime horaSeleccionada = DateTime.Parse(txt_hora.Text);
+            int horaSelEnMintuos = (horaSeleccionada.Hour * 60) + horaSeleccionada.Minute;
+            int duracionTotal = horaSelEnMintuos + duracionReserva;
+
+            DateTime horaFinal = DateTime.Parse(horaF);
+            int horasEnMinutos = horaFinal.Hour * 60 + horaFinal.Minute;
+
+            if(duracionTotal > horasEnMinutos)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        //privat
 
         private void txt_hora_Leave(object sender, EventArgs e)
         {
@@ -190,17 +253,24 @@ namespace PPAI_DSI
                 txt_hora.Text = "Formato '00:00' 24horas";
                 txt_hora.ForeColor = Color.DarkGray;
             }
-        }
 
-        private void txt_hora_TextChanged(object sender, EventArgs e)
-        {
             if (txt_hora.ForeColor == Color.Black)
             {
                 if (DateTime.Parse(horaI) <= DateTime.Parse(txt_hora.Text))
                 {
                     if (DateTime.Parse(horaF) > DateTime.Parse(txt_hora.Text))
                     {
+                        calcularDuracionReserva();
+                     
+                        if (validarDuracion())
+                        {
+                            lbl_duracion_reserva.Text += " " + duracionReserva.ToString() + " minutos";
 
+                        }
+                        else
+                        {
+                            MessageBox.Show("En el horario ingresado no se puede realizar la reserva");
+                        }
                     }
                     else
                     {
@@ -215,8 +285,27 @@ namespace PPAI_DSI
         }
 
 
-
-
+        private void txt_hora_TextChanged(object sender, EventArgs e)
+        {
+            //if (txt_hora.ForeColor == Color.Black)
+            //{
+            //    if (DateTime.Parse(horaI) <= DateTime.Parse(txt_hora.Text))
+            //    {
+            //        if (DateTime.Parse(horaF) > DateTime.Parse(txt_hora.Text))
+            //        {
+            //            calcularDuracionReserva();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("En ese horario ya cerro la exposicion, la seleccionada cierra a las: " + horaF, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("En ese horario todabia no abrio la exposicion, la seleccionada abre a las: " + horaI, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //    }
+            //}
+        }
 
 
         // Ejecutar cadena de consultas en la base de datos

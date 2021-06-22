@@ -210,5 +210,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="OBRASPOREXPOSICION">
+      <EntityTypeMapping TypeName="PPAI_DSIModel.OBRASPOREXPOSICION">
+        <MappingFragment StoreEntitySet="OBRASPOREXPOSICION">
+          <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
+          <ScalarProperty Name="Id_Obra" ColumnName="Id_Obra" />
+          <ScalarProperty Name="Id_ObraPorExposicion" ColumnName="Id_ObraPorExposicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

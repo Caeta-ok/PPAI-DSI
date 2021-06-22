@@ -111,6 +111,7 @@
     <NavigationProperty Name="SEDES" Relationship="Self.FK_EXPOSICIONES0" FromRole="EXPOSICIONES" ToRole="SEDES" />
     <NavigationProperty Name="PUBLICOSDESTINO" Relationship="Self.FK_PUBLICOSDESTINO0" FromRole="EXPOSICIONES" ToRole="PUBLICOSDESTINO" />
     <NavigationProperty Name="TIPOSEXPOSICION" Relationship="Self.FK_TIPOSEXPOSICION0" FromRole="EXPOSICIONES" ToRole="TIPOSEXPOSICION" />
+    <NavigationProperty Name="OBRASPOREXPOSICION" Relationship="PPAI_DSIModel.FK_EXPOSICIONES1" FromRole="EXPOSICIONES" ToRole="OBRASPOREXPOSICION" />
   </EntityType>
   <EntityType Name="HORARIOSTRABAJOS">
     <Key>
@@ -131,14 +132,15 @@
     <Property Name="FechaCreacion" Type="DateTime" Precision="0" />
     <Property Name="FechaPrimerIngreso" Type="DateTime" Precision="0" />
     <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="DuracionExtendida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="DuracionResumida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DuracionExtendida" Type="Int32" />
+    <Property Name="DuracionResumida" Type="Int32" />
     <Property Name="Alto" Type="Int32" />
     <Property Name="Ancho" Type="Int32" />
     <Property Name="Peso" Type="Int32" />
     <Property Name="Valuacion" Type="Int32" />
     <Property Name="CodigoSensor" Type="Int32" />
     <NavigationProperty Name="DETALLESEXPOSICION" Relationship="Self.FK_OBRAS0" FromRole="OBRAS" ToRole="DETALLESEXPOSICION" />
+    <NavigationProperty Name="OBRASPOREXPOSICION" Relationship="PPAI_DSIModel.FK_OBRAS1" FromRole="OBRAS" ToRole="OBRASPOREXPOSICION" />
   </EntityType>
   <EntityType Name="PUBLICOSDESTINO">
     <Key>
@@ -498,5 +500,48 @@
       <End Role="USUARIOS" EntitySet="USUARIOS" />
       <End Role="SESION" EntitySet="SESION" />
     </AssociationSet>
+    <EntitySet Name="OBRASPOREXPOSICION" EntityType="PPAI_DSIModel.OBRASPOREXPOSICION" />
+    <AssociationSet Name="FK_EXPOSICIONES1" Association="PPAI_DSIModel.FK_EXPOSICIONES1">
+      <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
+      <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OBRAS1" Association="PPAI_DSIModel.FK_OBRAS1">
+      <End Role="OBRAS" EntitySet="OBRAS" />
+      <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="OBRASPOREXPOSICION">
+    <Key>
+      <PropertyRef Name="Id_ObraPorExposicion" />
+    </Key>
+    <Property Name="Id_ObraPorExposicion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Obra" Type="Int32" />
+    <Property Name="Id_Exposicion" Type="Int32" />
+    <NavigationProperty Name="EXPOSICIONES" Relationship="PPAI_DSIModel.FK_EXPOSICIONES1" FromRole="OBRASPOREXPOSICION" ToRole="EXPOSICIONES" />
+    <NavigationProperty Name="OBRAS" Relationship="PPAI_DSIModel.FK_OBRAS1" FromRole="OBRASPOREXPOSICION" ToRole="OBRAS" />
+  </EntityType>
+  <Association Name="FK_EXPOSICIONES1">
+    <End Type="PPAI_DSIModel.EXPOSICIONES" Role="EXPOSICIONES" Multiplicity="0..1" />
+    <End Type="PPAI_DSIModel.OBRASPOREXPOSICION" Role="OBRASPOREXPOSICION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EXPOSICIONES">
+        <PropertyRef Name="Id_Exposicion" />
+      </Principal>
+      <Dependent Role="OBRASPOREXPOSICION">
+        <PropertyRef Name="Id_Exposicion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OBRAS1">
+    <End Type="PPAI_DSIModel.OBRAS" Role="OBRAS" Multiplicity="0..1" />
+    <End Type="PPAI_DSIModel.OBRASPOREXPOSICION" Role="OBRASPOREXPOSICION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OBRAS">
+        <PropertyRef Name="Id_Obra" />
+      </Principal>
+      <Dependent Role="OBRASPOREXPOSICION">
+        <PropertyRef Name="Id_Obra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

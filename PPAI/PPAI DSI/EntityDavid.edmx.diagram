@@ -39,6 +39,9 @@
         <AssociationConnector Association="PPAI_DSIModel.FK_TIPOSEXPOSICION0" ManuallyRouted="false" />
         <AssociationConnector Association="PPAI_DSIModel.FK_SEDES0" ManuallyRouted="false" />
         <AssociationConnector Association="PPAI_DSIModel.FK_USUARIOS0" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PPAI_DSIModel.OBRASPOREXPOSICION" Width="1.5" PointX="7.5" PointY="15.125" />
+        <AssociationConnector Association="PPAI_DSIModel.FK_EXPOSICIONES1" />
+        <AssociationConnector Association="PPAI_DSIModel.FK_OBRAS1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

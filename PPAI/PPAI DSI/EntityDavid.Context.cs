@@ -43,5 +43,6 @@ namespace PPAI_DSI
         public virtual DbSet<TIPOSEXPOSICION> TIPOSEXPOSICION { get; set; }
         public virtual DbSet<TIPOSVISITA> TIPOSVISITA { get; set; }
         public virtual DbSet<USUARIOS> USUARIOS { get; set; }
+        public virtual DbSet<OBRASPOREXPOSICION> OBRASPOREXPOSICION { get; set; }
     }
 }
