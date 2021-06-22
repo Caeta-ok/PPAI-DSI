@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using PPAI_DSI.Negocio;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using PPAI_DSI.Clases;
-using PPAI_DSI.Negocio;
 
 namespace PPAI_DSI
 {
     public partial class Form1 : Form
     {
         Ng_FormularioReserva formularioReserva = new Ng_FormularioReserva();
+        string nombreExp;
+        string horaI;
+        string horaF;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,6 +21,8 @@ namespace PPAI_DSI
         DataTable table = new DataTable();
         private void Form1_Load(object sender, EventArgs e)
         {
+            txt_hora.Text = "Formato '00:00' 24horas";
+            txt_hora.ForeColor = Color.DarkGray;
             using (PPAIEntities db = new PPAIEntities())
             {
                 var lista = db.ESCUELAS.ToList();
@@ -51,18 +52,25 @@ namespace PPAI_DSI
         }
         private void cmb_escuelas_TextChanged(object sender, EventArgs e)
         {
-            dgv1.Rows.Clear();
-            dgv2.Rows.Clear();
+            txtVisitantes.Text = "";
+            cmbTipoVisita.Text = null;
+            cmbTipoVisita.Enabled = false;
+            dgv1.Enabled = false;
+            dgv2.Enabled = false;
+            dateTimePicker1.Enabled = false;
+            txt_hora.Enabled = false;
         }
 
         private void txtVisitantes_Enter(object sender, EventArgs e)
         {
-            if (txtVisitantes.Text != "")
+            if (txtVisitantes.Text != "" && txtVisitantes.Text != null)
             {
+                dgv1.Enabled = true;
                 using (PPAIEntities db = new PPAIEntities())
                 {
                     var lista = (from emp in db.SEDES.ToList()
                                  join Exp in db.EXPOSICIONES on emp.Id_Exposicion equals Exp.Id_Exposicion
+                                 where emp.CantidadMaximaVisitantes >= int.Parse(txtVisitantes.Text)
                                  select new
                                  {
                                      emp.Nombre,
@@ -75,15 +83,52 @@ namespace PPAI_DSI
             }
             else
             {
-                dgv1.Rows.Clear();
+                cmbTipoVisita.Text = null;
+                cmbTipoVisita.Enabled = false;
+                dgv1.Enabled = false;
             }
         }
 
         private void dgv1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            txtVisitantes.Enabled = false;
+            cmbTipoVisita.Enabled = true;
             using (PPAIEntities db = new PPAIEntities())
             {
                 var lista = db.TIPOSVISITA.ToList();
+                DataTable item = new DataTable();
+                item.Columns.Add("Id");
+                item.Columns.Add("Nombre");
+                int i = 0;
+                foreach (var l in lista)
+                {
+                    item.Rows.Add();
+                    item.Rows[i]["Id"] = l.Id_TipoVisita;
+                    item.Rows[i]["Nombre"] = l.Nombre;
+                    i++;
+                }
+                cmbTipoVisita.DataSource = item;
+                cmbTipoVisita.DisplayMember = "Nombre";
+                cmbTipoVisita.ValueMember = "Id";
+            }
+        }
+
+        private void cmbTipoVisita_Enter(object sender, EventArgs e)
+        {
+            dgv2.Enabled = true;
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var lista = (from exp in db.EXPOSICIONES.ToList()
+                             join pub in db.PUBLICOSDESTINO on exp.Id_PublicoDestino equals pub.Id_PublicoDestino
+                             where exp.FechaFin > System.DateTime.Now
+                             where exp.Id_TipoExposicion == 2
+                             select new
+                             {
+                                 exp.Nombre,
+                                 exp.HoraApertura,
+                                 exp.HoraCierre,
+                                 Publico = pub.Nombre
+                             }).ToList();
                 dgv2.DataSource = lista;
             }
         }
@@ -91,7 +136,86 @@ namespace PPAI_DSI
         private void dgv2_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             dgv1.Enabled = false;
+            cmbTipoVisita.Enabled = false;
+            nombreExp = dgv2.CurrentRow.Cells[0].Value.ToString();
+            horaI = dgv2.CurrentRow.Cells[1].Value.ToString();
+            horaF = dgv2.CurrentRow.Cells[2].Value.ToString();
+            dateTimePicker1.Enabled = true;
         }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            dgv2.Enabled = false;
+            if (dateTimePicker1.Value > System.DateTime.Now)
+            {
+                DateTime fechaFin = DateTime.Now;
+                using (PPAIEntities db = new PPAIEntities())
+                {
+                    var lista = (from exp in db.EXPOSICIONES.ToList()
+                                 where exp.Nombre == nombreExp.Trim()
+                                 select new
+                                 {
+                                     exp.FechaFin
+                                 });
+                    foreach (var l in lista)
+                    {
+                        fechaFin = DateTime.Parse(l.FechaFin.ToString());
+                    }
+                }
+                if (dateTimePicker1.Value <= fechaFin)
+                {
+                    txt_hora.Enabled = true;
+                }
+                else
+                {
+                    MessageBox.Show("En la fecha ingresada la exposicion ya no va a estar disponible, su fecha de fin es: " + fechaFin.ToString(), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingrese una fecha mayor a la del dia actual", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void txt_hora_Enter(object sender, EventArgs e)
+        {
+            txt_hora.Text = null;
+            txt_hora.ForeColor = Color.Black;
+        }
+
+        private void txt_hora_Leave(object sender, EventArgs e)
+        {
+            if (txt_hora.Text == "")
+            {
+                txt_hora.Text = "Formato '00:00' 24horas";
+                txt_hora.ForeColor = Color.DarkGray;
+            }
+        }
+
+        private void txt_hora_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_hora.ForeColor == Color.Black)
+            {
+                if (DateTime.Parse(horaI) <= DateTime.Parse(txt_hora.Text))
+                {
+                    if (DateTime.Parse(horaF) > DateTime.Parse(txt_hora.Text))
+                    {
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("En ese horario ya cerro la exposicion, la seleccionada cierra a las: " + horaF, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("En ese horario todabia no abrio la exposicion, la seleccionada abre a las: " + horaI, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+        }
+
+
+
 
 
 

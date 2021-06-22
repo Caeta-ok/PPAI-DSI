@@ -26,3 +26,17 @@ D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.GenerateResour
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe.config
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.pdb
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.dll
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.dll
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.xml
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.xml
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csprojAssemblyReference.cache
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Form1.resources
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Properties.Resources.resources
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.GenerateResource.cache
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
+D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
