@@ -15,8 +15,8 @@ namespace PPAI_DSI
         string nombreExp;
         string horaInicioExposicion;
         string horaFinalExposicion;
-        //string nombreGuiaSeleccionado;
-        //string apellidoGuiaSeleccionado;
+        int IdSede;
+        int IdExposicion;
         List<Empleado> listaGuiasSeleccionados = new List<Empleado>();
         int duracionReserva;
 
@@ -65,39 +65,41 @@ namespace PPAI_DSI
         {
             if (cmb_escuelas.Text != "")
             {
-                txtVisitantes.Enabled = true;
+                txt_cantidad_alumnos.Enabled = true;
             }
         }
 
         private void cmb_escuelas_TextChanged(object sender, EventArgs e)
         {
-            txtVisitantes.Text = "";
+            txt_cantidad_alumnos.Text = "";
             cmbTipoVisita.Text = null;
             cmbTipoVisita.Enabled = false;
             grid_sedes.Enabled = false;
             grid_exposiciones.Enabled = false;
-            dateTimePicker1.Enabled = false;
-            dateTimePicker2.Enabled = false;
+            dt_fecha_reserva.Enabled = false;
+            dt_hora_reserva.Enabled = false;
         }
 
         private void txtVisitantes_Enter(object sender, EventArgs e)
         {
-            if (txtVisitantes.Text != "" && txtVisitantes.Text != null)
+            if (txt_cantidad_alumnos.Text != "" && txt_cantidad_alumnos.Text != null)
             {
                 grid_sedes.Enabled = true;
                 using (PPAIEntities db = new PPAIEntities())
                 {
                     var lista = (from sede in db.SEDES.ToList()
                                  join exp in db.EXPOSICIONES on sede.Id_Exposicion equals exp.Id_Exposicion
-                                 where sede.CantidadMaximaVisitantes >= int.Parse(txtVisitantes.Text)
+                                 where sede.CantidadMaximaVisitantes >= int.Parse(txt_cantidad_alumnos.Text)
                                  select new
                                  {
+                                     sede.Id_Sede,
                                      sede.Nombre,
                                      sede.CantidadMaximaVisitantes,
                                      sede.CantidadMaximaPorGuia,
                                      Exposicion = exp.Nombre
                                  }).ToList();
                     grid_sedes.DataSource = lista;
+                    grid_sedes.Columns[0].Visible = false;
                 }
             }
             else
@@ -110,10 +112,30 @@ namespace PPAI_DSI
 
         private void dgv1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            txtVisitantes.Enabled = false;
-            cmbTipoVisita.Enabled = true;
+
+
+            //for (int i = 0; i < grid_sedes.Rows.Count; i++)
+            //{
+            //    if (grid_sedes[0, i].Selected)
+            //    {
+            //        empleado.id = int.Parse(grid_guias_disponibles[0, i].Value.ToString());
+            //        empleado.nombre = grid_guias_disponibles[1, i].Value.ToString();
+            //        empleado.apellido = grid_guias_disponibles[2, i].Value.ToString();
+            //        empleado.email = grid_guias_disponibles[3, i].Value.ToString();
+            //        listaGuiasSeleccionados.Add(empleado);
+            //    }
+            //}
+
+
+
             using (PPAIEntities db = new PPAIEntities())
             {
+                int row_index = grid_sedes.SelectedRows[0].Index;
+                SEDES sede = db.SEDES.Find(grid_sedes[0, row_index].Value);
+                IdSede = sede.Id_Sede;
+                txt_cantidad_alumnos.Enabled = false;
+                cmbTipoVisita.Enabled = true;
+
                 var lista = db.TIPOSVISITA.ToList();
                 DataTable item = new DataTable();
                 item.Columns.Add("Id");
@@ -143,30 +165,39 @@ namespace PPAI_DSI
                              where exp.Id_TipoExposicion == 2
                              select new
                              {
+                                 exp.Id_Exposicion,
                                  exp.Nombre,
                                  exp.HoraApertura,
                                  exp.HoraCierre,
                                  Publico = pub.Nombre
                              }).ToList();
                 grid_exposiciones.DataSource = lista;
+                grid_exposiciones.Columns[0].Visible = false;
             }
         }
 
         private void dgv2_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                int row_index = grid_exposiciones.SelectedRows[0].Index;
+                EXPOSICIONES exposicion = db.EXPOSICIONES.Find(grid_exposiciones[0, row_index].Value);
+                IdExposicion = exposicion.Id_Exposicion;
+            }
+
             grid_sedes.Enabled = false;
             cmbTipoVisita.Enabled = false;
-            nombreExp = grid_exposiciones.CurrentRow.Cells[0].Value.ToString();
-            horaInicioExposicion = grid_exposiciones.CurrentRow.Cells[1].Value.ToString();
-            horaFinalExposicion = grid_exposiciones.CurrentRow.Cells[2].Value.ToString();
-            dateTimePicker1.Enabled = true;
+            nombreExp = grid_exposiciones.CurrentRow.Cells[1].Value.ToString();
+            horaInicioExposicion = grid_exposiciones.CurrentRow.Cells[2].Value.ToString();
+            horaFinalExposicion = grid_exposiciones.CurrentRow.Cells[3].Value.ToString();
+            dt_fecha_reserva.Enabled = true;
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            // Cambia la fecha
+
             grid_exposiciones.Enabled = false;
-            if (dateTimePicker1.Value > System.DateTime.Now)
+            if (dt_fecha_reserva.Value > System.DateTime.Now)
             {
                 DateTime fechaFin = DateTime.Now;
                 using (PPAIEntities db = new PPAIEntities())
@@ -182,9 +213,9 @@ namespace PPAI_DSI
                         fechaFin = DateTime.Parse(l.FechaFin.ToString());
                     }
                 }
-                if (dateTimePicker1.Value <= fechaFin)
+                if (dt_fecha_reserva.Value <= fechaFin)
                 {
-                    dateTimePicker2.Enabled = true;
+                    dt_hora_reserva.Enabled = true;
                 }
                 else
                 {
@@ -195,6 +226,39 @@ namespace PPAI_DSI
             {
                 MessageBox.Show("Ingrese una fecha mayor a la del dia actual", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
+
+            //// Cambia la fecha
+            //grid_exposiciones.Enabled = false;
+            //if (dt_fecha_reserva.Value > System.DateTime.Now)
+            //{
+            //    DateTime fechaFin = DateTime.Now;
+            //    using (PPAIEntities db = new PPAIEntities())
+            //    {
+            //        var lista = (from exp in db.EXPOSICIONES.ToList()
+            //                     where exp.Nombre == nombreExp.Trim()
+            //                     select new
+            //                     {
+            //                         exp.FechaFin
+            //                     });
+            //        foreach (var l in lista)
+            //        {
+            //            fechaFin = DateTime.Parse(l.FechaFin.ToString());
+            //        }
+            //    }
+            //    if (dt_fecha_reserva.Value <= fechaFin)
+            //    {
+            //        dt_hora_reserva.Enabled = true;
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("En la fecha ingresada la exposicion ya no va a estar disponible, su fecha de fin es: " + fechaFin.ToString(), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Ingrese una fecha mayor a la del dia actual", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //}
         }
 
         
@@ -244,7 +308,7 @@ namespace PPAI_DSI
 
                 foreach (var asign in listaAsignaciones)
                 {
-                    if (dateTimePicker1.Value.ToShortDateString() == DateTime.Parse(asign.FechaInicio.ToString()).ToShortDateString())
+                    if (dt_fecha_reserva.Value.ToShortDateString() == DateTime.Parse(asign.FechaInicio.ToString()).ToShortDateString())
                     {
                         if (validarGuiaDisponible(asign.HoraInicio.ToString(), asign.HoraFin.ToString()) == false)
                         {
@@ -262,7 +326,7 @@ namespace PPAI_DSI
                             if (id != guia.Id_Empleado)
                             {
                                 Empleado empleado = new Empleado();
-                                //empleado.id = guia.Id_Empleado;
+                                empleado.id = guia.Id_Empleado;
                                 empleado.nombre = guia.Nombre;
                                 empleado.apellido = guia.Apellido;
                                 empleado.email = guia.Email;
@@ -275,13 +339,14 @@ namespace PPAI_DSI
                     else
                     {
                         Empleado empleado = new Empleado();
-                        //empleado.id = guia.Id_Empleado;
+                        empleado.id = guia.Id_Empleado;
                         empleado.nombre = guia.Nombre;
                         empleado.apellido = guia.Apellido;
                         empleado.email = guia.Email;
                         //empleado.horaEntrada = DateTime.Parse(guia.HoraEntrada.ToString());
                         //empleado.horaSalida = DateTime.Parse(guia.HoraSalida.ToString());
                         listaFinal.Add(empleado);
+
                     }
                 }
             }
@@ -290,7 +355,7 @@ namespace PPAI_DSI
 
         private bool validarGuiaDisponible(string horaInicialGuia, string horaFinalGuia)
         {
-            DateTime horaSeleccionada = DateTime.Parse(dateTimePicker2.Text);
+            DateTime horaSeleccionada = DateTime.Parse(dt_hora_reserva.Text);
             int horaSelEnMintuos = (horaSeleccionada.Hour * 60) + horaSeleccionada.Minute;
             int duracionTotal = horaSelEnMintuos + duracionReserva;
 
@@ -314,7 +379,7 @@ namespace PPAI_DSI
 
         private bool validarDuracion(string horaComparacion)
         {
-            DateTime horaSeleccionada = DateTime.Parse(dateTimePicker2.Text);
+            DateTime horaSeleccionada = DateTime.Parse(dt_hora_reserva.Text);
             int horaSelEnMintuos = (horaSeleccionada.Hour * 60) + horaSeleccionada.Minute;
             int duracionTotal = horaSelEnMintuos + duracionReserva;
 
@@ -334,13 +399,13 @@ namespace PPAI_DSI
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
             lbl_duracion_reserva.Text = "Duración de Reserva: ";
-            if (dateTimePicker2.Text == "")
+            if (dt_hora_reserva.Text == "")
             {
                 lbl_duracion_reserva.Text = "Duración de Reserva: ";
             }
-            if (DateTime.Parse(horaInicioExposicion) <= DateTime.Parse(dateTimePicker2.Text))
+            if (DateTime.Parse(horaInicioExposicion) <= DateTime.Parse(dt_hora_reserva.Text))
             {
-                if (DateTime.Parse(horaFinalExposicion) > DateTime.Parse(dateTimePicker2.Text))
+                if (DateTime.Parse(horaFinalExposicion) > DateTime.Parse(dt_hora_reserva.Text))
                 {
                     calcularDuracionReserva();
 
@@ -349,6 +414,7 @@ namespace PPAI_DSI
                         lbl_duracion_reserva.Text += " " + duracionReserva.ToString() + " minutos";
                         List<Empleado> lista = buscarGuiasDisponiblesFechaReserva();
                         grid_guias_disponibles.DataSource = lista;
+                        grid_guias_disponibles.Columns[0].Visible = false;
                     }
                     else
                     {
@@ -368,49 +434,79 @@ namespace PPAI_DSI
 
         private void grid_guias_disponibles_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            /*
             listaGuiasSeleccionados.Clear();
-            //nombreGuiaSeleccionado = grid_guias_disponibles.CurrentRow.Cells[1].Value.ToString();
-            //apellidoGuiaSeleccionado = grid_guias_disponibles.CurrentRow.Cells[2].Value.ToString();
-            for(int i = 0; i < grid_guias_disponibles.SelectedRows.Count; i++)
+            for(int i = 0; i < grid_guias_disponibles.Rows.Count; i++)
             {
-                //if(grid_guias_disponibles.Rows[i].Index == grid_guias_disponibles.SelectedRows.get)
-                foreach (int row in grid_guias_disponibles.SelectedRows)
+                Empleado empleado = new Empleado();
+                if(grid_guias_disponibles[0, i].Selected)
                 {
-                    Empleado[] arrayEmpleados = { grid_guias_disponibles.Rows[0].Cells[0].Value };
+                    empleado.id = int.Parse(grid_guias_disponibles[0, i].Value.ToString());
+                    empleado.nombre = grid_guias_disponibles[1, i].Value.ToString();
+                    empleado.apellido = grid_guias_disponibles[2, i].Value.ToString();
+                    empleado.email = grid_guias_disponibles[3, i].Value.ToString();
+                    listaGuiasSeleccionados.Add(empleado);
                 }
-
-                        Empleado empleado = new Empleado();
-                empleado.nombre = grid_guias_disponibles.Rows[i].Cells[0].Value.ToString();
-                empleado.apellido = grid_guias_disponibles.CurrentRow.Cells[1].Value.ToString();
-                empleado.email = grid_guias_disponibles.CurrentRow.Cells[2].Value.ToString();
-                listaGuiasSeleccionados.Add(empleado);
             }
-
-            //foreach (int row in grid_guias_disponibles.SelectedRows)
-            //{
-            //    Empleado empleado = new Empleado();
-            //    empleado.nombre = grid_guias_disponibles[0, row].Value;
-
-
-            //    empleado.nombre = grid_guias_disponibles.Rows[row][0].ToString();
-            //    empleado.apellido = grid_guias_disponibles.CurrentRow.Cells[1].Value.ToString();
-            //    empleado.email = grid_guias_disponibles.CurrentRow.Cells[2].Value.ToString();
-            //    listaGuiasSeleccionados.Add(empleado);
-            //}
-            */
         }
 
+        private void btn_ejecutar_registro_reserva_Click(object sender, EventArgs e)
+        {
+            TimeSpan horaInicioReserva = TimeSpan.Parse(dt_fecha_reserva.Value.ToString("HH:mm:ss"));
+            TimeSpan horaFinalReserva = CalcularHoraFinReserva(dt_fecha_reserva.Value, duracionReserva);
+            DateTime FechaHoraInicio = DateTime.Now;
 
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                CAMBIOSESTADOS cambioEstados = new CAMBIOSESTADOS();
+                cambioEstados.FechaHoraInicio = FechaHoraInicio;
+                cambioEstados.Id_Estado = 1;
+                db.CAMBIOSESTADOS.Add(cambioEstados);
+                db.SaveChanges();
+                int idCambioEstado = cambioEstados.Id_CambioEstado;
+            //}
 
+            //using (PPAIEntities db = new PPAIEntities())
+            //{
+                USUARIOS usuario = db.USUARIOS.Find(1);
+                ASIGNACIONESVISITA asignacionAux = new ASIGNACIONESVISITA();
 
+                foreach (Empleado guia in listaGuiasSeleccionados)
+                {
+                    ASIGNACIONESVISITA asignacion = new ASIGNACIONESVISITA();
+                    asignacion.FechaInicio = dt_fecha_reserva.Value;
+                    asignacion.HoraInicio = horaInicioReserva;
+                    asignacion.HoraFin = horaFinalReserva;
+                    asignacion.Id_Empleado = guia.id;
+                    db.ASIGNACIONESVISITA.Add(asignacion);
+                    db.SaveChanges();
+                    asignacionAux = asignacion;
+                }
 
-
-
-
-
-
-
+                RESERVAS reserva = new RESERVAS();
+                reserva.DuracionEstimada = duracionReserva;
+                reserva.FechaHoraCreacion = DateTime.Now;
+                reserva.FechaReserva = dt_fecha_reserva.Value;
+                reserva.HoraInicioReal = horaInicioReserva;
+                reserva.HoraFinReal = horaFinalReserva;
+                reserva.CantidadAlumnos = int.Parse(txt_cantidad_alumnos.Text);
+                reserva.Id_Sede = IdSede;
+                reserva.Id_AsignacionVisita = asignacionAux.Id_AsignacionVisita;
+                reserva.Id_Exposicion = IdExposicion;
+                reserva.Id_Empleado = usuario.Id_Empleado;
+                reserva.Id_CambioEstado = idCambioEstado;
+                db.RESERVAS.Add(reserva);
+                db.SaveChanges();
+            }
+            MessageBox.Show("Reserva registrada");
+            this.Close();
+        }
+        private TimeSpan CalcularHoraFinReserva(DateTime horaInicio, int duracion)
+        {
+            int horaInicioEnMinutos = (horaInicio.Hour * 60) + horaInicio.Minute;
+            int horaFinalEnMinutos = horaInicioEnMinutos + duracion;
+            TimeSpan horaFinal = TimeSpan.FromMinutes(horaInicioEnMinutos);
+            return horaFinal;
+        }
 
 
         // Ejecutar cadena de consultas en la base de datos

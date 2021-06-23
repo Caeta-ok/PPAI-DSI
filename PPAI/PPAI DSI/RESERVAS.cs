@@ -15,9 +15,8 @@ namespace PPAI_DSI
     public partial class RESERVAS
     {
         public int Id_Reserva { get; set; }
-        public string DuracionEstimada { get; set; }
+        public Nullable<int> DuracionEstimada { get; set; }
         public Nullable<System.DateTime> FechaHoraCreacion { get; set; }
-        public Nullable<System.DateTime> FechaHoraReserva { get; set; }
         public Nullable<System.TimeSpan> HoraInicioReal { get; set; }
         public Nullable<System.TimeSpan> HoraFinReal { get; set; }
         public Nullable<int> CantidadAlumnos { get; set; }
@@ -27,6 +26,7 @@ namespace PPAI_DSI
         public Nullable<int> Id_Exposicion { get; set; }
         public Nullable<int> Id_Empleado { get; set; }
         public Nullable<int> Id_CambioEstado { get; set; }
+        public Nullable<System.DateTime> FechaReserva { get; set; }
     
         public virtual ASIGNACIONESVISITA ASIGNACIONESVISITA { get; set; }
         public virtual CAMBIOSESTADOS CAMBIOSESTADOS { get; set; }

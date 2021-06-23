@@ -146,10 +146,10 @@
     <EntitySetMapping Name="RESERVAS">
       <EntityTypeMapping TypeName="PPAI_DSIModel.RESERVAS">
         <MappingFragment StoreEntitySet="RESERVAS">
+          <ScalarProperty Name="FechaReserva" ColumnName="FechaReserva" />
           <ScalarProperty Name="Id_Reserva" ColumnName="Id_Reserva" />
           <ScalarProperty Name="DuracionEstimada" ColumnName="DuracionEstimada" />
           <ScalarProperty Name="FechaHoraCreacion" ColumnName="FechaHoraCreacion" />
-          <ScalarProperty Name="FechaHoraReserva" ColumnName="FechaHoraReserva" />
           <ScalarProperty Name="HoraInicioReal" ColumnName="HoraInicioReal" />
           <ScalarProperty Name="HoraFinReal" ColumnName="HoraFinReal" />
           <ScalarProperty Name="CantidadAlumnos" ColumnName="CantidadAlumnos" />

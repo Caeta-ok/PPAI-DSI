@@ -148,11 +148,10 @@
             <PropertyRef Name="Id_Reserva" />
           </Key>
           <Property Name="Id_Reserva" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DuracionEstimada" Type="varchar" MaxLength="150" />
           <Property Name="FechaHoraCreacion" Type="date" />
-          <Property Name="FechaHoraReserva" Type="date" />
-          <Property Name="HoraInicioReal" Type="time" Precision="7" />
-          <Property Name="HoraFinReal" Type="time" Precision="7" />
+          <Property Name="FechaReserva" Type="date" />
+          <Property Name="HoraInicioReal" Type="time" Precision="0" />
+          <Property Name="HoraFinReal" Type="time" Precision="0" />
           <Property Name="CantidadAlumnos" Type="int" />
           <Property Name="CantidadAlumnosConfirmados" Type="int" />
           <Property Name="Id_Sede" Type="int" />
@@ -160,6 +159,7 @@
           <Property Name="Id_Exposicion" Type="int" />
           <Property Name="Id_Empleado" Type="int" />
           <Property Name="Id_CambioEstado" Type="int" />
+          <Property Name="DuracionEstimada" Type="int" />
         </EntityType>
         <EntityType Name="SEDES">
           <Key>
@@ -677,11 +677,10 @@
             <PropertyRef Name="Id_Reserva" />
           </Key>
           <Property Name="Id_Reserva" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DuracionEstimada" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DuracionEstimada" Type="Int32" />
           <Property Name="FechaHoraCreacion" Type="DateTime" Precision="0" />
-          <Property Name="FechaHoraReserva" Type="DateTime" Precision="0" />
-          <Property Name="HoraInicioReal" Type="Time" Precision="7" />
-          <Property Name="HoraFinReal" Type="Time" Precision="7" />
+          <Property Name="HoraInicioReal" Type="Time" Precision="0" />
+          <Property Name="HoraFinReal" Type="Time" Precision="0" />
           <Property Name="CantidadAlumnos" Type="Int32" />
           <Property Name="CantidadAlumnosConfirmados" Type="Int32" />
           <Property Name="Id_Sede" Type="Int32" />
@@ -694,6 +693,7 @@
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS2" FromRole="RESERVAS" ToRole="EMPLEADOS" />
           <NavigationProperty Name="EXPOSICIONES" Relationship="Self.FK_EXPOSICION0" FromRole="RESERVAS" ToRole="EXPOSICIONES" />
           <NavigationProperty Name="SEDES" Relationship="Self.FK_SEDES0" FromRole="RESERVAS" ToRole="SEDES" />
+          <Property Name="FechaReserva" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="SEDES">
           <Key>
@@ -1216,10 +1216,10 @@
           <EntitySetMapping Name="RESERVAS">
             <EntityTypeMapping TypeName="PPAI_DSIModel.RESERVAS">
               <MappingFragment StoreEntitySet="RESERVAS">
+                <ScalarProperty Name="FechaReserva" ColumnName="FechaReserva" />
                 <ScalarProperty Name="Id_Reserva" ColumnName="Id_Reserva" />
                 <ScalarProperty Name="DuracionEstimada" ColumnName="DuracionEstimada" />
                 <ScalarProperty Name="FechaHoraCreacion" ColumnName="FechaHoraCreacion" />
-                <ScalarProperty Name="FechaHoraReserva" ColumnName="FechaHoraReserva" />
                 <ScalarProperty Name="HoraInicioReal" ColumnName="HoraInicioReal" />
                 <ScalarProperty Name="HoraFinReal" ColumnName="HoraFinReal" />
                 <ScalarProperty Name="CantidadAlumnos" ColumnName="CantidadAlumnos" />
