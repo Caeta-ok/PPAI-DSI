@@ -143,11 +143,10 @@
       <PropertyRef Name="Id_Reserva" />
     </Key>
     <Property Name="Id_Reserva" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DuracionEstimada" Type="varchar" MaxLength="150" />
     <Property Name="FechaHoraCreacion" Type="date" />
-    <Property Name="FechaHoraReserva" Type="date" />
-    <Property Name="HoraInicioReal" Type="time" Precision="7" />
-    <Property Name="HoraFinReal" Type="time" Precision="7" />
+    <Property Name="FechaReserva" Type="date" />
+    <Property Name="HoraInicioReal" Type="time" Precision="0" />
+    <Property Name="HoraFinReal" Type="time" Precision="0" />
     <Property Name="CantidadAlumnos" Type="int" />
     <Property Name="CantidadAlumnosConfirmados" Type="int" />
     <Property Name="Id_Sede" Type="int" />
@@ -155,6 +154,7 @@
     <Property Name="Id_Exposicion" Type="int" />
     <Property Name="Id_Empleado" Type="int" />
     <Property Name="Id_CambioEstado" Type="int" />
+    <Property Name="DuracionEstimada" Type="int" />
   </EntityType>
   <EntityType Name="SEDES">
     <Key>

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a3567b70c8ba4fa5b5e2ba495fab943b" Name="Diagram1">
+      <Diagram DiagramId="a3567b70c8ba4fa5b5e2ba495fab943b" Name="Diagram1" ZoomLevel="89">
         <EntityTypeShape EntityType="PPAI_DSIModel.ASIGNACIONESVISITA" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PPAI_DSIModel.CAMBIOSESTADOS" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PPAI_DSIModel.CARGOS" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />

@@ -158,11 +158,10 @@
       <PropertyRef Name="Id_Reserva" />
     </Key>
     <Property Name="Id_Reserva" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DuracionEstimada" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DuracionEstimada" Type="Int32" />
     <Property Name="FechaHoraCreacion" Type="DateTime" Precision="0" />
-    <Property Name="FechaHoraReserva" Type="DateTime" Precision="0" />
-    <Property Name="HoraInicioReal" Type="Time" Precision="7" />
-    <Property Name="HoraFinReal" Type="Time" Precision="7" />
+    <Property Name="HoraInicioReal" Type="Time" Precision="0" />
+    <Property Name="HoraFinReal" Type="Time" Precision="0" />
     <Property Name="CantidadAlumnos" Type="Int32" />
     <Property Name="CantidadAlumnosConfirmados" Type="Int32" />
     <Property Name="Id_Sede" Type="Int32" />
@@ -175,6 +174,7 @@
     <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS2" FromRole="RESERVAS" ToRole="EMPLEADOS" />
     <NavigationProperty Name="EXPOSICIONES" Relationship="Self.FK_EXPOSICION0" FromRole="RESERVAS" ToRole="EXPOSICIONES" />
     <NavigationProperty Name="SEDES" Relationship="Self.FK_SEDES0" FromRole="RESERVAS" ToRole="SEDES" />
+    <Property Name="FechaReserva" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="SEDES">
     <Key>
