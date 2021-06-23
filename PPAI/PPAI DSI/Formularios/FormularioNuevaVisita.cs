@@ -4,6 +4,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PPAI_DSI.Negocio;
+using System.Collections.Generic;
 
 namespace PPAI_DSI
 {
@@ -11,8 +13,11 @@ namespace PPAI_DSI
     {
         GestorReserva formularioReserva = new GestorReserva();
         string nombreExp;
-        string horaI;
-        string horaF;
+        string horaInicioExposicion;
+        string horaFinalExposicion;
+        //string nombreGuiaSeleccionado;
+        //string apellidoGuiaSeleccionado;
+        List<Empleado> listaGuiasSeleccionados = new List<Empleado>();
         int duracionReserva;
 
         public Form1()
@@ -36,8 +41,6 @@ namespace PPAI_DSI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            txt_hora.Text = "Formato '00:00' 24horas";
-            txt_hora.ForeColor = Color.DarkGray;
             using (PPAIEntities db = new PPAIEntities())
             {
                 var lista = db.ESCUELAS.ToList();
@@ -74,7 +77,7 @@ namespace PPAI_DSI
             grid_sedes.Enabled = false;
             grid_exposiciones.Enabled = false;
             dateTimePicker1.Enabled = false;
-            txt_hora.Enabled = false;
+            dateTimePicker2.Enabled = false;
         }
 
         private void txtVisitantes_Enter(object sender, EventArgs e)
@@ -154,8 +157,8 @@ namespace PPAI_DSI
             grid_sedes.Enabled = false;
             cmbTipoVisita.Enabled = false;
             nombreExp = grid_exposiciones.CurrentRow.Cells[0].Value.ToString();
-            horaI = grid_exposiciones.CurrentRow.Cells[1].Value.ToString();
-            horaF = grid_exposiciones.CurrentRow.Cells[2].Value.ToString();
+            horaInicioExposicion = grid_exposiciones.CurrentRow.Cells[1].Value.ToString();
+            horaFinalExposicion = grid_exposiciones.CurrentRow.Cells[2].Value.ToString();
             dateTimePicker1.Enabled = true;
         }
 
@@ -181,7 +184,7 @@ namespace PPAI_DSI
                 }
                 if (dateTimePicker1.Value <= fechaFin)
                 {
-                    txt_hora.Enabled = true;
+                    dateTimePicker2.Enabled = true;
                 }
                 else
                 {
@@ -217,95 +220,197 @@ namespace PPAI_DSI
             }
         }
 
-        private void buscarGuiasDisponiblesFechaReserva()
+        private List<Empleado> buscarGuiasDisponiblesFechaReserva()
         {
-            //using ()
+            List<Empleado> listaFinal = new List<Empleado>();
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaGuias = (from empleado in db.EMPLEADOS.ToList()
+                             join cargo in db.CARGOS on empleado.Id_Cargo equals cargo.Id_Cargo
+                             join horarioTrabajo in db.HORARIOSTRABAJOS on empleado.Id_HorarioTrabajo equals horarioTrabajo.Id_HorarioTrabajo
+                             where cargo.Nombre == "Guía"
+                             select new
+                             {
+                                 empleado.Id_Empleado,
+                                 empleado.Nombre,
+                                 empleado.Apellido,
+                                 empleado.Email,
+                                 horarioTrabajo.HoraEntrada,
+                                 horarioTrabajo.HoraSalida,
+                             }).ToList();
+
+                var listaAsignaciones = db.ASIGNACIONESVISITA.ToList();
+                List<int> IdGuia = new List<int>();
+
+                foreach (var asign in listaAsignaciones)
+                {
+                    if (dateTimePicker1.Value.ToShortDateString() == DateTime.Parse(asign.FechaInicio.ToString()).ToShortDateString())
+                    {
+                        if (validarGuiaDisponible(asign.HoraInicio.ToString(), asign.HoraFin.ToString()) == false)
+                        {
+                            IdGuia.Add(int.Parse(asign.Id_Empleado.ToString()));
+                        }
+                    }
+                }
+
+                foreach (var guia in listaGuias)
+                {
+                    if(IdGuia.Count > 0)
+                    {
+                        foreach (int id in IdGuia)
+                        {
+                            if (id != guia.Id_Empleado)
+                            {
+                                Empleado empleado = new Empleado();
+                                //empleado.id = guia.Id_Empleado;
+                                empleado.nombre = guia.Nombre;
+                                empleado.apellido = guia.Apellido;
+                                empleado.email = guia.Email;
+                                //empleado.horaEntrada = DateTime.Parse(guia.HoraEntrada.ToString());
+                                //empleado.horaSalida = DateTime.Parse(guia.HoraSalida.ToString());
+                                listaFinal.Add(empleado);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Empleado empleado = new Empleado();
+                        //empleado.id = guia.Id_Empleado;
+                        empleado.nombre = guia.Nombre;
+                        empleado.apellido = guia.Apellido;
+                        empleado.email = guia.Email;
+                        //empleado.horaEntrada = DateTime.Parse(guia.HoraEntrada.ToString());
+                        //empleado.horaSalida = DateTime.Parse(guia.HoraSalida.ToString());
+                        listaFinal.Add(empleado);
+                    }
+                }
+            }
+            return listaFinal;
         }
 
-        private void txt_hora_Enter(object sender, EventArgs e)
+        private bool validarGuiaDisponible(string horaInicialGuia, string horaFinalGuia)
         {
-            txt_hora.Text = null;
-            txt_hora.ForeColor = Color.Black;
-        }
-
-        private bool validarDuracion()
-        {
-            DateTime horaSeleccionada = DateTime.Parse(txt_hora.Text);
+            DateTime horaSeleccionada = DateTime.Parse(dateTimePicker2.Text);
             int horaSelEnMintuos = (horaSeleccionada.Hour * 60) + horaSeleccionada.Minute;
             int duracionTotal = horaSelEnMintuos + duracionReserva;
 
-            DateTime horaFinal = DateTime.Parse(horaF);
-            int horasEnMinutos = horaFinal.Hour * 60 + horaFinal.Minute;
+            //DateTime horaFinal = DateTime.Parse(horaFinalExposicion);
+            //int horasEnMinutos = horaFinal.Hour * 60 + horaFinal.Minute;
 
-            if(duracionTotal > horasEnMinutos)
+            DateTime horaInicial = DateTime.Parse(horaInicialGuia);
+            int horasInicialEnMinutos = horaInicial.Hour * 60 + horaInicial.Minute;
+
+            DateTime horaFinal = DateTime.Parse(horaFinalGuia);
+            int horasFinalEnMinutos = horaFinal.Hour * 60 + horaFinal.Minute;
+
+
+            if (duracionTotal < horasInicialEnMinutos || horaSelEnMintuos > horasFinalEnMinutos)
+            {
+                //return false;
+                return true;
+            }
+            return false;
+        }
+
+        private bool validarDuracion(string horaComparacion)
+        {
+            DateTime horaSeleccionada = DateTime.Parse(dateTimePicker2.Text);
+            int horaSelEnMintuos = (horaSeleccionada.Hour * 60) + horaSeleccionada.Minute;
+            int duracionTotal = horaSelEnMintuos + duracionReserva;
+
+            //DateTime horaFinal = DateTime.Parse(horaFinalExposicion);
+            //int horasEnMinutos = horaFinal.Hour * 60 + horaFinal.Minute;
+
+            DateTime horaFinal = DateTime.Parse(horaComparacion);
+            int horasFinalEnMinutos = horaFinal.Hour * 60 + horaFinal.Minute;
+
+            if (duracionTotal > horasFinalEnMinutos)
             {
                 return false;
             }
             return true;
         }
 
-        //privat
-
-        private void txt_hora_Leave(object sender, EventArgs e)
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
-            if (txt_hora.Text == "")
+            lbl_duracion_reserva.Text = "Duración de Reserva: ";
+            if (dateTimePicker2.Text == "")
             {
-                txt_hora.Text = "Formato '00:00' 24horas";
-                txt_hora.ForeColor = Color.DarkGray;
+                lbl_duracion_reserva.Text = "Duración de Reserva: ";
             }
-
-            if (txt_hora.ForeColor == Color.Black)
+            if (DateTime.Parse(horaInicioExposicion) <= DateTime.Parse(dateTimePicker2.Text))
             {
-                if (DateTime.Parse(horaI) <= DateTime.Parse(txt_hora.Text))
+                if (DateTime.Parse(horaFinalExposicion) > DateTime.Parse(dateTimePicker2.Text))
                 {
-                    if (DateTime.Parse(horaF) > DateTime.Parse(txt_hora.Text))
-                    {
-                        calcularDuracionReserva();
-                     
-                        if (validarDuracion())
-                        {
-                            lbl_duracion_reserva.Text += " " + duracionReserva.ToString() + " minutos";
+                    calcularDuracionReserva();
 
-                        }
-                        else
-                        {
-                            MessageBox.Show("En el horario ingresado no se puede realizar la reserva");
-                        }
+                    if (validarDuracion(horaFinalExposicion))
+                    {
+                        lbl_duracion_reserva.Text += " " + duracionReserva.ToString() + " minutos";
+                        List<Empleado> lista = buscarGuiasDisponiblesFechaReserva();
+                        grid_guias_disponibles.DataSource = lista;
                     }
                     else
                     {
-                        MessageBox.Show("En ese horario ya cerro la exposicion, la seleccionada cierra a las: " + horaF, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("En el horario ingresado no se puede realizar la reserva");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("En ese horario todabia no abrio la exposicion, la seleccionada abre a las: " + horaI, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("En ese horario ya cerro la exposicion, la seleccionada cierra a las: " + horaFinalExposicion, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+            }
+            else
+            {
+                MessageBox.Show("En ese horario todabia no abrio la exposicion, la seleccionada abre a las: " + horaInicioExposicion, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
-
-        private void txt_hora_TextChanged(object sender, EventArgs e)
+        private void grid_guias_disponibles_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //if (txt_hora.ForeColor == Color.Black)
+            /*
+            listaGuiasSeleccionados.Clear();
+            //nombreGuiaSeleccionado = grid_guias_disponibles.CurrentRow.Cells[1].Value.ToString();
+            //apellidoGuiaSeleccionado = grid_guias_disponibles.CurrentRow.Cells[2].Value.ToString();
+            for(int i = 0; i < grid_guias_disponibles.SelectedRows.Count; i++)
+            {
+                //if(grid_guias_disponibles.Rows[i].Index == grid_guias_disponibles.SelectedRows.get)
+                foreach (int row in grid_guias_disponibles.SelectedRows)
+                {
+                    Empleado[] arrayEmpleados = { grid_guias_disponibles.Rows[0].Cells[0].Value };
+                }
+
+                        Empleado empleado = new Empleado();
+                empleado.nombre = grid_guias_disponibles.Rows[i].Cells[0].Value.ToString();
+                empleado.apellido = grid_guias_disponibles.CurrentRow.Cells[1].Value.ToString();
+                empleado.email = grid_guias_disponibles.CurrentRow.Cells[2].Value.ToString();
+                listaGuiasSeleccionados.Add(empleado);
+            }
+
+            //foreach (int row in grid_guias_disponibles.SelectedRows)
             //{
-            //    if (DateTime.Parse(horaI) <= DateTime.Parse(txt_hora.Text))
-            //    {
-            //        if (DateTime.Parse(horaF) > DateTime.Parse(txt_hora.Text))
-            //        {
-            //            calcularDuracionReserva();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("En ese horario ya cerro la exposicion, la seleccionada cierra a las: " + horaF, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("En ese horario todabia no abrio la exposicion, la seleccionada abre a las: " + horaI, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //    }
+            //    Empleado empleado = new Empleado();
+            //    empleado.nombre = grid_guias_disponibles[0, row].Value;
+
+
+            //    empleado.nombre = grid_guias_disponibles.Rows[row][0].ToString();
+            //    empleado.apellido = grid_guias_disponibles.CurrentRow.Cells[1].Value.ToString();
+            //    empleado.email = grid_guias_disponibles.CurrentRow.Cells[2].Value.ToString();
+            //    listaGuiasSeleccionados.Add(empleado);
             //}
+            */
         }
+
+
+
+
+
+
+
+
+
+
+
 
 
         // Ejecutar cadena de consultas en la base de datos

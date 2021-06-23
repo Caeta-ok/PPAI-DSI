@@ -4,9 +4,11 @@
     <EntitySetMapping Name="ASIGNACIONESVISITA">
       <EntityTypeMapping TypeName="PPAI_DSIModel.ASIGNACIONESVISITA">
         <MappingFragment StoreEntitySet="ASIGNACIONESVISITA">
+          <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+          <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+          <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+          <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
           <ScalarProperty Name="Id_AsignacionVisita" ColumnName="Id_AsignacionVisita" />
-          <ScalarProperty Name="FechaHoraInicio" ColumnName="FechaHoraInicio" />
-          <ScalarProperty Name="FechaHoraFin" ColumnName="FechaHoraFin" />
           <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
         </MappingFragment>
       </EntityTypeMapping>

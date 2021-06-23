@@ -21,9 +21,11 @@ namespace PPAI_DSI
         }
     
         public int Id_AsignacionVisita { get; set; }
-        public Nullable<System.DateTime> FechaHoraInicio { get; set; }
-        public Nullable<System.DateTime> FechaHoraFin { get; set; }
         public Nullable<int> Id_Empleado { get; set; }
+        public Nullable<System.DateTime> FechaInicio { get; set; }
+        public Nullable<System.DateTime> FechaFin { get; set; }
+        public Nullable<System.TimeSpan> HoraInicio { get; set; }
+        public Nullable<System.TimeSpan> HoraFin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RESERVAS> RESERVAS { get; set; }

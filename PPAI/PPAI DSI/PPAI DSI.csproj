@@ -112,6 +112,7 @@
     <Compile Include="HORARIOSTRABAJOS.cs">
       <DependentUpon>EntityDavid.tt</DependentUpon>
     </Compile>
+    <Compile Include="Negocio\Empleado.cs" />
     <Compile Include="Negocio\Exposicion.cs" />
     <Compile Include="Negocio\GestorReserva.cs" />
     <Compile Include="Negocio\Sede.cs" />
