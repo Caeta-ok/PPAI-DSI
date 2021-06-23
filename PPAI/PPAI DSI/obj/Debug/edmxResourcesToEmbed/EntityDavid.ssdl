@@ -5,9 +5,11 @@
       <PropertyRef Name="Id_AsignacionVisita" />
     </Key>
     <Property Name="Id_AsignacionVisita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FechaHoraInicio" Type="date" />
-    <Property Name="FechaHoraFin" Type="date" />
+    <Property Name="FechaInicio" Type="date" />
+    <Property Name="FechaFin" Type="date" />
     <Property Name="Id_Empleado" Type="int" />
+    <Property Name="HoraInicio" Type="time" Precision="0" />
+    <Property Name="HoraFin" Type="time" Precision="0" />
   </EntityType>
   <EntityType Name="CAMBIOSESTADOS">
     <Key>

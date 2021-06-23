@@ -10,9 +10,11 @@
             <PropertyRef Name="Id_AsignacionVisita" />
           </Key>
           <Property Name="Id_AsignacionVisita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FechaHoraInicio" Type="date" />
-          <Property Name="FechaHoraFin" Type="date" />
+          <Property Name="FechaInicio" Type="date" />
+          <Property Name="FechaFin" Type="date" />
           <Property Name="Id_Empleado" Type="int" />
+          <Property Name="HoraInicio" Type="time" Precision="0" />
+          <Property Name="HoraFin" Type="time" Precision="0" />
         </EntityType>
         <EntityType Name="CAMBIOSESTADOS">
           <Key>
@@ -522,11 +524,13 @@
             <PropertyRef Name="Id_AsignacionVisita" />
           </Key>
           <Property Name="Id_AsignacionVisita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FechaHoraInicio" Type="DateTime" Precision="0" />
-          <Property Name="FechaHoraFin" Type="DateTime" Precision="0" />
           <Property Name="Id_Empleado" Type="Int32" />
           <NavigationProperty Name="RESERVAS" Relationship="Self.FK_ASIGNACIONESVISITA0" FromRole="ASIGNACIONESVISITA" ToRole="RESERVAS" />
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS1" FromRole="ASIGNACIONESVISITA" ToRole="EMPLEADOS" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Precision="0" />
+          <Property Name="HoraInicio" Type="Time" Precision="0" />
+          <Property Name="HoraFin" Type="Time" Precision="0" />
         </EntityType>
         <EntityType Name="CAMBIOSESTADOS">
           <Key>
@@ -1070,9 +1074,11 @@
           <EntitySetMapping Name="ASIGNACIONESVISITA">
             <EntityTypeMapping TypeName="PPAI_DSIModel.ASIGNACIONESVISITA">
               <MappingFragment StoreEntitySet="ASIGNACIONESVISITA">
+                <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="Id_AsignacionVisita" ColumnName="Id_AsignacionVisita" />
-                <ScalarProperty Name="FechaHoraInicio" ColumnName="FechaHoraInicio" />
-                <ScalarProperty Name="FechaHoraFin" ColumnName="FechaHoraFin" />
                 <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
               </MappingFragment>
             </EntityTypeMapping>

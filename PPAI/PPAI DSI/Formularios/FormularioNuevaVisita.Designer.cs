@@ -39,15 +39,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.grid_exposiciones = new System.Windows.Forms.DataGridView();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.txt_hora = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.btn_registrar_reserva = new System.Windows.Forms.Button();
             this.group_registrar_reserva = new System.Windows.Forms.GroupBox();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.lbl_duracion_reserva = new System.Windows.Forms.Label();
+            this.grid_guias_disponibles = new System.Windows.Forms.DataGridView();
+            this.lbl_guias_disponibles = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid_sedes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_exposiciones)).BeginInit();
             this.group_registrar_reserva.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_guias_disponibles)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -158,16 +161,6 @@
             this.dateTimePicker1.TabIndex = 46;
             this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
-            // txt_hora
-            // 
-            this.txt_hora.Location = new System.Drawing.Point(20, 537);
-            this.txt_hora.Name = "txt_hora";
-            this.txt_hora.Size = new System.Drawing.Size(121, 20);
-            this.txt_hora.TabIndex = 47;
-            this.txt_hora.TextChanged += new System.EventHandler(this.txt_hora_TextChanged);
-            this.txt_hora.Enter += new System.EventHandler(this.txt_hora_Enter);
-            this.txt_hora.Leave += new System.EventHandler(this.txt_hora_Leave);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -198,13 +191,15 @@
             // 
             // group_registrar_reserva
             // 
+            this.group_registrar_reserva.Controls.Add(this.lbl_guias_disponibles);
+            this.group_registrar_reserva.Controls.Add(this.grid_guias_disponibles);
+            this.group_registrar_reserva.Controls.Add(this.dateTimePicker2);
             this.group_registrar_reserva.Controls.Add(this.lbl_duracion_reserva);
             this.group_registrar_reserva.Controls.Add(this.cmb_escuelas);
             this.group_registrar_reserva.Controls.Add(this.label1);
             this.group_registrar_reserva.Controls.Add(this.label6);
             this.group_registrar_reserva.Controls.Add(this.txtVisitantes);
             this.group_registrar_reserva.Controls.Add(this.label4);
-            this.group_registrar_reserva.Controls.Add(this.txt_hora);
             this.group_registrar_reserva.Controls.Add(this.label3);
             this.group_registrar_reserva.Controls.Add(this.dateTimePicker1);
             this.group_registrar_reserva.Controls.Add(this.grid_sedes);
@@ -215,11 +210,22 @@
             this.group_registrar_reserva.Controls.Add(this.label7);
             this.group_registrar_reserva.Location = new System.Drawing.Point(12, 62);
             this.group_registrar_reserva.Name = "group_registrar_reserva";
-            this.group_registrar_reserva.Size = new System.Drawing.Size(616, 587);
+            this.group_registrar_reserva.Size = new System.Drawing.Size(616, 721);
             this.group_registrar_reserva.TabIndex = 51;
             this.group_registrar_reserva.TabStop = false;
             this.group_registrar_reserva.Text = "Registrar Reserva";
             this.group_registrar_reserva.Visible = false;
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.CustomFormat = "HH:mm:ss";
+            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker2.Location = new System.Drawing.Point(21, 537);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.ShowUpDown = true;
+            this.dateTimePicker2.Size = new System.Drawing.Size(120, 20);
+            this.dateTimePicker2.TabIndex = 51;
+            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // lbl_duracion_reserva
             // 
@@ -230,20 +236,44 @@
             this.lbl_duracion_reserva.TabIndex = 50;
             this.lbl_duracion_reserva.Text = "Duración de Reserva: ";
             // 
+            // grid_guias_disponibles
+            // 
+            this.grid_guias_disponibles.AllowUserToAddRows = false;
+            this.grid_guias_disponibles.AllowUserToDeleteRows = false;
+            this.grid_guias_disponibles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grid_guias_disponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid_guias_disponibles.Location = new System.Drawing.Point(20, 595);
+            this.grid_guias_disponibles.Name = "grid_guias_disponibles";
+            this.grid_guias_disponibles.ReadOnly = true;
+            this.grid_guias_disponibles.Size = new System.Drawing.Size(556, 120);
+            this.grid_guias_disponibles.TabIndex = 52;
+            this.grid_guias_disponibles.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_guias_disponibles_RowHeaderMouseClick);
+            // 
+            // lbl_guias_disponibles
+            // 
+            this.lbl_guias_disponibles.AutoSize = true;
+            this.lbl_guias_disponibles.Location = new System.Drawing.Point(21, 576);
+            this.lbl_guias_disponibles.Name = "lbl_guias_disponibles";
+            this.lbl_guias_disponibles.Size = new System.Drawing.Size(89, 13);
+            this.lbl_guias_disponibles.TabIndex = 53;
+            this.lbl_guias_disponibles.Text = "Guias disponibles";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1100, 765);
+            this.ClientSize = new System.Drawing.Size(1100, 800);
             this.Controls.Add(this.group_registrar_reserva);
             this.Controls.Add(this.btn_registrar_reserva);
             this.Name = "Form1";
             this.Text = "Ventana";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid_sedes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_exposiciones)).EndInit();
             this.group_registrar_reserva.ResumeLayout(false);
             this.group_registrar_reserva.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_guias_disponibles)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -260,12 +290,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView grid_exposiciones;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox txt_hora;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btn_registrar_reserva;
         private System.Windows.Forms.GroupBox group_registrar_reserva;
         private System.Windows.Forms.Label lbl_duracion_reserva;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Label lbl_guias_disponibles;
+        private System.Windows.Forms.DataGridView grid_guias_disponibles;
     }
 }
 
