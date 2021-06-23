@@ -54,3 +54,18 @@ C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe.config
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.pdb
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.dll
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.xml
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.AssemblyReference.cache
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Form1.resources
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Properties.Resources.resources
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.GenerateResource.cache
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CoreCompileInputs.cache
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
+C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb

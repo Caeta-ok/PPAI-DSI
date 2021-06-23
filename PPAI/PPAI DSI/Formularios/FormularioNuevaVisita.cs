@@ -4,7 +4,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using PPAI_DSI.Negocio;
 using System.Collections.Generic;
 
 namespace PPAI_DSI
