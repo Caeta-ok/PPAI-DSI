@@ -155,10 +155,8 @@
           <ScalarProperty Name="CantidadAlumnos" ColumnName="CantidadAlumnos" />
           <ScalarProperty Name="CantidadAlumnosConfirmados" ColumnName="CantidadAlumnosConfirmados" />
           <ScalarProperty Name="Id_Sede" ColumnName="Id_Sede" />
-          <ScalarProperty Name="Id_AsignacionVisita" ColumnName="Id_AsignacionVisita" />
           <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
           <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
-          <ScalarProperty Name="Id_CambioEstado" ColumnName="Id_CambioEstado" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -218,6 +216,24 @@
           <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
           <ScalarProperty Name="Id_Obra" ColumnName="Id_Obra" />
           <ScalarProperty Name="Id_ObraPorExposicion" ColumnName="Id_ObraPorExposicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ASIGNACIONESVISITAPORRESERVA">
+      <EntityTypeMapping TypeName="PPAI_DSIModel.ASIGNACIONESVISITAPORRESERVA">
+        <MappingFragment StoreEntitySet="ASIGNACIONESVISITAPORRESERVA">
+          <ScalarProperty Name="Id_Reserva" ColumnName="Id_Reserva" />
+          <ScalarProperty Name="Id_AsignacionVisita" ColumnName="Id_AsignacionVisita" />
+          <ScalarProperty Name="Id_AsignacionVisitaPorReserva" ColumnName="Id_AsignacionVisitaPorReserva" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAMBIOSESTADOSPORRESERVA">
+      <EntityTypeMapping TypeName="PPAI_DSIModel.CAMBIOSESTADOSPORRESERVA">
+        <MappingFragment StoreEntitySet="CAMBIOSESTADOSPORRESERVA">
+          <ScalarProperty Name="Id_CambioEstado" ColumnName="Id_CambioEstado" />
+          <ScalarProperty Name="Id_Reserva" ColumnName="Id_Reserva" />
+          <ScalarProperty Name="Id_CambioEstadoPorReserva" ColumnName="Id_CambioEstadoPorReserva" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

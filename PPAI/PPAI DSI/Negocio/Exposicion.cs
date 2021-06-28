@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PPAI_DSI.Backend;
 
 namespace PPAI_DSI.Negocio
 {
-
     public class Exposicion
     {
+        private int _id;
         private string _nombre;
         private DateTime _fechaInicio;
         private DateTime _fechaInicioReplanificada;
@@ -16,54 +17,112 @@ namespace PPAI_DSI.Negocio
         private DateTime _fechaFinReplanificada;
         private DateTime _horaApertura;
         private DateTime _horaCierre;
+        private TipoExposicion _tipoExposicion;
+        private Empleado _empleado;
+        private PublicoDestino _publicoDestino;
+        private DetalleExposicion _detalleExposicion;
 
-        public string nombre
+        public Exposicion(EXPOSICIONES exposicion)
         {
-            get{return _nombre;}
-            set{_nombre = value;}
+            _id = exposicion.Id_Exposicion;
+            _nombre = exposicion.Nombre;
+            _fechaInicio = exposicion.FechaInicio.Value;
+            _fechaInicioReplanificada = exposicion.FechaInicioReplanificada.Value;
+            _fechaFin = exposicion.FechaFin.Value;
+            _fechaFinReplanificada = exposicion.FechaFinReplanificada.Value;
+            _horaApertura = DateTime.Parse(exposicion.HoraApertura.Value.ToString());
+            _horaCierre = DateTime.Parse(exposicion.HoraCierre.Value.ToString());
         }
 
-        public DateTime fechaInicio
+        public void conocerTipoExposicion(TipoExposicion tipoExposicion)
         {
-            get { return _fechaInicio; }
-            set { _fechaInicio = value; }
+            _tipoExposicion = tipoExposicion;
         }
 
-        public DateTime fechaInicioReplanificada
+        public void conocerEmpelado(Empleado empleado)
         {
-            get { return _fechaInicioReplanificada; }
-            set { _fechaInicioReplanificada = value; }
+            _empleado = empleado;
         }
 
-        public DateTime fechaFin
+        public void conocerPublicoDestino(PublicoDestino publicoDestino)
         {
-            get { return _fechaFin; }
-            set { _fechaFin = value; }
+            _publicoDestino = publicoDestino;
+        }
+        
+        public void conocerDetalleExposicion(DetalleExposicion detalleExposicion)
+        {
+            _detalleExposicion = detalleExposicion;
         }
 
-        public DateTime fechaFinReplanificada
+        public TipoExposicion getTipoExposicion()
         {
-            get { return _fechaFinReplanificada; }
-            set { _fechaFinReplanificada = value; }
+            return _tipoExposicion;
         }
 
-        public DateTime horaApertura
+        public bool esVigente()
         {
-            get { return _horaApertura; }
-            set { _horaApertura = value; }
+            if(_fechaFin > DateTime.Now)
+            {
+                if(_fechaFinReplanificada > DateTime.Now)
+                {
+                    return true; 
+                }
+            }
+            return false;
         }
 
-        public DateTime horaCierre
+        public int getId()
         {
-            get { return _horaCierre; }
-            set { _horaCierre = value; }
+            return _id;
+        }
+
+        public string getNombre()
+        {
+            return _nombre;
+        }
+
+        public DateTime getFechaFin()
+        {
+            return _fechaFin;
+        }
+
+        public DateTime getFechaInicio()
+        {
+            return _fechaInicio;
+        }
+
+        public DateTime getHoraApertura()
+        {
+            return _horaApertura;
+        }
+
+        public DateTime getHoraCierre()
+        {
+            return _horaCierre;
+        }
+
+        public PublicoDestino getPublicoDestino()
+        {
+            return _publicoDestino;
+        }
+
+        public DetalleExposicion getDetalleExposicion()
+        {
+            return _detalleExposicion;
         }
 
 
         /*
-        public int getDuracionExposicion(Exposicion exposicion)
+        public int calcularDuracionObrasExpuestas()
         {
 
         }*/
+
+        /*
+        public bool esVigente()
+        {
+
+        }*/
+
     }
 }
