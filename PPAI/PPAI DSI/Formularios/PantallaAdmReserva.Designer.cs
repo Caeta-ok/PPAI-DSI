@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.group_registrar_reserva = new System.Windows.Forms.GroupBox();
+            this.lbl_duracion = new System.Windows.Forms.Label();
             this.btn_ejecutar_registro_reserva = new System.Windows.Forms.Button();
             this.lbl_guias_disponibles = new System.Windows.Forms.Label();
             this.grid_guias_disponibles = new System.Windows.Forms.DataGridView();
@@ -59,7 +60,13 @@
             this.PublicoDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.btn_registrar_reserva = new System.Windows.Forms.Button();
-            this.lbl_duracion = new System.Windows.Forms.Label();
+            this.Id_Guia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NombreEmpleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ApellidoEmpleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NroTelefono = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoraEntrada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoraSalida = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.group_registrar_reserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_guias_disponibles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_sedes)).BeginInit();
@@ -95,6 +102,15 @@
             this.group_registrar_reserva.Text = "Registrar Reserva";
             this.group_registrar_reserva.Visible = false;
             // 
+            // lbl_duracion
+            // 
+            this.lbl_duracion.AutoSize = true;
+            this.lbl_duracion.Location = new System.Drawing.Point(337, 522);
+            this.lbl_duracion.Name = "lbl_duracion";
+            this.lbl_duracion.Size = new System.Drawing.Size(10, 13);
+            this.lbl_duracion.TabIndex = 55;
+            this.lbl_duracion.Text = " ";
+            // 
             // btn_ejecutar_registro_reserva
             // 
             this.btn_ejecutar_registro_reserva.Location = new System.Drawing.Point(241, 754);
@@ -103,6 +119,7 @@
             this.btn_ejecutar_registro_reserva.TabIndex = 54;
             this.btn_ejecutar_registro_reserva.Text = "Registrar Reserva";
             this.btn_ejecutar_registro_reserva.UseVisualStyleBackColor = true;
+            this.btn_ejecutar_registro_reserva.Click += new System.EventHandler(this.registrarReserva);
             // 
             // lbl_guias_disponibles
             // 
@@ -119,11 +136,21 @@
             this.grid_guias_disponibles.AllowUserToDeleteRows = false;
             this.grid_guias_disponibles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grid_guias_disponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid_guias_disponibles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id_Guia,
+            this.NombreEmpleado,
+            this.ApellidoEmpleado,
+            this.Email,
+            this.NroTelefono,
+            this.HoraEntrada,
+            this.HoraSalida});
             this.grid_guias_disponibles.Location = new System.Drawing.Point(20, 628);
             this.grid_guias_disponibles.Name = "grid_guias_disponibles";
             this.grid_guias_disponibles.ReadOnly = true;
+            this.grid_guias_disponibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grid_guias_disponibles.Size = new System.Drawing.Size(556, 120);
             this.grid_guias_disponibles.TabIndex = 52;
+            this.grid_guias_disponibles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tomarSeleccionGuia);
             // 
             // dt_hora_reserva
             // 
@@ -366,14 +393,48 @@
             this.btn_registrar_reserva.UseVisualStyleBackColor = true;
             this.btn_registrar_reserva.Click += new System.EventHandler(this.opcionRegReservaVisitaGuiada);
             // 
-            // lbl_duracion
+            // Id_Guia
             // 
-            this.lbl_duracion.AutoSize = true;
-            this.lbl_duracion.Location = new System.Drawing.Point(337, 522);
-            this.lbl_duracion.Name = "lbl_duracion";
-            this.lbl_duracion.Size = new System.Drawing.Size(10, 13);
-            this.lbl_duracion.TabIndex = 55;
-            this.lbl_duracion.Text = " ";
+            this.Id_Guia.HeaderText = "Id_Guia";
+            this.Id_Guia.Name = "Id_Guia";
+            this.Id_Guia.ReadOnly = true;
+            this.Id_Guia.Visible = false;
+            // 
+            // NombreEmpleado
+            // 
+            this.NombreEmpleado.HeaderText = "Nombre";
+            this.NombreEmpleado.Name = "NombreEmpleado";
+            this.NombreEmpleado.ReadOnly = true;
+            // 
+            // ApellidoEmpleado
+            // 
+            this.ApellidoEmpleado.HeaderText = "Apellido";
+            this.ApellidoEmpleado.Name = "ApellidoEmpleado";
+            this.ApellidoEmpleado.ReadOnly = true;
+            // 
+            // Email
+            // 
+            this.Email.HeaderText = "Email";
+            this.Email.Name = "Email";
+            this.Email.ReadOnly = true;
+            // 
+            // NroTelefono
+            // 
+            this.NroTelefono.HeaderText = "NroTelefono";
+            this.NroTelefono.Name = "NroTelefono";
+            this.NroTelefono.ReadOnly = true;
+            // 
+            // HoraEntrada
+            // 
+            this.HoraEntrada.HeaderText = "Hora de entrada";
+            this.HoraEntrada.Name = "HoraEntrada";
+            this.HoraEntrada.ReadOnly = true;
+            // 
+            // HoraSalida
+            // 
+            this.HoraSalida.HeaderText = "Hora de salida";
+            this.HoraSalida.Name = "HoraSalida";
+            this.HoraSalida.ReadOnly = true;
             // 
             // PantallaAdmReserva
             // 
@@ -427,5 +488,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn HoraCierre;
         private System.Windows.Forms.DataGridViewTextBoxColumn PublicoDestino;
         private System.Windows.Forms.Label lbl_duracion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id_Guia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NombreEmpleado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ApellidoEmpleado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NroTelefono;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HoraEntrada;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HoraSalida;
     }
 }

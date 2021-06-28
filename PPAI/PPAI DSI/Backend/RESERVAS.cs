@@ -33,6 +33,7 @@ namespace PPAI_DSI.Backend
         public Nullable<int> Id_Empleado { get; set; }
         public Nullable<int> DuracionEstimada { get; set; }
         public Nullable<System.TimeSpan> HoraReserva { get; set; }
+        public Nullable<int> NroReserva { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASIGNACIONESVISITAPORRESERVA> ASIGNACIONESVISITAPORRESERVA { get; set; }

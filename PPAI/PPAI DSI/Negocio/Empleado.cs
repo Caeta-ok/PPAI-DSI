@@ -9,13 +9,6 @@ namespace PPAI_DSI.Negocio
 {
     public class Empleado
     {
-        //public int id { get; set; }
-        //public string nombre { get; set; }
-        //public string apellido { get; set; }
-        //public string email { get; set; }
-        //public DateTime horaEntrada { get; set; }
-        //public DateTime horaSalida { get; set; }
-
         private int _id;
         private string _nombre;
         private string _apellido;
@@ -46,6 +39,31 @@ namespace PPAI_DSI.Negocio
         public int getId()
         {
             return _id;
+        }
+
+        public HorarioTrabajo getHorarioTrabajo()
+        {
+            return _horarioTrabajo;
+        }
+
+        public string getNombre()
+        {
+            return _nombre;
+        }
+
+        public string getApellido()
+        {
+            return _apellido;
+        }
+
+        public string getEmail()
+        {
+            return _email;
+        }
+
+        public Int64 getNroTelefono()
+        {
+            return _nroTelefono;
         }
     }
 }

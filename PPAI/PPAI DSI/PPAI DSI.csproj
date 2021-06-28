@@ -103,6 +103,9 @@
     <Compile Include="Backend\EXPOSICIONES.cs">
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Backend\EXPOSICIONESPORRESERVA.cs">
+      <DependentUpon>EntityData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Backend\EXPOSICIONESPORSEDE.cs">
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
@@ -125,7 +128,7 @@
     <Compile Include="Backend\SEDES.cs">
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Backend\SESION.cs">
+    <Compile Include="Backend\SESIONES.cs">
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
     <Compile Include="Backend\TIPOSEXPOSICION.cs">

@@ -13,8 +13,37 @@ namespace PPAI_DSI.Negocio
         private DateTime _horaSalida;
         public HorarioTrabajo(HORARIOSTRABAJOS horarioTrabajo)
         {
-            _horaEntrada = DateTime.Parse(horarioTrabajo.HoraEntrada.Value.ToString("HH:mm:ss"));
-            _horaSalida = DateTime.Parse(horarioTrabajo.HoraSalida.Value.ToString("HH:mm:ss"));
+            _horaEntrada = DateTime.Parse(horarioTrabajo.HoraEntrada.Value.ToString());
+            _horaSalida = DateTime.Parse(horarioTrabajo.HoraSalida.Value.ToString());
+        }
+
+        public bool estaDisponibleEnHora(DateTime horaInicio, int duracion)
+        {
+            // Horas del evento
+            int horaInicioEnMinutos = (horaInicio.Hour * 60) + horaInicio.Minute;
+            int horaFinEnMinutos = horaInicioEnMinutos + duracion;
+
+            // Horarios del empleado
+            int horaEntradaEnMinutos = (_horaEntrada.Hour * 60) + _horaEntrada.Minute;
+            int horaSalidaEnMinutos = (_horaSalida.Hour * 60) + _horaSalida.Minute;
+
+            // Si 
+                //1) La hora de inicio del evento es despues de la hora de entrada del guia
+                    //y
+                //2) La hora de fin del evento es antes de la hora de salida del guia
+            if(horaInicioEnMinutos >= horaEntradaEnMinutos && horaFinEnMinutos <= horaSalidaEnMinutos)
+                return true;
+            return false;
+        }
+
+        public DateTime getHoraEntrada()
+        {
+            return _horaEntrada;
+        }
+
+        public DateTime getHoraSalida()
+        {
+            return _horaSalida;
         }
     }
 }

@@ -12,13 +12,11 @@ namespace PPAI_DSI.Backend
     using System;
     using System.Collections.Generic;
     
-    public partial class SESION
+    public partial class SESIONES
     {
         public int Id_Sesion { get; set; }
-        public Nullable<System.DateTime> FechaInicio { get; set; }
-        public Nullable<System.DateTime> FechaFin { get; set; }
-        public Nullable<System.TimeSpan> HoraFin { get; set; }
-        public Nullable<System.TimeSpan> HoraInicio { get; set; }
+        public Nullable<System.DateTime> FechaHoraInicio { get; set; }
+        public Nullable<System.DateTime> FechaHoraFin { get; set; }
         public Nullable<int> Id_Usuario { get; set; }
     
         public virtual USUARIOS USUARIOS { get; set; }

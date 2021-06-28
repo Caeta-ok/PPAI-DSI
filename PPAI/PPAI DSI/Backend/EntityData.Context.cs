@@ -44,7 +44,7 @@ namespace PPAI_DSI.Backend
         public virtual DbSet<PUBLICOSDESTINO> PUBLICOSDESTINO { get; set; }
         public virtual DbSet<RESERVAS> RESERVAS { get; set; }
         public virtual DbSet<SEDES> SEDES { get; set; }
-        public virtual DbSet<SESION> SESION { get; set; }
+        public virtual DbSet<SESIONES> SESIONES { get; set; }
         public virtual DbSet<TIPOSEXPOSICION> TIPOSEXPOSICION { get; set; }
         public virtual DbSet<TIPOSVISITA> TIPOSVISITA { get; set; }
         public virtual DbSet<USUARIOS> USUARIOS { get; set; }

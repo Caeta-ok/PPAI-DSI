@@ -110,8 +110,7 @@ namespace PPAI_DSI.Negocio
         {
             return _detalleExposicion;
         }
-
-
+        
         /*
         public int calcularDuracionObrasExpuestas()
         {
