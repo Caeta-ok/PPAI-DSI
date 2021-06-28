@@ -17,7 +17,7 @@ namespace PPAI_DSI.Backend
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USUARIOS()
         {
-            this.SESION = new HashSet<SESION>();
+            this.SESIONES = new HashSet<SESIONES>();
         }
     
         public int Id_Usuario { get; set; }
@@ -27,6 +27,6 @@ namespace PPAI_DSI.Backend
     
         public virtual EMPLEADOS EMPLEADOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SESION> SESION { get; set; }
+        public virtual ICollection<SESIONES> SESIONES { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace PPAI_DSI.Negocio
             _empleado = empleado;
         }
 
-        public Empleado obtenerEmpleado()
+        public Empleado getEmpleadoLogeado()
         {
             return _empleado;
         }

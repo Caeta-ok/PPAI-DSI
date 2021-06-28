@@ -17,6 +17,7 @@ namespace PPAI_DSI.Backend
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SEDES()
         {
+            this.EMPLEADOS = new HashSet<EMPLEADOS>();
             this.EXPOSICIONESPORSEDE = new HashSet<EXPOSICIONESPORSEDE>();
             this.RESERVAS = new HashSet<RESERVAS>();
         }
@@ -26,6 +27,8 @@ namespace PPAI_DSI.Backend
         public Nullable<int> CantidadMaximaVisitantes { get; set; }
         public Nullable<int> CantidadMaximaPorGuia { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EMPLEADOS> EMPLEADOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EXPOSICIONESPORSEDE> EXPOSICIONESPORSEDE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

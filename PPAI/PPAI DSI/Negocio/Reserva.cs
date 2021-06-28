@@ -19,11 +19,13 @@ namespace PPAI_DSI.Negocio
         private int _cantidadAlumnos;
         private int _cantidadAlumnosConfirmados;
         private Sede _sede;
+        private Empleado _empleadoRegistrador;
         private List<Exposicion> _listaExposiciones = new List<Exposicion>();
-        private List<Empleado> _listaEmpleadosGuia = new List<Empleado>();
+        //private List<Empleado> _listaEmpleadosGuia = new List<Empleado>();
         private List<AsignacionVisita> _listaAsignacionesVisita = new List<AsignacionVisita>();
-        private CambioEstado _cambioEstado;
+        private List<CambioEstado> _listaCambiosEstado = new List<CambioEstado>();
         private Escuela _escuela;
+        private int _nroReserva;
 
         public Reserva(RESERVAS reserva)
         {
@@ -40,20 +42,47 @@ namespace PPAI_DSI.Negocio
 
         public Reserva() { }
 
+        public int getId()
+        {
+            return _id;
+        }
+
         public void conocerAsignacionVisita(AsignacionVisita asignacionVisita)
         {
             _listaAsignacionesVisita.Add(asignacionVisita);
-            conocerEmpleado(asignacionVisita.getEmpleado());
+        }
+
+        public List<AsignacionVisita> getAsignacionesVisita()
+        {
+            return _listaAsignacionesVisita;
         }
 
         public void conocerCambioEstado(CambioEstado cambioEstado)
         {
-            _cambioEstado = cambioEstado;
+            _listaCambiosEstado.Add(cambioEstado);
         }
 
-        public void conocerEmpleado(Empleado empleado)
+        public CambioEstado getCambioEstadoActual()
         {
-            _listaEmpleadosGuia.Add(empleado);
+            CambioEstado cambioEstado = _listaCambiosEstado[0];
+            foreach(CambioEstado cambioEst in _listaCambiosEstado)
+            {
+                if(cambioEst.getFechaHoraInicio() > cambioEstado.getFechaHoraInicio())
+                {
+                    cambioEstado = cambioEst;
+                }
+            }
+            return cambioEstado;
+        }
+
+        public void conocerEmpleadoRegistrador(Empleado empleado)
+        {
+            _empleadoRegistrador = empleado;
+        }
+
+        public Empleado getEmpeladoRegistrador()
+        {
+            return _empleadoRegistrador;
         }
 
         public void conocerEscuela(Escuela escuela)
@@ -66,14 +95,14 @@ namespace PPAI_DSI.Negocio
             _listaExposiciones.Add(exposicion);
         }
 
+        public List<Exposicion> getExposiciones()
+        {
+            return _listaExposiciones;
+        }
+
         public void conocerSede(Sede sede)
         {
             _sede = sede;
-        }
-
-        public void setEscuela(Escuela escuela)
-        {
-            _escuela = escuela;
         }
 
         public void setCantidadAlumnos(int cantidadAlumnos)
@@ -84,6 +113,11 @@ namespace PPAI_DSI.Negocio
         public void setSede(Sede sede)
         {
             _sede = sede;
+        }
+
+        public Sede getSede()
+        {
+            return _sede;
         }
 
         public void setHoraInicioReal(DateTime horaInicio)
@@ -125,5 +159,47 @@ namespace PPAI_DSI.Negocio
         {
             return _cantidadAlumnos;
         }
+
+        public DateTime getHoraReserva()
+        {
+            return _horaReserva;
+        }
+
+        public void setNroReserva(int nroReserva)
+        {
+            _nroReserva = nroReserva;
+        }
+
+        public int getNroReserva()
+        {
+            return _nroReserva;
+        }
+
+        public void crearAsignaciones(List<Empleado> guiasSeleccionados)
+        {
+            foreach(Empleado guia in guiasSeleccionados)
+            {
+                AsignacionVisita asignacionVisita = new AsignacionVisita();
+                DateTime horaFinAsignacion = _horaReserva;
+                horaFinAsignacion.AddMinutes(double.Parse(_duracionEstimada.ToString()));
+                asignacionVisita.setFechaInicio(_fechaReserva);
+                asignacionVisita.setFechaFin(_fechaReserva);
+                asignacionVisita.setHoraInicio(_horaReserva);
+                asignacionVisita.conocerEmpleado(guia);
+                _listaAsignacionesVisita.Add(asignacionVisita);
+            }
+        }
+
+        public void setFechaHoraCreacion(DateTime fechaHoraCreacion)
+        {
+            _fechaHoraCreacion = fechaHoraCreacion;
+        }
+
+        public DateTime getFechaHoraCreacion()
+        {
+            return _fechaHoraCreacion;
+        }
+
+
     }
 }

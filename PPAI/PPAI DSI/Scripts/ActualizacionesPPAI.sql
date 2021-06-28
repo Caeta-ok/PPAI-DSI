@@ -144,6 +144,8 @@ alter table RESERVAS drop column Id_CambioEstado
 alter table RESERVAS drop constraint FK_EXPOSICION0
 alter table RESERVAS drop column Id_Exposicion
 
+alter table RESERVAS add FechaReserva date
+
 create table CAMBIOSESTADOSPORRESERVA
 	(Id_CambioEstadoPorReserva int identity(1, 1) not null primary key,
 	 Id_Reserva int,
@@ -171,6 +173,12 @@ insert into EXPOSICIONESPORRESERVA (Id_ExposicionPorReserva, Id_Reserva, Id_Expo
 insert into EXPOSICIONESPORRESERVA (Id_ExposicionPorReserva, Id_Reserva, Id_Exposicion) values(3, 3, 8)
 set identity_insert EXPOSICIONESPORRESERVA off
 
+alter table RESERVAS add NroReserva int
+update RESERVAS set NroReserva = 1 where Id_Reserva = 1
+update RESERVAS set NroReserva = 2 where Id_Reserva = 2
+update RESERVAS set NroReserva = 3 where Id_Reserva = 3
+alter table RESERVAS add constraint UC_NRORESERVA unique (NroReserva)
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 alter table SEDES drop constraint FK_EXPOSICIONES0
 alter table SEDES drop column Id_Exposicion
@@ -190,8 +198,42 @@ insert into EXPOSICIONESPORSEDE (Id_ExposicionPorSede, Id_Sede, Id_Exposicion) v
 insert into EXPOSICIONESPORSEDE (Id_ExposicionPorSede, Id_Sede, Id_Exposicion) values(5, 5, 7)
 set identity_insert EXPOSICIONESPORSEDE off
 
+-----------------------------------------------------------------------------------------------------------------
+alter table EMPLEADOS add Id_Sede int
+alter table EMPLEADOS add constraint FK_SEDES2 foreign key (Id_Sede) references SEDES(Id_Sede)
 
+update EMPLEADOS set Id_Sede = 2 where Id_Empleado = 1
+update EMPLEADOS set Id_Sede = 1 where Id_Empleado = 2
+update EMPLEADOS set Id_Sede = 3 where Id_Empleado = 3
+update EMPLEADOS set Id_Sede = 4 where Id_Empleado = 4
+update EMPLEADOS set Id_Sede = 5 where Id_Empleado = 5
 
+----------------------------------------------------------------------------------------------------------
+-- Más datos de empleados
+set identity_insert EMPLEADOS on
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (6, 'Roman', 'Mansilla', '487880', 24190558473, 19055847, 'Uruguay 491', '2015-09-21', '1974-10-13', 'romanmansi@gmail.com', 'Masculino', 3518956587, 13, 2, 2)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (7, 'Julia', 'Alvarez', '487881', 22204926813, 20492681, 'San Martin 478', '2010-12-23', '1969-01-06', 'julialva@gmail.com', 'Femenino', 3514568899, 13, 2, 2)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (8, 'Ramón', 'Luis', '487882', 24432113543, 43211354, 'Roca 896', '2020-01-21', '2002-03-15', 'ramluis@gmail.com', 'Masculino', 3512356532, 13, 2, 2)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (9, 'Maximiliano', 'Villanueva', '487883', 24391310363, 39131036, 'Boulevard Illia 455', '2018-05-01', '1997-03-03', 'maxivilla@gmail.com', 'Masculino', 3514785263, 13, 1, 2)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (10, 'Camila', 'Fuentes', '487884', 24332262483, 33226248, 'Obispo Oro 758', '2009-10-01', '1985-12-15', 'camifuentes@gmail.com', 'Femenino', 3511569874, 13, 1, 2)
+set identity_insert EMPLEADOS off
+
+---------------------------------------------------------------------------------------------------------
+drop table SESION
+create table SESIONES
+	(Id_Sesion int identity(1, 1) not null primary key,
+	 FechaHoraInicio datetime,
+	 FechaHoraFin datetime,
+	 Id_Usuario int,
+	 constraint FK_USUARIOS0 foreign key (Id_Usuario) references USUARIOS(Id_Usuario))
+
+-----------------------------------------------------------------------------------------------------------
+alter table ESTADOS add Ambito varchar(50)
+update ESTADOS set Ambito = 'Reservas' where Id_Estado = 1
+
+set identity_insert ESTADOS on
+insert into ESTADOS(Id_Estado, Nombre, Descripcion, Ambito) values (2, 'Programada', 'Se registra una nueva reserva', 'Reservas')
+set identity_insert ESTADOS off
 
 
 

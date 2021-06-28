@@ -36,6 +36,7 @@ namespace PPAI_DSI.Backend
         public Nullable<long> NroTelefono { get; set; }
         public Nullable<int> Id_Cargo { get; set; }
         public Nullable<int> Id_HorarioTrabajo { get; set; }
+        public Nullable<int> Id_Sede { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASIGNACIONESVISITA> ASIGNACIONESVISITA { get; set; }
@@ -45,5 +46,6 @@ namespace PPAI_DSI.Backend
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RESERVAS> RESERVAS { get; set; }
         public virtual HORARIOSTRABAJOS HORARIOSTRABAJOS { get; set; }
+        public virtual SEDES SEDES { get; set; }
     }
 }

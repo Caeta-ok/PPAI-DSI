@@ -21,8 +21,8 @@ namespace PPAI_DSI.Formularios
         private void opcionRegReservaVisitaGuiada(object sender, EventArgs e)
         {
             habilitarVentana();
+            GestorReserva.iniciarSesion();
             GestorReserva.nuevaReserva();
-            GestorReserva.buscarEscuelas();
             mostrarEscuelas(GestorReserva.getListaEscuelas());
             solicitarSeleccionEscuela();
         }
@@ -39,6 +39,7 @@ namespace PPAI_DSI.Formularios
             solicitarFechaReserva(false);
             solicitarFechaReserva(false);
             solicitarHoraReserva(false);
+            solicitarSeleccionGuia(false);
         }
 
         public void mostrarEscuelas(List<Escuela> listaEscuelas)
@@ -281,12 +282,65 @@ namespace PPAI_DSI.Formularios
             lbl_duracion.Text = GestorReserva.getDuracionEstimada() + " minutos";
             if(GestorReserva.validarCapacidadVisitantes())
             {
-
+                GestorReserva.buscarGuiasDispFechaReserva();
+                mostrarGuiasDisponibles(GestorReserva.getGuiasDisponibles());
+                solicitarSeleccionGuia();
             }
             else
             {
                 MessageBox.Show("Se sobrepasa la capacidad de visitantes");
             }
+        }
+
+        private void mostrarGuiasDisponibles(List<Empleado> listaGuiasDisponibles)
+        {
+            grid_guias_disponibles.DataSource = null;
+            grid_guias_disponibles.Rows.Clear();
+            int i = 0;
+            foreach(Empleado empleado in listaGuiasDisponibles)
+            {
+                grid_guias_disponibles.Rows.Add();
+                grid_guias_disponibles.Rows[i].Cells["Id_Guia"].Value = empleado.getId();
+                grid_guias_disponibles.Rows[i].Cells["NombreEmpleado"].Value = empleado.getNombre();
+                grid_guias_disponibles.Rows[i].Cells["ApellidoEmpleado"].Value = empleado.getApellido();
+                grid_guias_disponibles.Rows[i].Cells["Email"].Value = empleado.getEmail();
+                grid_guias_disponibles.Rows[i].Cells["NroTelefono"].Value = empleado.getNroTelefono();
+                grid_guias_disponibles.Rows[i].Cells["HoraEntrada"].Value = empleado.getHorarioTrabajo().getHoraEntrada().ToString("HH:mm:ss");
+                grid_guias_disponibles.Rows[i].Cells["HoraSalida"].Value = empleado.getHorarioTrabajo().getHoraSalida().ToString("HH:mm:ss");
+                i++;
+            }
+        }
+
+        private void solicitarSeleccionGuia(bool estado = true)
+        {
+            if(estado)
+            {
+                grid_guias_disponibles.CellClick += tomarSeleccionGuia;
+            }
+            else
+            {
+                grid_guias_disponibles.CellClick -= tomarSeleccionGuia;
+            }
+        }
+
+        private void tomarSeleccionGuia(object sender, DataGridViewCellEventArgs e)
+        {
+            List<int> idGuiasSeleccionados = new List<int>();
+            for (int i = 0; i < grid_guias_disponibles.Rows.Count; i++)
+            {
+                if(grid_guias_disponibles.Rows[i].Selected)
+                {
+                    idGuiasSeleccionados.Add(int.Parse(grid_guias_disponibles[0, i].Value.ToString()));
+                }
+            }
+            GestorReserva.tomarSeleccionGuias(idGuiasSeleccionados);
+            btn_ejecutar_registro_reserva.Enabled = true;
+        }
+
+        private void registrarReserva(object sender, EventArgs e)
+        {
+            GestorReserva.registrarReserva();
+            btn_ejecutar_registro_reserva.Enabled = false;
         }
     }
 }
