@@ -12,6 +12,7 @@
     <Property Name="FechaFin" Type="DateTime" Precision="0" />
     <Property Name="HoraInicio" Type="Time" Precision="0" />
     <Property Name="HoraFin" Type="Time" Precision="0" />
+    <NavigationProperty Name="ASIGNACIONESVISITAPORRESERVA" Relationship="PPAI_DSIModel.FK_ASIGNACIONESVISITA1" FromRole="ASIGNACIONESVISITA" ToRole="ASIGNACIONESVISITAPORRESERVA" />
   </EntityType>
   <EntityType Name="CAMBIOSESTADOS">
     <Key>
@@ -23,6 +24,7 @@
     <Property Name="Id_Estado" Type="Int32" />
     <NavigationProperty Name="RESERVAS" Relationship="Self.FK_CAMBIOSESTADOS" FromRole="CAMBIOSESTADOS" ToRole="RESERVAS" />
     <NavigationProperty Name="ESTADOS" Relationship="Self.FK_ESTADOS0" FromRole="CAMBIOSESTADOS" ToRole="ESTADOS" />
+    <NavigationProperty Name="CAMBIOSESTADOSPORRESERVA" Relationship="PPAI_DSIModel.FK_CAMBIOSESTADOS0" FromRole="CAMBIOSESTADOS" ToRole="CAMBIOSESTADOSPORRESERVA" />
   </EntityType>
   <EntityType Name="CARGOS">
     <Key>
@@ -120,8 +122,8 @@
       <PropertyRef Name="Id_HorarioTrabajo" />
     </Key>
     <Property Name="Id_HorarioTrabajo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="HoraEntrada" Type="Time" Precision="7" />
-    <Property Name="HoraSalida" Type="Time" Precision="7" />
+    <Property Name="HoraEntrada" Type="Time" Precision="0" />
+    <Property Name="HoraSalida" Type="Time" Precision="0" />
     <Property Name="Id_Dia" Type="Int32" />
     <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_HORARIOSTRABAJOS" FromRole="HORARIOSTRABAJOS" ToRole="EMPLEADOS" />
   </EntityType>
@@ -175,6 +177,8 @@
     <NavigationProperty Name="EXPOSICIONES" Relationship="Self.FK_EXPOSICION0" FromRole="RESERVAS" ToRole="EXPOSICIONES" />
     <NavigationProperty Name="SEDES" Relationship="Self.FK_SEDES0" FromRole="RESERVAS" ToRole="SEDES" />
     <Property Name="FechaReserva" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="ASIGNACIONESVISITAPORRESERVA" Relationship="PPAI_DSIModel.FK_RESERVAS0" FromRole="RESERVAS" ToRole="ASIGNACIONESVISITAPORRESERVA" />
+    <NavigationProperty Name="CAMBIOSESTADOSPORRESERVA" Relationship="PPAI_DSIModel.FK_RESERVAS1" FromRole="RESERVAS" ToRole="CAMBIOSESTADOSPORRESERVA" />
   </EntityType>
   <EntityType Name="SEDES">
     <Key>
@@ -511,6 +515,24 @@
       <End Role="OBRAS" EntitySet="OBRAS" />
       <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
     </AssociationSet>
+    <EntitySet Name="ASIGNACIONESVISITAPORRESERVA" EntityType="PPAI_DSIModel.ASIGNACIONESVISITAPORRESERVA" />
+    <EntitySet Name="CAMBIOSESTADOSPORRESERVA" EntityType="PPAI_DSIModel.CAMBIOSESTADOSPORRESERVA" />
+    <AssociationSet Name="FK_ASIGNACIONESVISITA1" Association="PPAI_DSIModel.FK_ASIGNACIONESVISITA1">
+      <End Role="ASIGNACIONESVISITA" EntitySet="ASIGNACIONESVISITA" />
+      <End Role="ASIGNACIONESVISITAPORRESERVA" EntitySet="ASIGNACIONESVISITAPORRESERVA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RESERVAS0" Association="PPAI_DSIModel.FK_RESERVAS0">
+      <End Role="RESERVAS" EntitySet="RESERVAS" />
+      <End Role="ASIGNACIONESVISITAPORRESERVA" EntitySet="ASIGNACIONESVISITAPORRESERVA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CAMBIOSESTADOS0" Association="PPAI_DSIModel.FK_CAMBIOSESTADOS0">
+      <End Role="CAMBIOSESTADOS" EntitySet="CAMBIOSESTADOS" />
+      <End Role="CAMBIOSESTADOSPORRESERVA" EntitySet="CAMBIOSESTADOSPORRESERVA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RESERVAS1" Association="PPAI_DSIModel.FK_RESERVAS1">
+      <End Role="RESERVAS" EntitySet="RESERVAS" />
+      <End Role="CAMBIOSESTADOSPORRESERVA" EntitySet="CAMBIOSESTADOSPORRESERVA" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="OBRASPOREXPOSICION">
     <Key>
@@ -543,6 +565,74 @@
       </Principal>
       <Dependent Role="OBRASPOREXPOSICION">
         <PropertyRef Name="Id_Obra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ASIGNACIONESVISITAPORRESERVA">
+    <Key>
+      <PropertyRef Name="Id_AsignacionVisitaPorReserva" />
+    </Key>
+    <Property Name="Id_AsignacionVisitaPorReserva" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_AsignacionVisita" Type="Int32" />
+    <Property Name="Id_Reserva" Type="Int32" />
+    <NavigationProperty Name="ASIGNACIONESVISITA" Relationship="PPAI_DSIModel.FK_ASIGNACIONESVISITA1" FromRole="ASIGNACIONESVISITAPORRESERVA" ToRole="ASIGNACIONESVISITA" />
+    <NavigationProperty Name="RESERVAS" Relationship="PPAI_DSIModel.FK_RESERVAS0" FromRole="ASIGNACIONESVISITAPORRESERVA" ToRole="RESERVAS" />
+  </EntityType>
+  <EntityType Name="CAMBIOSESTADOSPORRESERVA">
+    <Key>
+      <PropertyRef Name="Id_CambioEstadoPorReserva" />
+    </Key>
+    <Property Name="Id_CambioEstadoPorReserva" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Reserva" Type="Int32" />
+    <Property Name="Id_CambioEstado" Type="Int32" />
+    <NavigationProperty Name="CAMBIOSESTADOS" Relationship="PPAI_DSIModel.FK_CAMBIOSESTADOS0" FromRole="CAMBIOSESTADOSPORRESERVA" ToRole="CAMBIOSESTADOS" />
+    <NavigationProperty Name="RESERVAS" Relationship="PPAI_DSIModel.FK_RESERVAS1" FromRole="CAMBIOSESTADOSPORRESERVA" ToRole="RESERVAS" />
+  </EntityType>
+  <Association Name="FK_ASIGNACIONESVISITA1">
+    <End Type="PPAI_DSIModel.ASIGNACIONESVISITA" Role="ASIGNACIONESVISITA" Multiplicity="0..1" />
+    <End Type="PPAI_DSIModel.ASIGNACIONESVISITAPORRESERVA" Role="ASIGNACIONESVISITAPORRESERVA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ASIGNACIONESVISITA">
+        <PropertyRef Name="Id_AsignacionVisita" />
+      </Principal>
+      <Dependent Role="ASIGNACIONESVISITAPORRESERVA">
+        <PropertyRef Name="Id_AsignacionVisita" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RESERVAS0">
+    <End Type="PPAI_DSIModel.RESERVAS" Role="RESERVAS" Multiplicity="0..1" />
+    <End Type="PPAI_DSIModel.ASIGNACIONESVISITAPORRESERVA" Role="ASIGNACIONESVISITAPORRESERVA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVAS">
+        <PropertyRef Name="Id_Reserva" />
+      </Principal>
+      <Dependent Role="ASIGNACIONESVISITAPORRESERVA">
+        <PropertyRef Name="Id_Reserva" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CAMBIOSESTADOS0">
+    <End Type="PPAI_DSIModel.CAMBIOSESTADOS" Role="CAMBIOSESTADOS" Multiplicity="0..1" />
+    <End Type="PPAI_DSIModel.CAMBIOSESTADOSPORRESERVA" Role="CAMBIOSESTADOSPORRESERVA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAMBIOSESTADOS">
+        <PropertyRef Name="Id_CambioEstado" />
+      </Principal>
+      <Dependent Role="CAMBIOSESTADOSPORRESERVA">
+        <PropertyRef Name="Id_CambioEstado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RESERVAS1">
+    <End Type="PPAI_DSIModel.RESERVAS" Role="RESERVAS" Multiplicity="0..1" />
+    <End Type="PPAI_DSIModel.CAMBIOSESTADOSPORRESERVA" Role="CAMBIOSESTADOSPORRESERVA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVAS">
+        <PropertyRef Name="Id_Reserva" />
+      </Principal>
+      <Dependent Role="CAMBIOSESTADOSPORRESERVA">
+        <PropertyRef Name="Id_Reserva" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

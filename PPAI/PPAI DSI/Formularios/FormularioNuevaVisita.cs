@@ -10,7 +10,8 @@ namespace PPAI_DSI
 {
     public partial class Form1 : Form
     {
-        GestorReserva formularioReserva = new GestorReserva();
+        
+        //GestorReserva formularioReserva = new GestorReserva();
         string nombreExp;
         string horaInicioExposicion;
         string horaFinalExposicion;
@@ -18,12 +19,12 @@ namespace PPAI_DSI
         int IdExposicion;
         List<Empleado> listaGuiasSeleccionados = new List<Empleado>();
         int duracionReserva;
-
+        
         public Form1()
         {
             InitializeComponent();
         }
-
+        
         private void habilitarVentana()
         {
             this.btn_registrar_reserva.Visible = false;
@@ -225,40 +226,41 @@ namespace PPAI_DSI
             {
                 MessageBox.Show("Ingrese una fecha mayor a la del dia actual", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
-
-            //// Cambia la fecha
-            //grid_exposiciones.Enabled = false;
-            //if (dt_fecha_reserva.Value > System.DateTime.Now)
-            //{
-            //    DateTime fechaFin = DateTime.Now;
-            //    using (PPAIEntities db = new PPAIEntities())
-            //    {
-            //        var lista = (from exp in db.EXPOSICIONES.ToList()
-            //                     where exp.Nombre == nombreExp.Trim()
-            //                     select new
-            //                     {
-            //                         exp.FechaFin
-            //                     });
-            //        foreach (var l in lista)
-            //        {
-            //            fechaFin = DateTime.Parse(l.FechaFin.ToString());
-            //        }
-            //    }
-            //    if (dt_fecha_reserva.Value <= fechaFin)
-            //    {
-            //        dt_hora_reserva.Enabled = true;
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("En la fecha ingresada la exposicion ya no va a estar disponible, su fecha de fin es: " + fechaFin.ToString(), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Ingrese una fecha mayor a la del dia actual", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //}
         }
+            
+
+        //// Cambia la fecha
+        //grid_exposiciones.Enabled = false;
+        //if (dt_fecha_reserva.Value > System.DateTime.Now)
+        //{
+        //    DateTime fechaFin = DateTime.Now;
+        //    using (PPAIEntities db = new PPAIEntities())
+        //    {
+        //        var lista = (from exp in db.EXPOSICIONES.ToList()
+        //                     where exp.Nombre == nombreExp.Trim()
+        //                     select new
+        //                     {
+        //                         exp.FechaFin
+        //                     });
+        //        foreach (var l in lista)
+        //        {
+        //            fechaFin = DateTime.Parse(l.FechaFin.ToString());
+        //        }
+        //    }
+        //    if (dt_fecha_reserva.Value <= fechaFin)
+        //    {
+        //        dt_hora_reserva.Enabled = true;
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("En la fecha ingresada la exposicion ya no va a estar disponible, su fecha de fin es: " + fechaFin.ToString(), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //    }
+        //}
+        //else
+        //{
+        //    MessageBox.Show("Ingrese una fecha mayor a la del dia actual", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //}
+        //}
 
         
         private void calcularDuracionReserva()
@@ -324,28 +326,27 @@ namespace PPAI_DSI
                         {
                             if (id != guia.Id_Empleado)
                             {
+                                /*
                                 Empleado empleado = new Empleado();
                                 empleado.id = guia.Id_Empleado;
                                 empleado.nombre = guia.Nombre;
                                 empleado.apellido = guia.Apellido;
                                 empleado.email = guia.Email;
-                                //empleado.horaEntrada = DateTime.Parse(guia.HoraEntrada.ToString());
-                                //empleado.horaSalida = DateTime.Parse(guia.HoraSalida.ToString());
                                 listaFinal.Add(empleado);
+                                */
                             }
                         }
                     }
                     else
                     {
+                        /*
                         Empleado empleado = new Empleado();
                         empleado.id = guia.Id_Empleado;
                         empleado.nombre = guia.Nombre;
                         empleado.apellido = guia.Apellido;
                         empleado.email = guia.Email;
-                        //empleado.horaEntrada = DateTime.Parse(guia.HoraEntrada.ToString());
-                        //empleado.horaSalida = DateTime.Parse(guia.HoraSalida.ToString());
                         listaFinal.Add(empleado);
-
+                        */
                     }
                 }
             }
@@ -436,6 +437,7 @@ namespace PPAI_DSI
             listaGuiasSeleccionados.Clear();
             for(int i = 0; i < grid_guias_disponibles.Rows.Count; i++)
             {
+                /*
                 Empleado empleado = new Empleado();
                 if(grid_guias_disponibles[0, i].Selected)
                 {
@@ -445,6 +447,7 @@ namespace PPAI_DSI
                     empleado.email = grid_guias_disponibles[3, i].Value.ToString();
                     listaGuiasSeleccionados.Add(empleado);
                 }
+                */
             }
         }
 
@@ -499,6 +502,7 @@ namespace PPAI_DSI
             MessageBox.Show("Reserva registrada");
             this.Close();
         }
+
         private TimeSpan CalcularHoraFinReserva(DateTime horaInicio, int duracion)
         {
             int horaInicioEnMinutos = (horaInicio.Hour * 60) + horaInicio.Minute;
@@ -506,7 +510,7 @@ namespace PPAI_DSI
             TimeSpan horaFinal = TimeSpan.FromMinutes(horaInicioEnMinutos);
             return horaFinal;
         }
-
+        
 
         // Ejecutar cadena de consultas en la base de datos
         // SqlQuery: Retorna datos
