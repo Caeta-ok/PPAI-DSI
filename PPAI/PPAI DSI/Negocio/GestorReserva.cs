@@ -196,7 +196,7 @@ namespace PPAI_DSI.Negocio
                 { // Si su horario de trabajo permite abarcar la reserva
                     foreach(AsignacionVisita asign in listaAsignacionesVisitas)
                     {
-                        if(asign.estaAsignadoEnFechaVisita(guia)) // Si está asignado en esa fecha
+                        if(asign.estaAsignadoEnFechaVisita(guia, _fechaReserva)) // Si está asignado en esa fecha
                         {
                             if(asign.estaDisponibleEnHora(_horaReserva, _duracionEstimada))
                             { // Si el horario de la reserva se choca con el de la asignación
@@ -260,6 +260,7 @@ namespace PPAI_DSI.Negocio
             reserva.conocerEscuela(_escuelaSeleccionada);
             reserva.setNroReserva(_nroReserva);
             reserva.setSede(_sedeSeleccionada);
+            reserva.setDuracionEstimada(_duracionEstimada);
             reserva.conocerEmpleadoRegistrador(_empleadoRegistrador);
             reserva.crearAsignaciones(_listaGuiasSeleccionados);
             foreach(Exposicion expoTemporal in _listaExposicionesTemporalesSeleccionadas)
@@ -272,6 +273,7 @@ namespace PPAI_DSI.Negocio
             reserva.conocerCambioEstado(cambioEstado);
 
             Persistencia.insertarNuevaReserva(reserva);
+            Persistencia.insertarSesion(_sesionActual);
         }
     }
 }

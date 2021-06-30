@@ -26,9 +26,19 @@ namespace PPAI_DSI.Negocio
             _fechaHoraInicio = fechaHoraInicio;
         }
 
+        public DateTime getFechaHoraInicio()
+        {
+            return _fechaHoraInicio;
+        }
+
         public void setFechaHoraFin(DateTime fechaHoraFin)
         {
             _fechaHoraFin = fechaHoraFin;
+        }
+
+        public DateTime getFechaHoraFin()
+        {
+            return _fechaHoraFin;
         }
 
         public Usuario getUsuario()

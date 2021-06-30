@@ -34,10 +34,13 @@ namespace PPAI_DSI.Negocio
             _fechaHoraCreacion = reserva.FechaHoraCreacion.Value;
             _fechaReserva = reserva.FechaReserva.Value;
             _horaReserva = DateTime.Parse(reserva.HoraReserva.Value.ToString());
-            _horaInicioReal = DateTime.Parse(reserva.HoraInicioReal.Value.ToString());
-            _horaFinReal = DateTime.Parse(reserva.HoraFinReal.Value.ToString());
+            if(reserva.HoraInicioReal != null)
+                _horaInicioReal = DateTime.Parse(reserva.HoraInicioReal.Value.ToString());
+            if(reserva.HoraFinReal != null)
+                _horaFinReal = DateTime.Parse(reserva.HoraFinReal.Value.ToString());
             _cantidadAlumnos = reserva.CantidadAlumnos.Value;
-            _cantidadAlumnosConfirmados = reserva.CantidadAlumnosConfirmados.Value;
+            if(reserva.CantidadAlumnosConfirmados != null)
+                _cantidadAlumnosConfirmados = reserva.CantidadAlumnosConfirmados.Value;
         }
 
         public Reserva() { }
@@ -185,6 +188,7 @@ namespace PPAI_DSI.Negocio
                 asignacionVisita.setFechaInicio(_fechaReserva);
                 asignacionVisita.setFechaFin(_fechaReserva);
                 asignacionVisita.setHoraInicio(_horaReserva);
+                asignacionVisita.setHoraFin(_horaReserva.AddMinutes(_duracionEstimada));
                 asignacionVisita.conocerEmpleado(guia);
                 _listaAsignacionesVisita.Add(asignacionVisita);
             }

@@ -35,16 +35,16 @@ namespace PPAI_DSI.Negocio
             return _empleado;
         }
 
-        public bool estaAsignadoEnFechaVisita(Empleado empleado)
+        public bool estaAsignadoEnFechaVisita(Empleado empleado, DateTime fechaReserva)
         {
             if(empleado.getId() == _empleado.getId())
             {
-                return true;
+                if(_fechaInicio == fechaReserva)
+                {
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public bool estaDisponibleEnHora(DateTime horaInicioReserva, int duracion)

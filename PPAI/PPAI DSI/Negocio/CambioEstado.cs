@@ -18,7 +18,8 @@ namespace PPAI_DSI.Negocio
         {
             _id = cambioEstado.Id_CambioEstado;
             _fechaHoraInicio = cambioEstado.FechaHoraInicio.Value;
-            _fechaHoraFin = cambioEstado.FechaHoraFin.Value;
+            if(cambioEstado.FechaHoraFin != null)
+                _fechaHoraFin = cambioEstado.FechaHoraFin.Value;
         }
 
         public CambioEstado() { }
