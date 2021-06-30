@@ -22,6 +22,7 @@ namespace PPAI_DSI.Negocio
             _cantidadMaximaPorGuia = sede.CantidadMaximaPorGuia.Value;
             _cantidadMaximaVisitantes = sede.CantidadMaximaVisitantes.Value;
         }
+
         public Sede()
         {
 
@@ -120,7 +121,6 @@ namespace PPAI_DSI.Negocio
             listaGuias = Persistencia.traerEmpeladosGuiasPorIdSede(_id);
             return listaGuias;
         }
-
 
         //private List<Exposicion> _exposiciones;
         //private string _nombre;

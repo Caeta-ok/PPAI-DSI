@@ -12,6 +12,7 @@ namespace PPAI_DSI.Negocio
         private int _id;
         private string _nombre;
         private string _descripcion;
+
         public Cargo(CARGOS cargo)
         {
             _id = cargo.Id_Cargo;

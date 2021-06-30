@@ -399,7 +399,7 @@ namespace PPAI_DSI.Formularios
             dt_hora_reserva.Enabled = false;
             grid_guias_disponibles.Rows.Clear();
             grid_guias_disponibles.Enabled = false;
-            lbl_duracion_reserva.Text = "Duracion de Reserva: ";
+            lbl_duracion.Text = "";
             btn_ejecutar_registro_reserva.Enabled = false;
         }
     }
