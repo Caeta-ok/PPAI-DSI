@@ -72,3 +72,6 @@ D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.PantallaA
 D:\david\programacion\DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.Sharp.dll
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.Sharp.dll
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources

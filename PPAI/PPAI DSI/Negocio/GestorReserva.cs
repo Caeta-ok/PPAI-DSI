@@ -51,6 +51,7 @@ namespace PPAI_DSI.Negocio
         {
             buscarEscuelas();
         }
+
         public static List<Escuela> getListaEscuelas()
         {
             return _listaEscuelas;

@@ -23,11 +23,5 @@ namespace PPAI_DSI.Negocio
             return _nombre;
         }
 
-
-        /*
-        public bool esExposicionTemporal()
-        {
-
-        }*/
     }
 }
