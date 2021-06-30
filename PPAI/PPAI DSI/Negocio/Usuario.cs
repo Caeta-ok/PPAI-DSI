@@ -9,12 +9,14 @@ namespace PPAI_DSI.Negocio
 {
     public class Usuario
     {
+        private int _id;
         private string _nombre;
         private string _contrasenia;
         private Empleado _empleado;
 
         public Usuario(USUARIOS usuario)
         {
+            _id = usuario.Id_Usuario;
             _nombre = usuario.Nombre;
             _contrasenia = usuario.Contrasenia;
         }
@@ -22,6 +24,11 @@ namespace PPAI_DSI.Negocio
         public void conocerEmpleado(Empleado empleado)
         {
             _empleado = empleado;
+        }
+
+        public int getId()
+        {
+            return _id;
         }
 
         public Empleado getEmpleadoLogeado()

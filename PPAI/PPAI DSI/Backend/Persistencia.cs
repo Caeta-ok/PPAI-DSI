@@ -280,7 +280,6 @@ namespace PPAI_DSI.Backend
             return idReserva;
         }
 
-
         public static void insertarNuevaReserva(Reserva reserva)
         {
             using (PPAIEntities db = new PPAIEntities())
@@ -380,6 +379,19 @@ namespace PPAI_DSI.Backend
             using (PPAIEntities db = new PPAIEntities())
             {
                 db.EXPOSICIONESPORRESERVA.Add(exposicionPorReservaSql);
+                db.SaveChanges();
+            }
+        }
+
+        public static void insertarSesion(Sesion sesion)
+        {
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                SESIONES sesionSql = new SESIONES();
+                sesionSql.FechaHoraInicio = sesion.getFechaHoraInicio();
+                sesionSql.FechaHoraFin = sesion.getFechaHoraFin();
+                sesionSql.Id_Usuario = sesion.getUsuario().getId();
+                db.SESIONES.Add(sesionSql);
                 db.SaveChanges();
             }
         }
