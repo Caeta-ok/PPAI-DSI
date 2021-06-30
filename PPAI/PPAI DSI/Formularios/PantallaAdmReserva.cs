@@ -16,6 +16,7 @@ namespace PPAI_DSI.Formularios
         public PantallaAdmReserva()
         {
             InitializeComponent();
+            habilitarVentana();
         }
 
         private void opcionRegReservaVisitaGuiada(object sender, EventArgs e)
@@ -29,9 +30,6 @@ namespace PPAI_DSI.Formularios
 
         private void habilitarVentana()
         {
-            btn_registrar_reserva.Visible = false;
-            group_registrar_reserva.Visible = true;
-
             solicitarCantidadVisitantes(false);
             solicitarSeleccionEscuela(false);
             solicitarSeleccionSede(false);
@@ -40,6 +38,10 @@ namespace PPAI_DSI.Formularios
             solicitarFechaReserva(false);
             solicitarHoraReserva(false);
             solicitarSeleccionGuia(false);
+            GestorReserva.iniciarSesion();
+            GestorReserva.nuevaReserva();
+            mostrarEscuelas(GestorReserva.getListaEscuelas());
+            solicitarSeleccionEscuela();
         }
 
         public void mostrarEscuelas(List<Escuela> listaEscuelas)
@@ -97,6 +99,7 @@ namespace PPAI_DSI.Formularios
         private void tomarNumeroVisitantes(object sender, EventArgs e)
         {
             solicitarSeleccionSede(false);
+            grid_sedes.Enabled = true;
             // Faltan validar que sea solo una cadena de numeros enteros
             if(txt_cantidad_alumnos.Text != "")
             {
@@ -121,6 +124,11 @@ namespace PPAI_DSI.Formularios
                 grid_sedes.Rows[i].Cells["CantidadMaximaVisitantes"].Value = s.getCantidadMaixmaVisitantes();
                 i++;
             }
+            if (grid_sedes.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay sedes disponibles para esa cantidad de visitantes", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                limpiarFormulario();
+            }       
         }
 
         private void solicitarSeleccionSede(bool estado = true)
@@ -140,6 +148,8 @@ namespace PPAI_DSI.Formularios
         {
             // La sede de carlos paz tiene una exposicion temporal
             solicitarSeleccionTipoVisita(false);
+            txt_cantidad_alumnos.Enabled = false;
+            cmb_tipo_visita.Enabled = true;
             for(int i = 0; i < grid_sedes.Rows.Count; i++)
             {
                 if (grid_sedes[0, i].Selected)
@@ -186,8 +196,18 @@ namespace PPAI_DSI.Formularios
         private void tomarSeleccionTipoVisita(object sender, EventArgs e)
         {
             // Validar que se seleccione solo por exposicion (lo pide el caso de uso)
+            grid_sedes.Enabled = false;
             GestorReserva.tomarSeleccionTipoVisita(cmb_tipo_visita.SelectedIndex);
-            mostrarExposiciones(GestorReserva.getExposicionesTemporales());
+            if (cmb_tipo_visita.Text == "Por exposicion")
+            {
+                mostrarExposiciones(GestorReserva.getExposicionesTemporales());
+                grid_exposiciones.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Por el momento no estan habilitadas las visitas completas, seleccione por exposicion", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+                
         }
 
         private void mostrarExposiciones(List<Exposicion> listaExposiciones)
@@ -208,6 +228,18 @@ namespace PPAI_DSI.Formularios
                 grid_exposiciones.Rows[i].Cells["PublicoDestino"].Value = expo.getPublicoDestino().getNombre();
                 i++;
             }
+            if (grid_exposiciones.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay exposiciones " + cmb_tipo_visita.Text + " disponibles para esa sede, ingrese nuevamente la caantidad de alumnos y seleccione otra sede", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                cmb_tipo_visita.Text = "";
+                cmb_tipo_visita.Enabled = false;
+                txt_cantidad_alumnos.Text = "";
+                txt_cantidad_alumnos.Enabled = true;
+                grid_sedes.Enabled = false;
+                grid_sedes.Rows.Clear();
+                grid_exposiciones.Enabled = false;
+                btn_ejecutar_registro_reserva.Enabled = false;
+            }
         }
 
         private void solicitarSeleccionExposicion(bool estado = true)
@@ -225,6 +257,7 @@ namespace PPAI_DSI.Formularios
         private void tomarSeleccionExposicion(object sender, DataGridViewCellEventArgs e)
         {
             solicitarFechaReserva(false);
+            cmb_tipo_visita.Enabled = false;
             List<int> listaIdExposiciones = new List<int>();
             for(int i = 0; i < grid_exposiciones.Rows.Count; i++)
             {
@@ -279,6 +312,8 @@ namespace PPAI_DSI.Formularios
         private void tomarHoraReserva(object sender, EventArgs e)
         {
             GestorReserva.tomarHoraReserva(dt_hora_reserva.Value);
+            grid_exposiciones.Enabled = false;
+            grid_guias_disponibles.Enabled = true;
             lbl_duracion.Text = GestorReserva.getDuracionEstimada() + " minutos";
             if(GestorReserva.validarCapacidadVisitantes())
             {
@@ -308,6 +343,11 @@ namespace PPAI_DSI.Formularios
                 grid_guias_disponibles.Rows[i].Cells["HoraEntrada"].Value = empleado.getHorarioTrabajo().getHoraEntrada().ToString("HH:mm:ss");
                 grid_guias_disponibles.Rows[i].Cells["HoraSalida"].Value = empleado.getHorarioTrabajo().getHoraSalida().ToString("HH:mm:ss");
                 i++;
+            }
+            if (grid_guias_disponibles.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay guias disponibles para la fecha: " + dt_fecha_reserva.Text + " y el horario: " + dt_hora_reserva.Text + ", porfavor seleccione nuevamente","", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                btn_ejecutar_registro_reserva.Enabled = false;
             }
         }
 
@@ -340,6 +380,26 @@ namespace PPAI_DSI.Formularios
         private void registrarReserva(object sender, EventArgs e)
         {
             GestorReserva.registrarReserva();
+            MessageBox.Show("¡Reserva registrada!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            limpiarFormulario();
+        }
+
+        private void limpiarFormulario()
+        {
+            cmb_escuelas.Enabled = true;
+            txt_cantidad_alumnos.Text = "";
+            txt_cantidad_alumnos.Enabled = false;
+            grid_sedes.Rows.Clear();
+            grid_sedes.Enabled = false;
+            cmb_tipo_visita.Text = "";
+            cmb_tipo_visita.Enabled = false;
+            grid_exposiciones.Rows.Clear();
+            grid_exposiciones.Enabled = false;
+            dt_fecha_reserva.Enabled = false;
+            dt_hora_reserva.Enabled = false;
+            grid_guias_disponibles.Rows.Clear();
+            grid_guias_disponibles.Enabled = false;
+            lbl_duracion_reserva.Text = "Duracion de Reserva: ";
             btn_ejecutar_registro_reserva.Enabled = false;
         }
     }

@@ -39,6 +39,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FontAwesome.Sharp, Version=5.15.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.Sharp.5.15.3\lib\net45\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -140,6 +143,18 @@
     <Compile Include="Backend\USUARIOS.cs">
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FormEscritorio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormEscritorio.Designer.cs">
+      <DependentUpon>FormEscritorio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormLogIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormLogIn.Designer.cs">
+      <DependentUpon>FormLogIn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\PantallaAdmReserva.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +181,12 @@
     <Compile Include="Negocio\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Formularios\FormEscritorio.resx">
+      <DependentUpon>FormEscritorio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormLogIn.resx">
+      <DependentUpon>FormLogIn.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\PantallaAdmReserva.resx">
       <DependentUpon>PantallaAdmReserva.cs</DependentUpon>
     </EmbeddedResource>

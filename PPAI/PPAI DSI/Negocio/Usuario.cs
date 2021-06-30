@@ -10,8 +10,8 @@ namespace PPAI_DSI.Negocio
     public class Usuario
     {
         private int _id;
-        private string _nombre;
-        private string _contrasenia;
+        public string _nombre;
+        public string _contrasenia;
         private Empleado _empleado;
 
         public Usuario(USUARIOS usuario)

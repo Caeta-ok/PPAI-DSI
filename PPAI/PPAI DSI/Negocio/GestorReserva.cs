@@ -56,6 +56,17 @@ namespace PPAI_DSI.Negocio
             return _listaEscuelas;
         }
 
+        public static int validarUsuario(string nombre, string contrasenia)
+        {
+            Usuario usuario = Persistencia.traerUsuarioPorId(1);
+            if (usuario._nombre == nombre)
+            {
+                if (usuario._contrasenia == contrasenia)
+                    return 1;
+            }
+            return 0;
+        }
+
         public static void tomarSeleccionEscuela(int id)
         {
             foreach(Escuela escuela in _listaEscuelas)

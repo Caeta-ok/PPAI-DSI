@@ -20,7 +20,6 @@ D:\david\programacion\DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.dll
 D:\david\programacion\DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.xml
 D:\david\programacion\DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.xml
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csprojAssemblyReference.cache
-D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Form1.resources
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Properties.Resources.resources
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.GenerateResource.cache
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
@@ -69,3 +68,7 @@ C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.C
 C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
 C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.PantallaAdmReserva.resources
+D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.PantallaAdmReserva.resources
+D:\david\programacion\DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.Sharp.dll
+D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
+D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources
