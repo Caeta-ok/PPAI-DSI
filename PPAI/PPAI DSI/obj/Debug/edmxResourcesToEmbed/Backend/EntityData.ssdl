@@ -24,8 +24,8 @@
       <PropertyRef Name="Id_CambioEstado" />
     </Key>
     <Property Name="Id_CambioEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FechaHoraInicio" Type="datetime" />
-    <Property Name="FechaHoraFin" Type="datetime" />
+    <Property Name="FechaHoraInicio" Type="datetime2" Precision="0" />
+    <Property Name="FechaHoraFin" Type="datetime2" Precision="0" />
     <Property Name="Id_Estado" Type="int" />
   </EntityType>
   <EntityType Name="CAMBIOSESTADOSPORRESERVA">

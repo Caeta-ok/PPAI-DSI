@@ -21,7 +21,6 @@ namespace PPAI_DSI.Negocio
         private Sede _sede;
         private Empleado _empleadoRegistrador;
         private List<Exposicion> _listaExposiciones = new List<Exposicion>();
-        //private List<Empleado> _listaEmpleadosGuia = new List<Empleado>();
         private List<AsignacionVisita> _listaAsignacionesVisita = new List<AsignacionVisita>();
         private List<CambioEstado> _listaCambiosEstado = new List<CambioEstado>();
         private Escuela _escuela;

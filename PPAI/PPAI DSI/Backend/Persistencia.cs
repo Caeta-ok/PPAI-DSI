@@ -59,6 +59,33 @@ namespace PPAI_DSI.Backend
             return listaSedes;
         }
 
+        public static List<Sede> traerSedes()
+        {
+            List<Sede> listaSedes = new List<Sede>();
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaSedesSql = db.SEDES.ToList();
+
+                foreach (var sedeSql in listaSedesSql)
+                {
+                    Sede sede = new Sede();
+                    sede.setId(sedeSql.Id_Sede);
+                    sede.setNombre(sedeSql.Nombre);
+                    sede.setCantidadMaximaPorGuia(sedeSql.CantidadMaximaPorGuia.Value);
+                    sede.setCantidadMaximaVisitantes(sedeSql.CantidadMaximaVisitantes.Value);
+
+                    var listaExposPorSedeSql = db.EXPOSICIONESPORSEDE.Where(e => e.Id_Sede == sedeSql.Id_Sede);
+                    foreach (var expoPorSedeSql in listaExposPorSedeSql)
+                    {
+                        Exposicion exposicion = traerExposicionPorId(expoPorSedeSql.Id_Exposicion.Value);
+                        sede.conocerExposicion(exposicion);
+                    }
+                    listaSedes.Add(sede);
+                }
+            }
+            return listaSedes;
+        }
+
         public static List<TipoVisita> traerTipoVisita()
         {
             List<TipoVisita> listaTiposVisita = new List<TipoVisita>();
@@ -197,6 +224,27 @@ namespace PPAI_DSI.Backend
             return listaGuias;
         }
 
+        public static List<Empleado> traerEmpleados()
+        {
+            // Trae todos los empleados completos
+            List<Empleado> listaEmpleados = new List<Empleado>();
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaEmpleadosSql = db.EMPLEADOS.ToList();
+                foreach (EMPLEADOS empleadoSql in listaEmpleadosSql)
+                {
+                    Empleado empleado = new Empleado(empleadoSql);
+                    HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(empleadoSql.Id_HorarioTrabajo);
+                    CARGOS cargoSql = db.CARGOS.Find(empleadoSql.Id_Cargo);
+
+                    empleado.conocerHorario(new HorarioTrabajo(horarioTrabajoSql));
+                    empleado.conocerCargo(new Cargo(cargoSql));
+                    listaEmpleados.Add(empleado);
+                }
+            }
+            return listaEmpleados;
+        }
+
         public static List<Empleado> traerEmpeladosGuiasPorIdSede(int Id_Sede)
         {
             List<Empleado> listaGuias = new List<Empleado>();
@@ -268,6 +316,7 @@ namespace PPAI_DSI.Backend
             return estado;
         }
 
+        /*
         private static int insertarReservaParcialGetId(RESERVAS reserva)
         {
             int idReserva = 0;
@@ -278,78 +327,109 @@ namespace PPAI_DSI.Backend
                 idReserva = reserva.Id_Reserva;
             }
             return idReserva;
-        }
+        }*/
 
-        public static void insertarNuevaReserva(Reserva reserva)
+        public static void insertarReserva(Reserva reserva)
         {
+            // Se debe pasar la reserva completa
             using (PPAIEntities db = new PPAIEntities())
             {
-                RESERVAS reservaSql = new RESERVAS();
-                List<ASIGNACIONESVISITAPORRESERVA> listaAsignacionesPorVisita = new List<ASIGNACIONESVISITAPORRESERVA>();
-                List<ASIGNACIONESVISITA> listaAsignacionesVisita = new List<ASIGNACIONESVISITA>();
-                List<EXPOSICIONESPORRESERVA> listaExposicionesPorReserva = new List<EXPOSICIONESPORRESERVA>();
-
-                //------------------------------------------------------------------------------------------- Preparar datos
-                reservaSql.FechaHoraCreacion = reserva.getFechaHoraCreacion();
-                reservaSql.FechaReserva = reserva.getFechaReserva();
-                reservaSql.HoraReserva = TimeSpan.Parse(reserva.getHoraReserva().ToString("HH:mm:ss"));
-                reservaSql.CantidadAlumnos = reserva.getCantidadAlumnos();
-                reservaSql.Id_Sede = reserva.getSede().getId();
-                reservaSql.Id_Empleado = reserva.getEmpeladoRegistrador().getId();
-                reservaSql.DuracionEstimada = reserva.getDuracionEstimada();
-                reservaSql.NroReserva = reserva.getNroReserva();
-
-                // Guardar asignaciones
-                foreach (AsignacionVisita asignacionVisita in reserva.getAsignacionesVisita())
+                // Se insertan primero los datos que son referenciados por llaves foraneas
+                using (var dbTransaction = db.Database.BeginTransaction())
                 {
-                    ASIGNACIONESVISITA asignacionVisitaSql = new ASIGNACIONESVISITA();
-                    asignacionVisitaSql.FechaInicio = asignacionVisita.getFechaInicio();
-                    asignacionVisitaSql.HoraInicio = TimeSpan.Parse(asignacionVisita.getHoraInicio().ToString("HH:mm:ss"));
-                    asignacionVisitaSql.FechaFin = asignacionVisita.getFechaFin();
-                    asignacionVisitaSql.HoraFin = TimeSpan.Parse(asignacionVisita.getHoraFin().ToString("HH:mm:ss"));
-                    asignacionVisitaSql.Id_Empleado = asignacionVisita.getEmpleado().getId();
-                    listaAsignacionesVisita.Add(asignacionVisitaSql);
+                    try
+                    {
+                        List<ASIGNACIONESVISITA> listaAsignacionesVisitaSql = new List<ASIGNACIONESVISITA>();
+                        // ------------------------------------------------------------------------- 1) Insertar AsignacionesVisita
+                        foreach (AsignacionVisita asignacion in reserva.getAsignacionesVisita())
+                        {
+                            ASIGNACIONESVISITA asignacionSql = new ASIGNACIONESVISITA //Crear objecto asignacionSql
+                            {
+                                // Asignarle los datos que traemos de la capa de negocio
+                                FechaInicio = asignacion.getFechaInicio(),
+                                FechaFin = asignacion.getFechaFin(),
+                                HoraInicio = TimeSpan.Parse(asignacion.getHoraInicio().ToString("HH:mm:ss")),
+                                HoraFin = TimeSpan.Parse(asignacion.getHoraFin().ToString("HH:mm:ss")),
+                                Id_Empleado = asignacion.getEmpleado().getId()
+                            };
+
+                            // Insertar objeto
+                            db.ASIGNACIONESVISITA.Add(asignacionSql);
+                            db.SaveChanges();
+                            listaAsignacionesVisitaSql.Add(asignacionSql);
+                        }
+
+                        // ------------------------------------------------------------------------- 2) Insertar CambioEstado
+                        CambioEstado cambioEstado = reserva.getCambioEstadoActual();
+                        CAMBIOSESTADOS cambioEstadoSql = new CAMBIOSESTADOS
+                        {
+                            FechaHoraInicio = cambioEstado.getFechaHoraInicio(),
+                            Id_Estado = cambioEstado.getEstado().getId()
+                        };
+                        db.CAMBIOSESTADOS.Add(cambioEstadoSql);
+                        db.SaveChanges();
+
+                        // ------------------------------------------------------------------------- 3) Insertar Reserva
+                        RESERVAS reservaSql = new RESERVAS
+                        {
+                            FechaHoraCreacion = reserva.getFechaHoraCreacion(),
+                            FechaReserva = reserva.getFechaReserva(),
+                            HoraReserva = TimeSpan.Parse(reserva.getHoraReserva().ToString("HH:mm:ss")),
+                            CantidadAlumnos = reserva.getCantidadAlumnos(),
+                            Id_Sede = reserva.getSede().getId(),
+                            Id_Empleado = reserva.getEmpeladoRegistrador().getId(),
+                            DuracionEstimada = reserva.getDuracionEstimada(),
+                            NroReserva = reserva.getNroReserva()
+                        };
+                        db.RESERVAS.Add(reservaSql);
+                        db.SaveChanges();
+
+                        // ------------------------------------------------------------------------- 4) Insertar AsignacionPorReserva
+                        foreach (ASIGNACIONESVISITA asignacionSql in listaAsignacionesVisitaSql)
+                        {
+                            ASIGNACIONESVISITAPORRESERVA asignacionVisitaPorReservaSql = new ASIGNACIONESVISITAPORRESERVA
+                            {
+                                Id_AsignacionVisita = asignacionSql.Id_AsignacionVisita,
+                                Id_Reserva = reservaSql.Id_Reserva
+                            };
+                            db.ASIGNACIONESVISITAPORRESERVA.Add(asignacionVisitaPorReservaSql);
+                            db.SaveChanges();
+                        }
+
+                        // ------------------------------------------------------------------------- 5) Insertar ExposicionPorReserva
+                        foreach (Exposicion exposicion in reserva.getExposiciones())
+                        {
+                            EXPOSICIONESPORRESERVA exposicionPorReservaSql = new EXPOSICIONESPORRESERVA
+                            {
+                                Id_Reserva = reservaSql.Id_Reserva,
+                                Id_Exposicion = exposicion.getId()
+                            };
+                            db.EXPOSICIONESPORRESERVA.Add(exposicionPorReservaSql);
+                            db.SaveChanges();
+                        }
+
+                        // ------------------------------------------------------------------------- 6) Insertar CambioEstadoPorReserva
+                        CAMBIOSESTADOSPORRESERVA cambioEstadoPorReservaSql = new CAMBIOSESTADOSPORRESERVA
+                        {
+                            Id_Reserva = reservaSql.Id_Reserva,
+                            Id_CambioEstado = cambioEstadoSql.Id_CambioEstado
+                        };
+
+                        db.CAMBIOSESTADOSPORRESERVA.Add(cambioEstadoPorReservaSql);
+                        db.SaveChanges();
+
+                        dbTransaction.Commit();
+                    }
+                    catch (Exception ex0) // Si hubo un error
+                    {
+                        dbTransaction.Rollback();
+                        Exception ex1 = new Exception("Error en la capa de persistencia");
+                        throw ex1;
+                    }
                 }
-
-                // Guardar el ultimo cambio de estado
-                CAMBIOSESTADOS cambioEstadoSql = new CAMBIOSESTADOS();
-                CambioEstado ultimoCambioEstado = reserva.getCambioEstadoActual();
-                cambioEstadoSql.FechaHoraInicio = ultimoCambioEstado.getFechaHoraInicio();
-                cambioEstadoSql.Id_Estado = ultimoCambioEstado.getEstado().getId();
-
-                // ---------------------------------------------------------------------------------------- Grabar datos 
-                int idReserva = insertarReservaParcialGetId(reservaSql);
-
-                //Grabar asignaciones
-                foreach(ASIGNACIONESVISITA asignacionSql in listaAsignacionesVisita)
-                {
-                    int idAsignacionVisita = insertarAsignacionVisitaGetId(asignacionSql);
-                    ASIGNACIONESVISITAPORRESERVA asignacionPorReservaSql = new ASIGNACIONESVISITAPORRESERVA();
-                    asignacionPorReservaSql.Id_AsignacionVisita = idAsignacionVisita;
-                    asignacionPorReservaSql.Id_Reserva = idReserva;
-                    db.ASIGNACIONESVISITAPORRESERVA.Add(asignacionPorReservaSql);
-                }
-                // Grabar exposiciones
-                foreach (Exposicion exposicion in reserva.getExposiciones())
-                {
-                    EXPOSICIONESPORRESERVA exposicionPorReservaSql = new EXPOSICIONESPORRESERVA();
-                    exposicionPorReservaSql.Id_Reserva = idReserva;
-                    exposicionPorReservaSql.Id_Exposicion = exposicion.getId();
-                    //listaExposicionesPorReserva.Add(exposicionPorReservaSql);
-                    insertarExposicionPorReserva(exposicionPorReservaSql);
-                }
-
-                // Grabar cambio de estado
-                int idCambioEstado = insertarCambioEstadoGetId(cambioEstadoSql);
-
-                CAMBIOSESTADOSPORRESERVA cambioEstadoPorReservaSql = new CAMBIOSESTADOSPORRESERVA();
-                cambioEstadoPorReservaSql.Id_CambioEstado = idCambioEstado;
-                cambioEstadoPorReservaSql.Id_Reserva = idReserva;
-                db.CAMBIOSESTADOSPORRESERVA.Add(cambioEstadoPorReservaSql);
-                db.SaveChanges();
             }
         }
-
+        /*
         private static int insertarAsignacionVisitaGetId(ASIGNACIONESVISITA asignacionVisitaSql)
         {
             int idAsignacionVisita = 0;
@@ -360,8 +440,9 @@ namespace PPAI_DSI.Backend
                 idAsignacionVisita = asignacionVisitaSql.Id_AsignacionVisita;
             }
             return idAsignacionVisita;
-        }
+        }*/
 
+        /*
         private static int insertarCambioEstadoGetId(CAMBIOSESTADOS cambioEstadosql)
         {
             int idCambioEstado = 0;
@@ -372,8 +453,9 @@ namespace PPAI_DSI.Backend
                 idCambioEstado = cambioEstadosql.Id_CambioEstado;
             }
             return idCambioEstado;
-        }
+        }*/
 
+        /*
         private static void insertarExposicionPorReserva(EXPOSICIONESPORRESERVA exposicionPorReservaSql)
         {
             using (PPAIEntities db = new PPAIEntities())
@@ -381,7 +463,7 @@ namespace PPAI_DSI.Backend
                 db.EXPOSICIONESPORRESERVA.Add(exposicionPorReservaSql);
                 db.SaveChanges();
             }
-        }
+        }*/
 
         public static void insertarSesion(Sesion sesion)
         {

@@ -235,6 +235,9 @@ set identity_insert ESTADOS on
 insert into ESTADOS(Id_Estado, Nombre, Descripcion, Ambito) values (2, 'Programada', 'Se registra una nueva reserva', 'Reservas')
 set identity_insert ESTADOS off
 
+-------------------------------------------------------------------------------------------------------------------
+alter table CAMBIOSESTADOS alter column FechaHoraInicio datetime2(0)
+alter table CAMBIOSESTADOS alter column FechaHoraFin datetime2(0)
 
 
 
