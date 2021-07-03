@@ -284,7 +284,8 @@ namespace PPAI_DSI.Negocio
             cambioEstado.conocerEstado(_estado);
             reserva.conocerCambioEstado(cambioEstado);
 
-            Persistencia.insertarNuevaReserva(reserva);
+            //Persistencia.insertarNuevaReserva(reserva);
+            Persistencia.insertarReserva(reserva);
             Persistencia.insertarSesion(_sesionActual);
         }
     }
