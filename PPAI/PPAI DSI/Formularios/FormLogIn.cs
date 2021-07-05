@@ -13,6 +13,7 @@ namespace PPAI_DSI.Formularios
 {
     public partial class FormLogIn : Form
     {
+        private GestorReserva gestorReserva = new GestorReserva();
         public FormLogIn()
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace PPAI_DSI.Formularios
                 txt_contrasena.Focus();
                 return;
             }
-            if (GestorReserva.validarUsuario(txt_usuario.Text, txt_contrasena.Text) == 1)
+            if (gestorReserva.validarUsuario(txt_usuario.Text, txt_contrasena.Text) == 1)
             {
                 this.Close();
             }

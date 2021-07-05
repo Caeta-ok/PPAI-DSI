@@ -13,6 +13,8 @@ namespace PPAI_DSI.Formularios
 {
     public partial class PantallaAdmReserva : Form
     {
+        private GestorReserva gestorReserva = new GestorReserva();
+
         public PantallaAdmReserva()
         {
             InitializeComponent();
@@ -22,9 +24,9 @@ namespace PPAI_DSI.Formularios
         private void opcionRegReservaVisitaGuiada(object sender, EventArgs e)
         {
             habilitarVentana();
-            GestorReserva.iniciarSesion();
-            GestorReserva.nuevaReserva();
-            mostrarEscuelas(GestorReserva.getListaEscuelas());
+            gestorReserva.iniciarSesion();
+            gestorReserva.nuevaReserva();
+            mostrarEscuelas(gestorReserva.getListaEscuelas());
             solicitarSeleccionEscuela();
         }
 
@@ -38,9 +40,9 @@ namespace PPAI_DSI.Formularios
             solicitarFechaReserva(false);
             solicitarHoraReserva(false);
             solicitarSeleccionGuia(false);
-            GestorReserva.iniciarSesion();
-            GestorReserva.nuevaReserva();
-            mostrarEscuelas(GestorReserva.getListaEscuelas());
+            gestorReserva.iniciarSesion();
+            gestorReserva.nuevaReserva();
+            mostrarEscuelas(gestorReserva.getListaEscuelas());
             solicitarSeleccionEscuela();
         }
 
@@ -92,7 +94,7 @@ namespace PPAI_DSI.Formularios
         private void tomarSeleccionEscuela(object sender, EventArgs e)
         {
             solicitarCantidadVisitantes(false);
-            GestorReserva.tomarSeleccionEscuela(cmb_escuelas.SelectedIndex);
+            gestorReserva.tomarSeleccionEscuela(cmb_escuelas.SelectedIndex);
             solicitarCantidadVisitantes();
         }
 
@@ -104,8 +106,8 @@ namespace PPAI_DSI.Formularios
             if(txt_cantidad_alumnos.Text != "")
             {
                 int numeroVisitantes = int.Parse(txt_cantidad_alumnos.Text);
-                GestorReserva.tomarNumeroVisitantes(numeroVisitantes);
-                mostrarSedes(GestorReserva.getSedes());
+                gestorReserva.tomarNumeroVisitantes(numeroVisitantes);
+                mostrarSedes(gestorReserva.getSedes());
             }
             solicitarSeleccionSede();
         }
@@ -154,10 +156,10 @@ namespace PPAI_DSI.Formularios
             {
                 if (grid_sedes[0, i].Selected)
                 {
-                    GestorReserva.tomarSeleccionSede(int.Parse(grid_sedes[0, i].Value.ToString()));
+                    gestorReserva.tomarSeleccionSede(int.Parse(grid_sedes[0, i].Value.ToString()));
                 }
             }
-            mostrarTiposVisita(GestorReserva.getTiposVisitas());
+            mostrarTiposVisita(gestorReserva.getTiposVisitas());
             solicitarSeleccionTipoVisita();
         }
 
@@ -197,10 +199,10 @@ namespace PPAI_DSI.Formularios
         {
             // Validar que se seleccione solo por exposicion (lo pide el caso de uso)
             grid_sedes.Enabled = false;
-            GestorReserva.tomarSeleccionTipoVisita(cmb_tipo_visita.SelectedIndex);
+            gestorReserva.tomarSeleccionTipoVisita(cmb_tipo_visita.SelectedIndex);
             if (cmb_tipo_visita.Text == "Por exposicion")
             {
-                mostrarExposiciones(GestorReserva.getExposicionesTemporales());
+                mostrarExposiciones(gestorReserva.getExposicionesTemporales());
                 grid_exposiciones.Enabled = true;
             }
             else
@@ -266,7 +268,7 @@ namespace PPAI_DSI.Formularios
                     listaIdExposiciones.Add(int.Parse(grid_exposiciones[0, i].Value.ToString()));
                 }
             }
-            GestorReserva.tomarSeleccionExposicion(listaIdExposiciones);
+            gestorReserva.tomarSeleccionExposicion(listaIdExposiciones);
             solicitarFechaReserva();
         }
 
@@ -300,7 +302,7 @@ namespace PPAI_DSI.Formularios
             solicitarHoraReserva(false);
             if(dt_fecha_reserva.Value > DateTime.Now)
             {
-                GestorReserva.tomarFechaReserva(dt_fecha_reserva.Value);
+                gestorReserva.tomarFechaReserva(dt_fecha_reserva.Value);
                 solicitarHoraReserva();
             }
             else
@@ -311,14 +313,14 @@ namespace PPAI_DSI.Formularios
 
         private void tomarHoraReserva(object sender, EventArgs e)
         {
-            GestorReserva.tomarHoraReserva(dt_hora_reserva.Value);
+            gestorReserva.tomarHoraReserva(dt_hora_reserva.Value);
             grid_exposiciones.Enabled = false;
             grid_guias_disponibles.Enabled = true;
-            lbl_duracion.Text = GestorReserva.getDuracionEstimada() + " minutos";
-            if(GestorReserva.validarCapacidadVisitantes())
+            lbl_duracion.Text = gestorReserva.getDuracionEstimada() + " minutos";
+            if(gestorReserva.validarCapacidadVisitantes())
             {
-                GestorReserva.buscarGuiasDispFechaReserva();
-                mostrarGuiasDisponibles(GestorReserva.getGuiasDisponibles());
+                gestorReserva.buscarGuiasDispFechaReserva();
+                mostrarGuiasDisponibles(gestorReserva.getGuiasDisponibles());
                 solicitarSeleccionGuia();
             }
             else
@@ -373,13 +375,13 @@ namespace PPAI_DSI.Formularios
                     idGuiasSeleccionados.Add(int.Parse(grid_guias_disponibles[0, i].Value.ToString()));
                 }
             }
-            GestorReserva.tomarSeleccionGuias(idGuiasSeleccionados);
+            gestorReserva.tomarSeleccionGuias(idGuiasSeleccionados);
             btn_ejecutar_registro_reserva.Enabled = true;
         }
 
         private void registrarReserva(object sender, EventArgs e)
         {
-            GestorReserva.registrarReserva();
+            gestorReserva.registrarReserva();
             MessageBox.Show("¡Reserva registrada!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             limpiarFormulario();
         }

@@ -10,30 +10,30 @@ using PPAI_DSI.Backend;
 
 namespace PPAI_DSI.Negocio
 {
-    public static class GestorReserva
+    public class GestorReserva
     {
         //private static Sede _sedeSeleccionada;
-        private static List<Escuela> _listaEscuelas;
+        private List<Escuela> _listaEscuelas;
         //private static Reserva _reserva;
-        private static List<Sede> _listaSedes;
-        private static List<TipoVisita> _listaTiposVisitas;
-        private static TipoVisita _tipoVisitaSeleccionada;
-        private static Sede _sedeSeleccionada;
-        private static List<Exposicion> _listaExposicionesTemporales;
-        private static List<Exposicion> _listaExposicionesTemporalesSeleccionadas = new List<Exposicion>();
-        private static List<Empleado> _listaGuiasDisponibles = new List<Empleado>();
-        private static List<Empleado> _listaGuiasSeleccionados = new List<Empleado>();
-        private static Sesion _sesionActual;
-        private static Estado _estado;
-        private static int _nroReserva;
-        private static Escuela _escuelaSeleccionada;
-        private static DateTime _fechaReserva;
-        private static DateTime _horaReserva;
-        private static int _duracionEstimada;
-        private static int _cantidadAlumnos;
-        private static Empleado _empleadoRegistrador;
+        private List<Sede> _listaSedes;
+        private List<TipoVisita> _listaTiposVisitas;
+        private TipoVisita _tipoVisitaSeleccionada;
+        private Sede _sedeSeleccionada;
+        private List<Exposicion> _listaExposicionesTemporales;
+        private List<Exposicion> _listaExposicionesTemporalesSeleccionadas = new List<Exposicion>();
+        private List<Empleado> _listaGuiasDisponibles = new List<Empleado>();
+        private List<Empleado> _listaGuiasSeleccionados = new List<Empleado>();
+        private Sesion _sesionActual;
+        private Estado _estado;
+        private int _nroReserva;
+        private Escuela _escuelaSeleccionada;
+        private DateTime _fechaReserva;
+        private DateTime _horaReserva;
+        private int _duracionEstimada;
+        private int _cantidadAlumnos;
+        private Empleado _empleadoRegistrador;
 
-        public static void iniciarSesion()
+        public void iniciarSesion()
         {
             Usuario usuario = Persistencia.traerUsuarioPorId(1);
             _sesionActual = new Sesion();
@@ -42,22 +42,22 @@ namespace PPAI_DSI.Negocio
             _sesionActual.conocerUsuario(usuario);
         }
 
-        public static void buscarEscuelas()
+        public void buscarEscuelas()
         {
             _listaEscuelas = Persistencia.traerEscuelas(); 
         }
 
-        public static void nuevaReserva()
+        public void nuevaReserva()
         {
             buscarEscuelas();
         }
 
-        public static List<Escuela> getListaEscuelas()
+        public List<Escuela> getListaEscuelas()
         {
             return _listaEscuelas;
         }
 
-        public static int validarUsuario(string nombre, string contrasenia)
+        public int validarUsuario(string nombre, string contrasenia)
         {
             Usuario usuario = Persistencia.traerUsuarioPorId(1);
             if (usuario._nombre == nombre)
@@ -68,7 +68,7 @@ namespace PPAI_DSI.Negocio
             return 0;
         }
 
-        public static void tomarSeleccionEscuela(int id)
+        public void tomarSeleccionEscuela(int id)
         {
             foreach(Escuela escuela in _listaEscuelas)
             {
@@ -80,23 +80,23 @@ namespace PPAI_DSI.Negocio
             }
         }
 
-        public static void tomarNumeroVisitantes(int numeroVisitantes)
+        public void tomarNumeroVisitantes(int numeroVisitantes)
         {
             _cantidadAlumnos = numeroVisitantes;
             buscarSedes(numeroVisitantes);
         }
 
-        private static void buscarSedes(int numeroVisitantes)
+        private void buscarSedes(int numeroVisitantes)
         {
             _listaSedes = Persistencia.traerSedesPorCapacidadVisitantes(numeroVisitantes);
         }
 
-        public static List<Sede> getSedes()
+        public List<Sede> getSedes()
         {
             return _listaSedes;
         }
 
-        public static void tomarSeleccionSede(int Id_Sede)
+        public void tomarSeleccionSede(int Id_Sede)
         {
             int aux = Id_Sede;
             foreach(Sede sede in _listaSedes)
@@ -109,17 +109,17 @@ namespace PPAI_DSI.Negocio
             buscarTipoVisita();
         }
 
-        private static void buscarTipoVisita()
+        private void buscarTipoVisita()
         {
             _listaTiposVisitas = Persistencia.traerTipoVisita();
         }
 
-        public static List<TipoVisita> getTiposVisitas()
+        public List<TipoVisita> getTiposVisitas()
         {
             return _listaTiposVisitas;
         }
 
-        public static void tomarSeleccionTipoVisita(int id)
+        public void tomarSeleccionTipoVisita(int id)
         {
             _listaExposicionesTemporales = new List<Exposicion>();
             foreach (TipoVisita tipoVisita in _listaTiposVisitas)
@@ -132,7 +132,7 @@ namespace PPAI_DSI.Negocio
             }
         }
 
-        public static void buscarExposicionesTemporales()
+        public void buscarExposicionesTemporales()
         {
             foreach (Exposicion expo in _sedeSeleccionada.getExposiciones()) // Para la sede seleccionada recorrer todas las exposiciones
             {
@@ -146,12 +146,12 @@ namespace PPAI_DSI.Negocio
             }
         }
 
-        public static List<Exposicion> getExposicionesTemporales()
+        public List<Exposicion> getExposicionesTemporales()
         {
             return _listaExposicionesTemporales;
         }
 
-        public static void tomarSeleccionExposicion(List<int> listaIdExposiciones)
+        public void tomarSeleccionExposicion(List<int> listaIdExposiciones)
         {
             
             _listaExposicionesTemporalesSeleccionadas.Clear();
@@ -167,28 +167,28 @@ namespace PPAI_DSI.Negocio
             }
         }
 
-        public static void tomarFechaReserva(DateTime fechaReserva)
+        public void tomarFechaReserva(DateTime fechaReserva)
         {
             _fechaReserva = fechaReserva;
         }
 
-        public static void tomarHoraReserva(DateTime horaReserva)
+        public void tomarHoraReserva(DateTime horaReserva)
         {
             _horaReserva = horaReserva;
             calcularDuracionReserva();
         }
 
-        private static void calcularDuracionReserva()
+        private void calcularDuracionReserva()
         {
             _duracionEstimada = _sedeSeleccionada.getDuracionDeExposicion();
         }
 
-        public static int getDuracionEstimada()
+        public int getDuracionEstimada()
         {
             return _duracionEstimada;
         }
 
-        public static bool validarCapacidadVisitantes()
+        public bool validarCapacidadVisitantes()
         {
             int cantidadTotal = _cantidadAlumnos + _sedeSeleccionada.sumarCantidadDeVisitantes(_fechaReserva);
             if (cantidadTotal <= _sedeSeleccionada.getCantidadMaixmaVisitantes())
@@ -196,7 +196,7 @@ namespace PPAI_DSI.Negocio
             return false;
         }
 
-        public static void buscarGuiasDispFechaReserva() // Los guias tienen que pertenecer a las sedes
+        public void buscarGuiasDispFechaReserva() // Los guias tienen que pertenecer a las sedes
         {
             _listaGuiasDisponibles.Clear();
             List<Empleado> listaGuiasSede = _sedeSeleccionada.buscarGuias();
@@ -229,12 +229,12 @@ namespace PPAI_DSI.Negocio
             }
         }
 
-        public static List<Empleado> getGuiasDisponibles()
+        public List<Empleado> getGuiasDisponibles()
         {
             return _listaGuiasDisponibles;
         }
 
-        public static void tomarSeleccionGuias(List<int> idGuiasSeleccionados)
+        public void tomarSeleccionGuias(List<int> idGuiasSeleccionados)
         {
             _listaGuiasSeleccionados.Clear();
             foreach(int id in idGuiasSeleccionados)
@@ -246,23 +246,23 @@ namespace PPAI_DSI.Negocio
             buscarEstadoReserva();
         }
 
-        private static void buscarEmpleadoLogeado()
+        private void buscarEmpleadoLogeado()
         {
             _empleadoRegistrador = _sesionActual.getUsuario().getEmpleadoLogeado();
         }
 
-        private static void buscarUltimoNroReserva()
+        private void buscarUltimoNroReserva()
         {
             int nroReserva = Persistencia.traerUltimoNroReserva();
             _nroReserva = nroReserva + 1;
         }
 
-        private static void buscarEstadoReserva()
+        private void buscarEstadoReserva()
         {
             _estado = Persistencia.traerEstadoPendienteParaReservas();
         }
 
-        public static void registrarReserva()
+        public void registrarReserva()
         {
             Reserva reserva = new Reserva();
             reserva.setCantidadAlumnos(_cantidadAlumnos);
