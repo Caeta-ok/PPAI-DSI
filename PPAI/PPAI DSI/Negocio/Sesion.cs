@@ -16,6 +16,11 @@ namespace PPAI_DSI.Negocio
 
         public Sesion() { }
 
+        public int getId()
+        {
+            return _id;
+        }
+
         public void conocerUsuario(Usuario usuario)
         {
             _usuario = usuario;
