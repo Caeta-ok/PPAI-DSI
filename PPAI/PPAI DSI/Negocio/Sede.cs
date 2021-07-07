@@ -134,6 +134,11 @@ namespace PPAI_DSI.Negocio
             return listaGuias;
         }
 
+        public double getCantidadGuiasNecesarios(double alumnos)
+        {
+            return Math.Round(Convert.ToDouble(alumnos / getCantidadMaximaPorGuia()));
+        }
+
         //private List<Exposicion> _exposiciones;
         //private string _nombre;
 

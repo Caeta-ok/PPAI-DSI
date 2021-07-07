@@ -161,7 +161,7 @@ namespace PPAI_DSI.Negocio
 
         private void calcularGuiasNecesarios()
         {
-            _guiasNecesarios = Math.Round(Convert.ToDouble(_cantidadAlumnos / _sedeSeleccionada.getCantidadMaximaPorGuia()));
+            _guiasNecesarios = _sedeSeleccionada.getCantidadGuiasNecesarios(_cantidadAlumnos);
         }
 
         public double getGuiasNecesarios()
