@@ -11,20 +11,24 @@ namespace PPAI_DSI.Negocio
     {
         private int _id;
         private string _nombre;
+
         public TipoVisita(TIPOSVISITA tipoVisita)
         {
-            _id = tipoVisita.Id_TipoVisita;
-            _nombre = tipoVisita.Nombre;
+            Id = tipoVisita.Id_TipoVisita;
+            Nombre = tipoVisita.Nombre;
         }
+
+        public int Id { get => _id; set => _id = value; }
+        public string Nombre { get => _nombre; set => _nombre = value; }
 
         public int getId()
         {
-            return _id;
+            return Id;
         }
 
         public string getNombre()
         {
-            return _nombre;
+            return Nombre;
         }
     }
 }

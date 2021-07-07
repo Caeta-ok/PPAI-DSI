@@ -8,9 +8,11 @@ namespace PPAI_DSI.Negocio
 {
     public class DetalleExposicion
     {
-        List<Obra> _listaObras = new List<Obra>();
+        private List<Obra> _listaObras = new List<Obra>();
 
-        public DetalleExposicion(){}
+        public DetalleExposicion()
+        {
+        }
 
         public void conocerObra(Obra obra)
         {
@@ -20,6 +22,16 @@ namespace PPAI_DSI.Negocio
         public List<Obra> getObras()
         {
             return _listaObras;
+        }
+
+        public int buscarDuracionExtraObra()
+        {
+            int duracionDeExposicion = 0;
+            foreach (Obra obra in _listaObras)
+            {
+                duracionDeExposicion += obra.getDuracionExtendida();
+            }
+            return duracionDeExposicion;
         }
     }
 }

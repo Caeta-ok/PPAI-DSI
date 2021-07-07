@@ -14,16 +14,19 @@ namespace PPAI_DSI.Formularios
     public partial class FormLogIn : Form
     {
         private GestorReserva gestorReserva = new GestorReserva();
+
         public FormLogIn()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
         }
+
         private void Frm_Login_Load(object sender, EventArgs e)
         {
             txt_usuario.ForeColor = Color.DarkGray;
             txt_contrasena.ForeColor = Color.DarkGray;
         }
+
         private void iniciar_Click(object sender, EventArgs e)
         {
             if (this.txt_usuario.Text == "")
@@ -48,7 +51,6 @@ namespace PPAI_DSI.Formularios
             }
         }
 
-
         private void txt_usuario_Leave(object sender, EventArgs e)
         {
             if (txt_usuario.Text == "")
@@ -67,6 +69,7 @@ namespace PPAI_DSI.Formularios
                 txt_contrasena.ForeColor = Color.DarkGray;
             }
         }
+
         private void txt_usuario_Enter(object sender, EventArgs e)
         {
             txt_usuario.Text = null;

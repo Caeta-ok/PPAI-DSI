@@ -50,22 +50,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dt_fecha_reserva = new System.Windows.Forms.DateTimePicker();
             this.grid_sedes = new System.Windows.Forms.DataGridView();
-            this.Id_Sede = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CantidadMaximaVisitantes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CantidadMaximaVisitantesPorGuia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cmb_tipo_visita = new System.Windows.Forms.ComboBox();
             this.grid_exposiciones = new System.Windows.Forms.DataGridView();
-            this.Id_Exposicion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreExpo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaInicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaFin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HoraApertura = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HoraCierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PublicoDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
+            this.lbl_guias_necesarios = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.group_registrar_reserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_guias_disponibles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_sedes)).BeginInit();
@@ -74,6 +65,8 @@
             // 
             // group_registrar_reserva
             // 
+            this.group_registrar_reserva.Controls.Add(this.lbl_guias_necesarios);
+            this.group_registrar_reserva.Controls.Add(this.label9);
             this.group_registrar_reserva.Controls.Add(this.lbl_duracion);
             this.group_registrar_reserva.Controls.Add(this.btn_ejecutar_registro_reserva);
             this.group_registrar_reserva.Controls.Add(this.lbl_guias_disponibles);
@@ -284,11 +277,6 @@
             this.grid_sedes.AllowUserToDeleteRows = false;
             this.grid_sedes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grid_sedes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_sedes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id_Sede,
-            this.Nombre,
-            this.CantidadMaximaVisitantes,
-            this.CantidadMaximaVisitantesPorGuia});
             this.grid_sedes.Enabled = false;
             this.grid_sedes.Location = new System.Drawing.Point(20, 90);
             this.grid_sedes.MultiSelect = false;
@@ -298,34 +286,6 @@
             this.grid_sedes.Size = new System.Drawing.Size(556, 130);
             this.grid_sedes.TabIndex = 31;
             this.grid_sedes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tomarSeleccionSede);
-            // 
-            // Id_Sede
-            // 
-            this.Id_Sede.HeaderText = "Id_Sede";
-            this.Id_Sede.Name = "Id_Sede";
-            this.Id_Sede.ReadOnly = true;
-            this.Id_Sede.Visible = false;
-            // 
-            // Nombre
-            // 
-            this.Nombre.FillWeight = 56.338F;
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.Name = "Nombre";
-            this.Nombre.ReadOnly = true;
-            // 
-            // CantidadMaximaVisitantes
-            // 
-            this.CantidadMaximaVisitantes.FillWeight = 82.81686F;
-            this.CantidadMaximaVisitantes.HeaderText = "Cantidad Maxima de Visitantes";
-            this.CantidadMaximaVisitantes.Name = "CantidadMaximaVisitantes";
-            this.CantidadMaximaVisitantes.ReadOnly = true;
-            // 
-            // CantidadMaximaVisitantesPorGuia
-            // 
-            this.CantidadMaximaVisitantesPorGuia.FillWeight = 82.81686F;
-            this.CantidadMaximaVisitantesPorGuia.HeaderText = "Cantidad Maxima de Visitantes por Guía";
-            this.CantidadMaximaVisitantesPorGuia.Name = "CantidadMaximaVisitantesPorGuia";
-            this.CantidadMaximaVisitantesPorGuia.ReadOnly = true;
             // 
             // label5
             // 
@@ -361,65 +321,15 @@
             this.grid_exposiciones.AllowUserToDeleteRows = false;
             this.grid_exposiciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grid_exposiciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_exposiciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id_Exposicion,
-            this.NombreExpo,
-            this.FechaInicio,
-            this.FechaFin,
-            this.HoraApertura,
-            this.HoraCierre,
-            this.PublicoDestino});
             this.grid_exposiciones.Enabled = false;
             this.grid_exposiciones.Location = new System.Drawing.Point(594, 93);
+            this.grid_exposiciones.MultiSelect = false;
             this.grid_exposiciones.Name = "grid_exposiciones";
             this.grid_exposiciones.ReadOnly = true;
             this.grid_exposiciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grid_exposiciones.Size = new System.Drawing.Size(556, 127);
             this.grid_exposiciones.TabIndex = 43;
             this.grid_exposiciones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tomarSeleccionExposicion);
-            // 
-            // Id_Exposicion
-            // 
-            this.Id_Exposicion.HeaderText = "Id_Exposicion";
-            this.Id_Exposicion.Name = "Id_Exposicion";
-            this.Id_Exposicion.ReadOnly = true;
-            this.Id_Exposicion.Visible = false;
-            // 
-            // NombreExpo
-            // 
-            this.NombreExpo.HeaderText = "Nombre";
-            this.NombreExpo.Name = "NombreExpo";
-            this.NombreExpo.ReadOnly = true;
-            // 
-            // FechaInicio
-            // 
-            this.FechaInicio.HeaderText = "Fecha Inicio";
-            this.FechaInicio.Name = "FechaInicio";
-            this.FechaInicio.ReadOnly = true;
-            // 
-            // FechaFin
-            // 
-            this.FechaFin.HeaderText = "Fecha Fin";
-            this.FechaFin.Name = "FechaFin";
-            this.FechaFin.ReadOnly = true;
-            // 
-            // HoraApertura
-            // 
-            this.HoraApertura.HeaderText = "Hora de Apertura";
-            this.HoraApertura.Name = "HoraApertura";
-            this.HoraApertura.ReadOnly = true;
-            // 
-            // HoraCierre
-            // 
-            this.HoraCierre.HeaderText = "Hora de Cierre";
-            this.HoraCierre.Name = "HoraCierre";
-            this.HoraCierre.ReadOnly = true;
-            // 
-            // PublicoDestino
-            // 
-            this.PublicoDestino.HeaderText = "Publico Destino";
-            this.PublicoDestino.Name = "PublicoDestino";
-            this.PublicoDestino.ReadOnly = true;
             // 
             // label7
             // 
@@ -429,6 +339,24 @@
             this.label7.Size = new System.Drawing.Size(75, 13);
             this.label7.TabIndex = 35;
             this.label7.Text = "Tipos de visita";
+            // 
+            // lbl_guias_necesarios
+            // 
+            this.lbl_guias_necesarios.AutoSize = true;
+            this.lbl_guias_necesarios.Location = new System.Drawing.Point(761, 332);
+            this.lbl_guias_necesarios.Name = "lbl_guias_necesarios";
+            this.lbl_guias_necesarios.Size = new System.Drawing.Size(10, 13);
+            this.lbl_guias_necesarios.TabIndex = 57;
+            this.lbl_guias_necesarios.Text = " ";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(641, 332);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(96, 13);
+            this.label9.TabIndex = 56;
+            this.label9.Text = "Guias Necesarios: ";
             // 
             // PantallaAdmReserva
             // 
@@ -468,17 +396,6 @@
         private System.Windows.Forms.ComboBox cmb_tipo_visita;
         private System.Windows.Forms.DataGridView grid_exposiciones;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id_Sede;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CantidadMaximaVisitantes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CantidadMaximaVisitantesPorGuia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id_Exposicion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreExpo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FechaInicio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FechaFin;
-        private System.Windows.Forms.DataGridViewTextBoxColumn HoraApertura;
-        private System.Windows.Forms.DataGridViewTextBoxColumn HoraCierre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PublicoDestino;
         private System.Windows.Forms.Label lbl_duracion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id_Guia;
         private System.Windows.Forms.DataGridViewTextBoxColumn NombreEmpleado;
@@ -487,5 +404,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NroTelefono;
         private System.Windows.Forms.DataGridViewTextBoxColumn HoraEntrada;
         private System.Windows.Forms.DataGridViewTextBoxColumn HoraSalida;
+        private System.Windows.Forms.Label lbl_guias_necesarios;
+        private System.Windows.Forms.Label label9;
     }
 }
