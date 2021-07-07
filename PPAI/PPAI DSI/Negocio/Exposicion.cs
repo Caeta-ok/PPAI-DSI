@@ -22,50 +22,70 @@ namespace PPAI_DSI.Negocio
         private PublicoDestino _publicoDestino;
         private DetalleExposicion _detalleExposicion;
 
+        public int Id { get => _id; set => _id = value; }
+        public string Nombre { get => _nombre; set => _nombre = value; }
+        public DateTime FechaInicio { get => _fechaInicio; set => _fechaInicio = value; }
+        public DateTime FechaInicioReplanificada { get => _fechaInicioReplanificada; set => _fechaInicioReplanificada = value; }
+        public DateTime FechaFin { get => _fechaFin; set => _fechaFin = value; }
+        public DateTime FechaFinReplanificada { get => _fechaFinReplanificada; set => _fechaFinReplanificada = value; }
+        public DateTime HoraApertura { get => _horaApertura; set => _horaApertura = value; }
+        public DateTime HoraCierre { get => _horaCierre; set => _horaCierre = value; }
+        public TipoExposicion TipoExposicion { get => _tipoExposicion; set => _tipoExposicion = value; }
+        public Empleado Empleado { get => _empleado; set => _empleado = value; }
+        public PublicoDestino PublicoDestino { get => _publicoDestino; set => _publicoDestino = value; }
+
+        public String PublicoDeDestino
+        {
+            get { return _publicoDestino.Nombre; }
+            set { _publicoDestino.Nombre = value; }
+        }
+
+        public DetalleExposicion DetalleExposicion { get => _detalleExposicion; set => _detalleExposicion = value; }
+
         public Exposicion(EXPOSICIONES exposicion)
         {
-            _id = exposicion.Id_Exposicion;
-            _nombre = exposicion.Nombre;
-            _fechaInicio = exposicion.FechaInicio.Value;
-            _fechaInicioReplanificada = exposicion.FechaInicioReplanificada.Value;
-            _fechaFin = exposicion.FechaFin.Value;
-            _fechaFinReplanificada = exposicion.FechaFinReplanificada.Value;
-            _horaApertura = DateTime.Parse(exposicion.HoraApertura.Value.ToString());
-            _horaCierre = DateTime.Parse(exposicion.HoraCierre.Value.ToString());
+            Id = exposicion.Id_Exposicion;
+            Nombre = exposicion.Nombre;
+            FechaInicio = exposicion.FechaInicio.Value;
+            FechaInicioReplanificada = exposicion.FechaInicioReplanificada.Value;
+            FechaFin = exposicion.FechaFin.Value;
+            FechaFinReplanificada = exposicion.FechaFinReplanificada.Value;
+            HoraApertura = DateTime.Parse(exposicion.HoraApertura.Value.ToString());
+            HoraCierre = DateTime.Parse(exposicion.HoraCierre.Value.ToString());
         }
 
         public void conocerTipoExposicion(TipoExposicion tipoExposicion)
         {
-            _tipoExposicion = tipoExposicion;
+            TipoExposicion = tipoExposicion;
         }
 
         public void conocerEmpelado(Empleado empleado)
         {
-            _empleado = empleado;
+            Empleado = empleado;
         }
 
         public void conocerPublicoDestino(PublicoDestino publicoDestino)
         {
-            _publicoDestino = publicoDestino;
+            PublicoDestino = publicoDestino;
         }
-        
+
         public void conocerDetalleExposicion(DetalleExposicion detalleExposicion)
         {
-            _detalleExposicion = detalleExposicion;
+            DetalleExposicion = detalleExposicion;
         }
 
         public TipoExposicion getTipoExposicion()
         {
-            return _tipoExposicion;
+            return TipoExposicion;
         }
 
         public bool esVigente()
         {
-            if(_fechaFin > DateTime.Now)
+            if (FechaFin > DateTime.Now)
             {
-                if(_fechaFinReplanificada > DateTime.Now)
+                if (FechaFinReplanificada > DateTime.Now)
                 {
-                    return true; 
+                    return true;
                 }
             }
             return false;
@@ -73,55 +93,47 @@ namespace PPAI_DSI.Negocio
 
         public int getId()
         {
-            return _id;
+            return Id;
         }
 
         public string getNombre()
         {
-            return _nombre;
+            return Nombre;
         }
 
         public DateTime getFechaFin()
         {
-            return _fechaFin;
+            return FechaFin;
         }
 
         public DateTime getFechaInicio()
         {
-            return _fechaInicio;
+            return FechaInicio;
         }
 
         public DateTime getHoraApertura()
         {
-            return _horaApertura;
+            return HoraApertura;
         }
 
         public DateTime getHoraCierre()
         {
-            return _horaCierre;
+            return HoraCierre;
         }
 
         public PublicoDestino getPublicoDestino()
         {
-            return _publicoDestino;
+            return PublicoDestino;
         }
 
         public DetalleExposicion getDetalleExposicion()
         {
-            return _detalleExposicion;
+            return DetalleExposicion;
         }
-        
-        /*
+
         public int calcularDuracionObrasExpuestas()
         {
-
-        }*/
-
-        /*
-        public bool esVigente()
-        {
-
-        }*/
-
+            return DetalleExposicion.buscarDuracionExtraObra();
+        }
     }
 }

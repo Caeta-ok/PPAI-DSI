@@ -24,9 +24,20 @@ namespace PPAI_DSI.Negocio
             _domicilio = escuela.Domicilio;
         }
 
-        public string getNombre()
+        public string id_esc
         {
-            return _nombre;
+            get
+            {
+                return _id.ToString();
+            }
+        }
+
+        public string getNombre
+        {
+            get
+            {
+                return _nombre;
+            }
         }
 
         public int getId()

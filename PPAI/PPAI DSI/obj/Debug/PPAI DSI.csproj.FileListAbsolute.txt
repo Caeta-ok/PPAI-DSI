@@ -74,3 +74,21 @@ D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.Sharp.dll
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csprojAssemblyReference.cache
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.PantallaAdmReserva.resources
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Properties.Resources.resources
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.GenerateResource.cache
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CoreCompileInputs.cache
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe.config
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.pdb
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.dll
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.Sharp.dll
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.xml
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
