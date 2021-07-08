@@ -35,6 +35,7 @@ namespace PPAI_DSI.Formularios
             solicitarFechaReserva(false);
             solicitarHoraReserva(false);
             solicitarSeleccionGuia(false);
+            solicitarSeleccionExposicion(false);
             gestorReserva.iniciarSesion();
             gestorReserva.nuevaReserva();
             mostrarEscuelas();
@@ -171,6 +172,7 @@ namespace PPAI_DSI.Formularios
         //Muestra las exposiciones depuradas
         private void mostrarExposiciones()
         {
+            //solicitarSeleccionExposicion(false);
             var datos = new BindingSource();
             datos.DataSource = gestorReserva.buscarExposicionesTemporales();
             grid_exposiciones.DataSource = datos;
@@ -183,8 +185,8 @@ namespace PPAI_DSI.Formularios
             grid_exposiciones.Columns["DetalleExposicion"].Visible = false;
             grid_exposiciones.Columns["TipoExposicion"].Visible = false;
             grid_exposiciones.Columns["PublicoDestino"].Visible = false;
-            solicitarSeleccionExposicion(true);
             tomarSeleccionExposicion();
+            //solicitarSeleccionExposicion();
         }
 
         //Habilita la seleccion de exposicion
@@ -217,15 +219,16 @@ namespace PPAI_DSI.Formularios
         //No funciona el listener del evento ?
         private void tomarSeleccionExposicion(object sender, DataGridViewCellEventArgs e)
         {
-            //solicitarFechaReserva(false);
-            //cmb_tipo_visita.Enabled = false;
-            //List<Exposicion> exposicion_seleccionada = new List<Exposicion>();
-            //foreach (DataGridViewRow row in grid_exposiciones.SelectedRows)
-            //{
-            //    exposicion_seleccionada.Add(grid_exposiciones.SelectedRows[0].DataBoundItem as Exposicion);
-            //}
-            //gestorReserva.tomarSeleccionExposicion(exposicion_seleccionada);
-            //solicitarFechaReserva(true);
+        //    solicitarFechaReserva(false);
+        //    cmb_tipo_visita.Enabled = false;
+        //    List<Exposicion> exposicion_seleccionada = new List<Exposicion>();
+
+        //    foreach (DataGridViewRow row in grid_exposiciones.SelectedRows)
+        //    {
+        //        exposicion_seleccionada.Add(grid_exposiciones.SelectedRows[0].DataBoundItem as Exposicion);
+        //    }
+        //    gestorReserva.tomarSeleccionExposicion(exposicion_seleccionada);
+        //    solicitarFechaReserva(true);
         }
 
         //Habilita la seleccion de Fecha de reserva
@@ -296,6 +299,7 @@ namespace PPAI_DSI.Formularios
             grid_guias_disponibles.DataSource = null;
             grid_guias_disponibles.Rows.Clear();
             int i = 0;
+
             foreach (Empleado empleado in listaGuiasDisponibles)
             {
                 grid_guias_disponibles.Rows.Add();

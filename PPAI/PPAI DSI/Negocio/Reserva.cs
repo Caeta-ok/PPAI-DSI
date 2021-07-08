@@ -203,6 +203,13 @@ namespace PPAI_DSI.Negocio
             return _fechaHoraCreacion;
         }
 
-
+        public bool esDeFecha(DateTime fecha)
+        {
+            if (_fechaReserva == fecha)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
