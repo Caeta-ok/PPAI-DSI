@@ -17,7 +17,6 @@ namespace PPAI_DSI.Negocio
 
         public int Id { get => _id; set => _id = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
-
         public int CantidadMaximaDeVisitantes { get => _cantidadMaximaVisitantes; set => _cantidadMaximaVisitantes = value; }
         public int CantidadMaximaDeVisitantesPorGuia { get => _cantidadMaximaPorGuia; set => _cantidadMaximaPorGuia = value; }
         public List<Exposicion> ListaExposiciones { get => _listaExposiciones; set => _listaExposiciones = value; }
@@ -103,29 +102,55 @@ namespace PPAI_DSI.Negocio
             return duracionDeExposicion;
         }
 
-        public List<Reserva> buscarReservasPorFecha(DateTime fecha)
+        //public List<Reserva> buscarReservasPorFecha(DateTime fecha)
+        //{
+        //    List<Reserva> listaReservas = Persistencia.traerReservasPorIdSede(_id);
+        //    foreach (Reserva reserva in listaReservas) // Mientras existan reservas
+        //    {
+        //        if (reserva.esDeFecha(fecha))
+        //        {
+        //            listaReservas.Add(reserva);
+        //        }
+        //    }
+        //    return listaReservas;
+        //}
+
+        public List<int> getCantidadVisitantesEnReservasPorFecha(DateTime fecha)
         {
-            List<Reserva> listaReservas = Persistencia.traerReservasPorIdSede(_id);
-            foreach (Reserva res in listaReservas)
+            List<Reserva> listaReservas = Persistencia.traerReservasPorIdSede(_id); // corregir consulta sql
+            List<int> listaCantidadesVisitantes = new List<int>();
+            foreach (Reserva reserva in listaReservas) // Loop Mientras existan reservas
             {
-                if (res.getFechaReserva() == fecha)
+                if (reserva.esDeFecha(fecha))
                 {
-                    listaReservas.Add(res);
+                    listaReservas.Add(reserva);
+                    listaCantidadesVisitantes.Add(reserva.getCantidadAlumnos());
                 }
             }
-            return listaReservas;
+            return listaCantidadesVisitantes;
         }
 
-        public int sumarCantidadDeVisitantes(DateTime fecha)
+        public int sumarCantidadDeVisitantesEnFecha(DateTime fecha)
         {
-            int cantidadAlumnos = 0;
-            List<Reserva> listaReservas = buscarReservasPorFecha(fecha);
-            foreach (Reserva res in listaReservas)
+            int cantidadVisitantes = 0;
+            List<int> listaCantidadesVisitantes = getCantidadVisitantesEnReservasPorFecha(fecha);
+            foreach (int cantidad in listaCantidadesVisitantes)
             {
-                cantidadAlumnos += res.getCantidadAlumnosConfirmados();
+                cantidadVisitantes += cantidad;
             }
-            return cantidadAlumnos;
+            return cantidadVisitantes;
         }
+
+        //public int sumarCantidadDeVisitantes(DateTime fecha)
+        //{
+        //    int cantidadAlumnos = 0;
+        //    List<Reserva> listaReservas = buscarReservasPorFecha(fecha);
+        //    foreach (Reserva res in listaReservas)
+        //    {
+        //        cantidadAlumnos += res.getCantidadAlumnos();
+        //    }
+        //    return cantidadAlumnos;
+        //}
 
         public List<Empleado> buscarGuias()
         {
@@ -137,6 +162,14 @@ namespace PPAI_DSI.Negocio
         public double getCantidadGuiasNecesarios(double alumnos)
         {
             return Math.Round(Convert.ToDouble(alumnos / getCantidadMaximaPorGuia()));
+        }
+
+        public bool validarCapacidadVisitantes(DateTime fechaReserva, int cantidadVisitantes)
+        {
+            int cantidadTotal = cantidadVisitantes + sumarCantidadDeVisitantesEnFecha(fechaReserva);
+            if (cantidadTotal <= _cantidadMaximaVisitantes)
+                return true;
+            return false;
         }
 
         //private List<Exposicion> _exposiciones;

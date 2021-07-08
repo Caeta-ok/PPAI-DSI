@@ -13,12 +13,8 @@ namespace PPAI_DSI.Negocio
 {
     public class GestorReserva
     {
-        //private static Sede _sedeSeleccionada;
         private List<Escuela> _listaEscuelas;
-
-        //private static Reserva _reserva;
         private List<Sede> _listaSedes;
-
         private List<TipoVisita> _listaTiposVisitas;
         private TipoVisita _tipoVisitaSeleccionada;
         private Sede _sedeSeleccionada;
@@ -111,24 +107,44 @@ namespace PPAI_DSI.Negocio
                 return false;
         }
 
+        //public List<Exposicion> buscarExposicionesTemporales()
+        //{
+        //    _listaExposiciones.Clear();
+        //    _listaExposicionesVigentes.Clear();
+        //    _listaExposicionesTemporalesVigentes.Clear();
+
+        //    _listaExposiciones = Persistencia.traerExposiciones(_sedeSeleccionada);
+        //    foreach (Exposicion expo_vigente in _listaExposiciones) // Loop Mientras haya exposiciones
+        //    {
+        //        if (expo_vigente.esVigente())
+        //        {
+        //            _listaExposicionesVigentes.Add(expo_vigente);
+        //            if()
+        //        }
+        //    }
+        //    foreach (Exposicion expo_temporal in _listaExposicionesVigentes)
+        //    {
+        //        //Obtengo del objeto Exposicion el objeto TipoExposicion y le pregunto si es Temporal si es asi relleno la lista
+        //        if (expo_temporal.getTipoExposicion().esExposicionTemporal())
+        //            _listaExposicionesTemporalesVigentes.Add(expo_temporal);
+        //    }
+        //    return _listaExposicionesTemporalesVigentes;
+        //}
+
         public List<Exposicion> buscarExposicionesTemporales()
         {
             _listaExposiciones.Clear();
-            _listaExposicionesVigentes.Clear();
             _listaExposicionesTemporalesVigentes.Clear();
             _listaExposiciones = Persistencia.traerExposiciones(_sedeSeleccionada);
-            foreach (Exposicion expo_vigente in _listaExposiciones)
+            foreach (Exposicion exposicion in _listaExposiciones) // Loop Mientras haya exposiciones
             {
-                if (expo_vigente.esVigente())
+                if (exposicion.esVigente())
                 {
-                    _listaExposicionesVigentes.Add(expo_vigente);
+                    if (exposicion.getTipoExposicion().esExposicionTemporal())
+                    {
+                        _listaExposicionesTemporalesVigentes.Add(exposicion);
+                    }
                 }
-            }
-            foreach (Exposicion expo_temporal in _listaExposicionesVigentes)
-            {
-                //Obtengo del objeto Exposicion el objeto TipoExposicion y le pregunto si es Temporal si es asi relleno la lista
-                if (expo_temporal.getTipoExposicion().esExposicionTemporal())
-                    _listaExposicionesTemporalesVigentes.Add(expo_temporal);
             }
             return _listaExposicionesTemporalesVigentes;
         }
@@ -171,10 +187,7 @@ namespace PPAI_DSI.Negocio
 
         public bool validarCapacidadVisitantes()
         {
-            int cantidadTotal = _cantidadAlumnos + _sedeSeleccionada.sumarCantidadDeVisitantes(_fechaReserva);
-            if (cantidadTotal <= _sedeSeleccionada.getCantidadMaixmaVisitantes())
-                return true;
-            return false;
+            return _sedeSeleccionada.validarCapacidadVisitantes(_fechaReserva, _cantidadAlumnos);
         }
 
         public void buscarGuiasDispFechaReserva() // Los guias tienen que pertenecer a las sedes
@@ -266,7 +279,6 @@ namespace PPAI_DSI.Negocio
             cambioEstado.conocerEstado(_estado);
             reserva.conocerCambioEstado(cambioEstado);
 
-            //Persistencia.insertarNuevaReserva(reserva);
             Persistencia.insertarReserva(reserva);
             Persistencia.insertarSesion(_sesionActual);
         }

@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.group_registrar_reserva = new System.Windows.Forms.GroupBox();
+            this.lbl_guias_necesarios = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.lbl_duracion = new System.Windows.Forms.Label();
             this.btn_ejecutar_registro_reserva = new System.Windows.Forms.Button();
             this.lbl_guias_disponibles = new System.Windows.Forms.Label();
@@ -55,8 +57,6 @@
             this.cmb_tipo_visita = new System.Windows.Forms.ComboBox();
             this.grid_exposiciones = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
-            this.lbl_guias_necesarios = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.group_registrar_reserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_guias_disponibles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_sedes)).BeginInit();
@@ -92,6 +92,24 @@
             this.group_registrar_reserva.TabIndex = 53;
             this.group_registrar_reserva.TabStop = false;
             this.group_registrar_reserva.Text = "Registrar Reserva";
+            // 
+            // lbl_guias_necesarios
+            // 
+            this.lbl_guias_necesarios.AutoSize = true;
+            this.lbl_guias_necesarios.Location = new System.Drawing.Point(761, 332);
+            this.lbl_guias_necesarios.Name = "lbl_guias_necesarios";
+            this.lbl_guias_necesarios.Size = new System.Drawing.Size(10, 13);
+            this.lbl_guias_necesarios.TabIndex = 57;
+            this.lbl_guias_necesarios.Text = " ";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(641, 332);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(96, 13);
+            this.label9.TabIndex = 56;
+            this.label9.Text = "Guias Necesarios: ";
             // 
             // lbl_duracion
             // 
@@ -323,7 +341,6 @@
             this.grid_exposiciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid_exposiciones.Enabled = false;
             this.grid_exposiciones.Location = new System.Drawing.Point(594, 93);
-            this.grid_exposiciones.MultiSelect = false;
             this.grid_exposiciones.Name = "grid_exposiciones";
             this.grid_exposiciones.ReadOnly = true;
             this.grid_exposiciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -339,24 +356,6 @@
             this.label7.Size = new System.Drawing.Size(75, 13);
             this.label7.TabIndex = 35;
             this.label7.Text = "Tipos de visita";
-            // 
-            // lbl_guias_necesarios
-            // 
-            this.lbl_guias_necesarios.AutoSize = true;
-            this.lbl_guias_necesarios.Location = new System.Drawing.Point(761, 332);
-            this.lbl_guias_necesarios.Name = "lbl_guias_necesarios";
-            this.lbl_guias_necesarios.Size = new System.Drawing.Size(10, 13);
-            this.lbl_guias_necesarios.TabIndex = 57;
-            this.lbl_guias_necesarios.Text = " ";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(641, 332);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(96, 13);
-            this.label9.TabIndex = 56;
-            this.label9.Text = "Guias Necesarios: ";
             // 
             // PantallaAdmReserva
             // 
