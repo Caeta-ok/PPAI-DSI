@@ -172,7 +172,7 @@ namespace PPAI_DSI.Formularios
         //Muestra las exposiciones depuradas
         private void mostrarExposiciones()
         {
-            //solicitarSeleccionExposicion(false);
+            solicitarSeleccionExposicion(false);
             var datos = new BindingSource();
             datos.DataSource = gestorReserva.buscarExposicionesTemporales();
             grid_exposiciones.DataSource = datos;
@@ -185,8 +185,8 @@ namespace PPAI_DSI.Formularios
             grid_exposiciones.Columns["DetalleExposicion"].Visible = false;
             grid_exposiciones.Columns["TipoExposicion"].Visible = false;
             grid_exposiciones.Columns["PublicoDestino"].Visible = false;
-            tomarSeleccionExposicion();
-            //solicitarSeleccionExposicion();
+            //tomarSeleccionExposicion();
+            solicitarSeleccionExposicion();
         }
 
         //Habilita la seleccion de exposicion
@@ -203,32 +203,32 @@ namespace PPAI_DSI.Formularios
         }
 
         //Envia las exposiciones seleccionadas al gestor y habilita la seleccion de fecha de reserva
-        public void tomarSeleccionExposicion()
-        {
-            solicitarFechaReserva(false);
-            cmb_tipo_visita.Enabled = false;
-            List<Exposicion> exposicion_seleccionada = new List<Exposicion>();
-            foreach (DataGridViewRow row in grid_exposiciones.SelectedRows)
-            {
-                exposicion_seleccionada.Add(grid_exposiciones.SelectedRows[0].DataBoundItem as Exposicion);
-            }
-            gestorReserva.tomarSeleccionExposicion(exposicion_seleccionada);
-            solicitarFechaReserva(true);
-        }
-
-        //No funciona el listener del evento ?
-        private void tomarSeleccionExposicion(object sender, DataGridViewCellEventArgs e)
-        {
+        //public void tomarSeleccionExposicion()
+        //{
         //    solicitarFechaReserva(false);
         //    cmb_tipo_visita.Enabled = false;
         //    List<Exposicion> exposicion_seleccionada = new List<Exposicion>();
-
         //    foreach (DataGridViewRow row in grid_exposiciones.SelectedRows)
         //    {
         //        exposicion_seleccionada.Add(grid_exposiciones.SelectedRows[0].DataBoundItem as Exposicion);
         //    }
         //    gestorReserva.tomarSeleccionExposicion(exposicion_seleccionada);
         //    solicitarFechaReserva(true);
+        //}
+
+        //No funciona el listener del evento ?
+        private void tomarSeleccionExposicion(object sender, DataGridViewCellEventArgs e)
+        {
+            solicitarFechaReserva(false);
+            cmb_tipo_visita.Enabled = false;
+            List<Exposicion> exposicion_seleccionada = new List<Exposicion>();
+
+            foreach (DataGridViewRow row in grid_exposiciones.SelectedRows)
+            {
+                exposicion_seleccionada.Add(grid_exposiciones.SelectedRows[0].DataBoundItem as Exposicion);
+            }
+            gestorReserva.tomarSeleccionExposicion(exposicion_seleccionada);
+            solicitarFechaReserva(true);
         }
 
         //Habilita la seleccion de Fecha de reserva
