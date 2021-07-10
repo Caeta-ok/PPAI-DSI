@@ -339,7 +339,6 @@
             this.grid_exposiciones.AllowUserToDeleteRows = false;
             this.grid_exposiciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grid_exposiciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_exposiciones.Enabled = false;
             this.grid_exposiciones.Location = new System.Drawing.Point(594, 93);
             this.grid_exposiciones.Name = "grid_exposiciones";
             this.grid_exposiciones.ReadOnly = true;
