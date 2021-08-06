@@ -23,16 +23,16 @@ namespace PPAI_DSI.Backend
         }
     
         public int Id_Reserva { get; set; }
+        public Nullable<int> DuracionEstimada { get; set; }
         public Nullable<System.DateTime> FechaHoraCreacion { get; set; }
         public Nullable<System.DateTime> FechaReserva { get; set; }
+        public Nullable<System.TimeSpan> HoraReserva { get; set; }
         public Nullable<System.TimeSpan> HoraInicioReal { get; set; }
         public Nullable<System.TimeSpan> HoraFinReal { get; set; }
         public Nullable<int> CantidadAlumnos { get; set; }
         public Nullable<int> CantidadAlumnosConfirmados { get; set; }
         public Nullable<int> Id_Sede { get; set; }
         public Nullable<int> Id_Empleado { get; set; }
-        public Nullable<int> DuracionEstimada { get; set; }
-        public Nullable<System.TimeSpan> HoraReserva { get; set; }
         public Nullable<int> NroReserva { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

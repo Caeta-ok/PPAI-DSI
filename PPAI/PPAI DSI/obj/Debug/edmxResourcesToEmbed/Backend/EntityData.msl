@@ -7,9 +7,9 @@
           <ScalarProperty Name="Id_AsignacionVisita" ColumnName="Id_AsignacionVisita" />
           <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
           <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-          <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
           <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
           <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+          <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -150,7 +150,6 @@
           <ScalarProperty Name="Id_HorarioTrabajo" ColumnName="Id_HorarioTrabajo" />
           <ScalarProperty Name="HoraEntrada" ColumnName="HoraEntrada" />
           <ScalarProperty Name="HoraSalida" ColumnName="HoraSalida" />
-          <ScalarProperty Name="Id_Dia" ColumnName="Id_Dia" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -162,13 +161,13 @@
           <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
           <ScalarProperty Name="FechaPrimerIngreso" ColumnName="FechaPrimerIngreso" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="DuracionExtendida" ColumnName="DuracionExtendida" />
+          <ScalarProperty Name="DuracionResumida" ColumnName="DuracionResumida" />
           <ScalarProperty Name="Alto" ColumnName="Alto" />
           <ScalarProperty Name="Ancho" ColumnName="Ancho" />
           <ScalarProperty Name="Peso" ColumnName="Peso" />
           <ScalarProperty Name="Valuacion" ColumnName="Valuacion" />
           <ScalarProperty Name="CodigoSensor" ColumnName="CodigoSensor" />
-          <ScalarProperty Name="DuracionExtendida" ColumnName="DuracionExtendida" />
-          <ScalarProperty Name="DuracionResumida" ColumnName="DuracionResumida" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -194,16 +193,16 @@
       <EntityTypeMapping TypeName="PPAIModel.RESERVAS">
         <MappingFragment StoreEntitySet="RESERVAS">
           <ScalarProperty Name="Id_Reserva" ColumnName="Id_Reserva" />
+          <ScalarProperty Name="DuracionEstimada" ColumnName="DuracionEstimada" />
           <ScalarProperty Name="FechaHoraCreacion" ColumnName="FechaHoraCreacion" />
           <ScalarProperty Name="FechaReserva" ColumnName="FechaReserva" />
+          <ScalarProperty Name="HoraReserva" ColumnName="HoraReserva" />
           <ScalarProperty Name="HoraInicioReal" ColumnName="HoraInicioReal" />
           <ScalarProperty Name="HoraFinReal" ColumnName="HoraFinReal" />
           <ScalarProperty Name="CantidadAlumnos" ColumnName="CantidadAlumnos" />
           <ScalarProperty Name="CantidadAlumnosConfirmados" ColumnName="CantidadAlumnosConfirmados" />
           <ScalarProperty Name="Id_Sede" ColumnName="Id_Sede" />
           <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
-          <ScalarProperty Name="DuracionEstimada" ColumnName="DuracionEstimada" />
-          <ScalarProperty Name="HoraReserva" ColumnName="HoraReserva" />
           <ScalarProperty Name="NroReserva" ColumnName="NroReserva" />
         </MappingFragment>
       </EntityTypeMapping>

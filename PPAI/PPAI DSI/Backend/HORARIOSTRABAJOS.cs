@@ -23,7 +23,6 @@ namespace PPAI_DSI.Backend
         public int Id_HorarioTrabajo { get; set; }
         public Nullable<System.TimeSpan> HoraEntrada { get; set; }
         public Nullable<System.TimeSpan> HoraSalida { get; set; }
-        public Nullable<int> Id_Dia { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMPLEADOS> EMPLEADOS { get; set; }

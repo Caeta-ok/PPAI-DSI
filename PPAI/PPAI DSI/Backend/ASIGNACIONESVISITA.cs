@@ -23,9 +23,9 @@ namespace PPAI_DSI.Backend
         public int Id_AsignacionVisita { get; set; }
         public Nullable<System.DateTime> FechaInicio { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
-        public Nullable<int> Id_Empleado { get; set; }
         public Nullable<System.TimeSpan> HoraInicio { get; set; }
         public Nullable<System.TimeSpan> HoraFin { get; set; }
+        public Nullable<int> Id_Empleado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASIGNACIONESVISITAPORRESERVA> ASIGNACIONESVISITAPORRESERVA { get; set; }

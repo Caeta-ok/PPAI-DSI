@@ -373,6 +373,7 @@ namespace PPAI_DSI.Formularios
             grid_guias_disponibles.Enabled = false;
             lbl_duracion.Text = "";
             btn_ejecutar_registro_reserva.Enabled = false;
+            lbl_guias_necesarios.Text = "";
         }
     }
 }
