@@ -1,7 +1,8 @@
 --CREATE DATABASE [PPAI_DSI] -- Ejecutar solo primero, despues comentar y ejecutar lo otro
 
-USE [PPAI_DSI]
+--USE [PPAI_DSI]
 GO
+
 -------------------------------------------------------------------------------------------------- ESCUELAS
 create table ESCUELAS
 	(Id_Escuela int identity(1, 1) not null primary key,
@@ -25,9 +26,8 @@ create table DIAS
 /*Con PK simple*/
 create table HORARIOSTRABAJOS
 	(Id_HorarioTrabajo int identity(1, 1) not null primary key,
-	HoraEntrada time,
-	HoraSalida time,
-	Id_Dia int)
+	HoraEntrada time(0),
+	HoraSalida time(0))
 
 /*Con PK compuesta*/
 --create table HORARIOSTRABAJOS
@@ -37,7 +37,34 @@ create table HORARIOSTRABAJOS
 --	constraint PK_HORARIOSTRABAJOS primary key(HoraEntrada, HoraSalida),
 --	constraint FK_DIAS0 foreign key (Id_Dia) references DIAS(Id_Dia))
 
+-------------------------------------------------------------------------------------------------- SEDES
+create table SEDES
+	(Id_Sede int identity(1, 1) not null primary key,
+	Nombre varchar(50),
+	CantidadMaximaVisitantes int,
+	CantidadMaximaPorGuia int)
+
 -------------------------------------------------------------------------------------------------- EMPLEADOS
+create table EMPLEADOS
+	(Id_Empleado int identity(1, 1) not null primary key,
+	Nombre varchar(50),
+	Apellido varchar(50),
+	CodigoValidacion varchar(50),
+	Cuit bigint,
+	Dni int,
+	Domicilio varchar(100),
+	FechaIngreso date,
+	FechaNacimiento date,
+	Email varchar(50) unique,
+	Sexo varchar(20),
+	NroTelefono bigint,
+	Id_Cargo int,
+	Id_HorarioTrabajo int,
+	Id_Sede int,
+	constraint FK_CARGOS0 foreign key(Id_Cargo) references CARGOS(Id_Cargo),
+	constraint FK_HORARIOSTRABAJOS0 foreign key (Id_HorarioTrabajo) references HORARIOSTRABAJOS(Id_HorarioTrabajo),
+	constraint FK_SEDES0 foreign key (Id_Sede) references SEDES(Id_Sede))
+
 --create table EMPLEADOS
 --	(Id_Empleado int identity(1, 1) not null primary key,
 --	Nombre varchar(50),
@@ -57,24 +84,6 @@ create table HORARIOSTRABAJOS
 --	constraint FK_CARGOS1 foreign key(Id_Cargo) references CARGOS(Id_Cargo),
 --	constraint FK_HORARIOSTRABAJOS foreign key (Id_HorarioEntrada, Id_HorarioSalida) references HORARIOSTRABAJOS(HoraEntrada, HoraSalida)))
 
-create table EMPLEADOS
-	(Id_Empleado int identity(1, 1) not null primary key,
-	Nombre varchar(50),
-	Apellido varchar(50),
-	CodigoValidacion varchar(50),
-	Cuit bigint,
-	Dni int,
-	Domicilio varchar(100),
-	FechaIngreso date,
-	FechaNacimiento date,
-	Email varchar(50) unique,
-	Sexo varchar(20),
-	NroTelefono bigint,
-	Id_Cargo int,
-	Id_HorarioTrabajo int,
-	constraint FK_CARGOS1 foreign key(Id_Cargo) references CARGOS(Id_Cargo),
-	constraint FK_HORARIOSTRABAJOS foreign key (Id_HorarioTrabajo) references HORARIOSTRABAJOS(Id_HorarioTrabajo))
-
 -------------------------------------------------------------------------------------------------- USUARIOS
 create table USUARIOS
 	(Id_Usuario int identity(1, 1) not null primary key,
@@ -84,14 +93,12 @@ create table USUARIOS
 	constraint FK_EMPLEADOS0 foreign key (Id_Empleado) references EMPLEADOS(Id_Empleado))
 
 -------------------------------------------------------------------------------------------------- SESION
-create table SESION
+create table SESIONES
 	(Id_Sesion int identity(1, 1) not null primary key,
-	FechaInicio date,
-	FechaFin date,
-	HoraFin time,
-	HoraInicio time,
-	Id_Usuario int,
-	constraint FK_USUARIOS0 foreign key(Id_Usuario) references USUARIOS(Id_Usuario))
+	 FechaHoraInicio datetime,
+	 FechaHoraFin datetime,
+	 Id_Usuario int,
+	 constraint FK_USUARIOS0 foreign key (Id_Usuario) references USUARIOS(Id_Usuario))
 
 ----------------------------------------------------------------------------------------------- PUBLICOSDESTINO
 create table PUBLICOSDESTINO
@@ -113,8 +120,8 @@ create table OBRAS
 	FechaCreacion date, 
 	FechaPrimerIngreso date, 
 	Descripcion varchar(150), 
-	DuracionExtendida varchar(50), 
-	DuracionResumida varchar(50), 
+	DuracionExtendida int, 
+	DuracionResumida int,
 	Alto int, 
 	Ancho int, 
 	Peso int, 
@@ -145,28 +152,71 @@ create table EXPOSICIONES
 	constraint FK_DETALLESEXPOSICION0 foreign key(Id_DetalleExposicion) references DETALLESEXPOSICION(Id_DetalleExposicion),
 	constraint FK_PUBLICOSDESTINO0 foreign key (Id_PublicoDestino) references PUBLICOSDESTINO(Id_PublicoDestino))
 
--------------------------------------------------------------------------------------------------- SEDES
-create table SEDES
-	(Id_Sede int identity(1, 1) not null primary key,
-	Nombre varchar(50),
-	CantidadMaximaVisitantes int,
-	CantidadMaximaPorGuia int,
+-------------------------------------------------------------------------------------------------- OBRASPOREXPOSICION
+create table OBRASPOREXPOSICION
+	(Id_ObraPorExposicion int identity(1, 1) not null primary key,
+	 Id_Obra int,
+	 Id_Exposicion int,
+	 constraint FK_OBRAS1 foreign key (Id_Obra) references OBRAS(Id_Obra),
+	 constraint FK_EXPOSICIONES0 foreign key (Id_Exposicion) references EXPOSICIONES(Id_Exposicion))
+
+-------------------------------------------------------------------------------------------------- RESERVAS
+create table RESERVAS
+	(Id_Reserva int identity(1, 1) not null primary key,
+	DuracionEstimada int, 
+	FechaHoraCreacion date, 
+	FechaReserva date,
+	HoraReserva time(0),
+	HoraInicioReal time(0), 
+	HoraFinReal time(0), 
+	CantidadAlumnos int, 
+	CantidadAlumnosConfirmados int,
+	Id_Sede int,
+	Id_Empleado int,
+	NroReserva int unique,
+	constraint FK_SEDES1 foreign key (Id_Sede) references SEDES(Id_Sede),
+	constraint FK_EMPLEADOS1 foreign key (Id_Empleado) references EMPLEADOS(Id_Empleado))
+
+-------------------------------------------------------------------------------------------------- EXPOSICIONESPORRESERVA
+create table EXPOSICIONESPORRESERVA
+	(Id_ExposicionPorReserva int identity(1, 1) not null primary key,
+	Id_Reserva int,
 	Id_Exposicion int,
-	constraint FK_EXPOSICIONES0 foreign key(Id_Exposicion) references EXPOSICIONES(Id_Exposicion))
+	constraint FK_RESERVAS0 foreign key(Id_Reserva) references RESERVAS(Id_Reserva),
+	constraint FK_EXPOSICIONES1 foreign key(Id_Exposicion) references EXPOSICIONES(Id_Exposicion))
+
+-------------------------------------------------------------------------------------------------- EXPOSICIONESPORRESERVA
+create table EXPOSICIONESPORSEDE
+	(Id_ExposicionPorSede int identity(1, 1) not null primary key,
+	Id_Exposicion int,
+	Id_Sede int,
+	constraint FK_EXPOSICIONES2 foreign key (Id_Exposicion) references EXPOSICIONES(Id_Exposicion),
+	constraint FK_SEDES2 foreign key (Id_Exposicion) references SEDES(Id_sede))
 
 -------------------------------------------------------------------------------------------------- ASIGNACIONESVISITA
 create table ASIGNACIONESVISITA
 	(Id_AsignacionVisita int identity(1, 1) not null primary key,
-	FechaHoraInicio date, 
-	FechaHoraFin date,
+	FechaInicio date, 
+	FechaFin date,
+	HoraInicio time(0),
+	HoraFin time(0),
 	Id_Empleado int,
-	constraint FK_EMPLEADOS1 foreign key (Id_Empleado) references EMPLEADOS(Id_Empleado))
+	constraint FK_EMPLEADOS2 foreign key (Id_Empleado) references EMPLEADOS(Id_Empleado))
+
+-------------------------------------------------------------------------------------------------- ASIGNACIONESVISITAPORRESERVAS
+create table ASIGNACIONESVISITAPORRESERVA
+	(Id_AsignacionVisitaPorReserva int identity(1, 1) not null primary key,
+	Id_AsignacionVisita int,
+	Id_Reserva int,
+	constraint FK_ASIGNACIONESVISITA0 foreign key (Id_AsignacionVisita) references ASIGNACIONESVISITA(Id_AsignacionVisita),
+	constraint FK_RESERVAS1 foreign key (Id_Reserva) references RESERVAS(Id_Reserva))
 
 -------------------------------------------------------------------------------------------------- ESTADOS
 create table ESTADOS -- Estados de Reserva
 	(Id_Estado int identity(1, 1) not null primary key,
-	Nombre varchar(50),
-	Descripcion varchar (200))
+	 Nombre varchar(50),
+	 Descripcion varchar (200),
+	 Ambito varchar(50))
 
 -------------------------------------------------------------------------------------------------- CAMBIOSESTADOS
 /*Con FK compuesta*/
@@ -179,31 +229,18 @@ create table ESTADOS -- Estados de Reserva
 
 create table CAMBIOSESTADOS
 	(Id_CambioEstado int identity(1, 1) not null primary key,
-	FechaHoraInicio datetime,
-	FechaHoraFin datetime,
+	FechaHoraInicio datetime2(0),
+	FechaHoraFin datetime2(0),
 	Id_Estado int,
 	constraint FK_ESTADOS0 foreign key (Id_Estado) references ESTADOS(Id_Estado))
 
--------------------------------------------------------------------------------------------------- RESERVAS
-create table RESERVAS
-	(Id_Reserva int identity(1, 1) not null primary key,
-	DuracionEstimada varchar(150), 
-	FechaHoraCreacion date, 
-	FechaHoraReserva date, 
-	HoraInicioReal time, 
-	HoraFinReal time, 
-	CantidadAlumnos int, 
-	CantidadAlumnosConfirmados int,
-	Id_Sede int,
-	Id_AsignacionVisita int,
-	Id_Exposicion int,
-	Id_Empleado int,
+-------------------------------------------------------------------------------------------------- CAMBIOSESTADOSPORRESERVA
+create table CAMBIOSESTADOSPORRESERVA
+	(Id_CambioEstadoPorReserva int identity(1, 1) not null primary key,
+	Id_Reserva int,
 	Id_CambioEstado int,
-	constraint FK_SEDES0 foreign key (Id_Sede) references SEDES(Id_Sede),
-	constraint FK_ASIGNACIONESVISITA0 foreign key(Id_AsignacionVisita) references ASIGNACIONESVISITA(Id_AsignacionVisita),
-	constraint FK_EXPOSICION0 foreign key (Id_Exposicion) references EXPOSICIONES(Id_Exposicion),
-	constraint FK_EMPLEADOS2 foreign key (Id_Empleado) references EMPLEADOS(Id_Empleado),
-	constraint FK_CAMBIOSESTADOS foreign key (Id_CambioEstado) references CAMBIOSESTADOS(Id_CambioEstado))
+	constraint FK_RESERVAS2 foreign key (Id_Reserva) references RESERVAS(Id_Reserva),
+	constraint FK_CAMBIOSESTADOS0 foreign key (Id_CambioEstado) references CAMBIOSESTADOS(Id_CambioEstado))
 
 -------------------------------------------------------------------------------------------------- TIPOSVISITA
 create table TIPOSVISITA

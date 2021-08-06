@@ -26,13 +26,13 @@ namespace PPAI_DSI.Backend
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public Nullable<System.DateTime> FechaPrimerIngreso { get; set; }
         public string Descripcion { get; set; }
+        public Nullable<int> DuracionExtendida { get; set; }
+        public Nullable<int> DuracionResumida { get; set; }
         public Nullable<int> Alto { get; set; }
         public Nullable<int> Ancho { get; set; }
         public Nullable<int> Peso { get; set; }
         public Nullable<int> Valuacion { get; set; }
         public Nullable<int> CodigoSensor { get; set; }
-        public Nullable<int> DuracionExtendida { get; set; }
-        public Nullable<int> DuracionResumida { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DETALLESEXPOSICION> DETALLESEXPOSICION { get; set; }

@@ -7,9 +7,9 @@
     <Property Name="Id_AsignacionVisita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FechaInicio" Type="date" />
     <Property Name="FechaFin" Type="date" />
-    <Property Name="Id_Empleado" Type="int" />
     <Property Name="HoraInicio" Type="time" Precision="0" />
     <Property Name="HoraFin" Type="time" Precision="0" />
+    <Property Name="Id_Empleado" Type="int" />
   </EntityType>
   <EntityType Name="ASIGNACIONESVISITAPORRESERVA">
     <Key>
@@ -108,8 +108,8 @@
     <Property Name="FechaInicioReplanificada" Type="date" />
     <Property Name="FechaFin" Type="date" />
     <Property Name="FechaFinReplanificada" Type="date" />
-    <Property Name="HoraApertura" Type="time" Precision="0" />
-    <Property Name="HoraCierre" Type="time" Precision="0" />
+    <Property Name="HoraApertura" Type="time" Precision="7" />
+    <Property Name="HoraCierre" Type="time" Precision="7" />
     <Property Name="Id_TipoExposicion" Type="int" />
     <Property Name="Id_DetalleExposicion" Type="int" />
     <Property Name="Id_PublicoDestino" Type="int" />
@@ -137,7 +137,6 @@
     <Property Name="Id_HorarioTrabajo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HoraEntrada" Type="time" Precision="0" />
     <Property Name="HoraSalida" Type="time" Precision="0" />
-    <Property Name="Id_Dia" Type="int" />
   </EntityType>
   <EntityType Name="OBRAS">
     <Key>
@@ -148,13 +147,13 @@
     <Property Name="FechaCreacion" Type="date" />
     <Property Name="FechaPrimerIngreso" Type="date" />
     <Property Name="Descripcion" Type="varchar" MaxLength="150" />
+    <Property Name="DuracionExtendida" Type="int" />
+    <Property Name="DuracionResumida" Type="int" />
     <Property Name="Alto" Type="int" />
     <Property Name="Ancho" Type="int" />
     <Property Name="Peso" Type="int" />
     <Property Name="Valuacion" Type="int" />
     <Property Name="CodigoSensor" Type="int" />
-    <Property Name="DuracionExtendida" Type="int" />
-    <Property Name="DuracionResumida" Type="int" />
   </EntityType>
   <EntityType Name="OBRASPOREXPOSICION">
     <Key>
@@ -177,16 +176,16 @@
       <PropertyRef Name="Id_Reserva" />
     </Key>
     <Property Name="Id_Reserva" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DuracionEstimada" Type="int" />
     <Property Name="FechaHoraCreacion" Type="date" />
     <Property Name="FechaReserva" Type="date" />
+    <Property Name="HoraReserva" Type="time" Precision="0" />
     <Property Name="HoraInicioReal" Type="time" Precision="0" />
     <Property Name="HoraFinReal" Type="time" Precision="0" />
     <Property Name="CantidadAlumnos" Type="int" />
     <Property Name="CantidadAlumnosConfirmados" Type="int" />
     <Property Name="Id_Sede" Type="int" />
     <Property Name="Id_Empleado" Type="int" />
-    <Property Name="DuracionEstimada" Type="int" />
-    <Property Name="HoraReserva" Type="time" Precision="0" />
     <Property Name="NroReserva" Type="int" />
   </EntityType>
   <EntityType Name="SEDES">
@@ -231,7 +230,7 @@
     <Property Name="Contrasenia" Type="varchar" MaxLength="50" />
     <Property Name="Id_Empleado" Type="int" />
   </EntityType>
-  <Association Name="FK_ASIGNACIONESVISITA1">
+  <Association Name="FK_ASIGNACIONESVISITA0">
     <End Role="ASIGNACIONESVISITA" Type="Self.ASIGNACIONESVISITA" Multiplicity="0..1" />
     <End Role="ASIGNACIONESVISITAPORRESERVA" Type="Self.ASIGNACIONESVISITAPORRESERVA" Multiplicity="*" />
     <ReferentialConstraint>
@@ -255,7 +254,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CARGOS1">
+  <Association Name="FK_CARGOS0">
     <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="0..1" />
     <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
     <ReferentialConstraint>
@@ -293,24 +292,24 @@
   </Association>
   <Association Name="FK_EMPLEADOS1">
     <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
-    <End Role="ASIGNACIONESVISITA" Type="Self.ASIGNACIONESVISITA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="EMPLEADOS">
-        <PropertyRef Name="Id_Empleado" />
-      </Principal>
-      <Dependent Role="ASIGNACIONESVISITA">
-        <PropertyRef Name="Id_Empleado" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EMPLEADOS2">
-    <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
     <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EMPLEADOS">
         <PropertyRef Name="Id_Empleado" />
       </Principal>
       <Dependent Role="RESERVAS">
+        <PropertyRef Name="Id_Empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLEADOS2">
+    <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
+    <End Role="ASIGNACIONESVISITA" Type="Self.ASIGNACIONESVISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADOS">
+        <PropertyRef Name="Id_Empleado" />
+      </Principal>
+      <Dependent Role="ASIGNACIONESVISITA">
         <PropertyRef Name="Id_Empleado" />
       </Dependent>
     </ReferentialConstraint>
@@ -329,18 +328,6 @@
   </Association>
   <Association Name="FK_EXPOSICIONES0">
     <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
-    <End Role="EXPOSICIONESPORSEDE" Type="Self.EXPOSICIONESPORSEDE" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="EXPOSICIONES">
-        <PropertyRef Name="Id_Exposicion" />
-      </Principal>
-      <Dependent Role="EXPOSICIONESPORSEDE">
-        <PropertyRef Name="Id_Exposicion" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EXPOSICIONES1">
-    <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
     <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="EXPOSICIONES">
@@ -351,7 +338,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EXPOSICIONES2">
+  <Association Name="FK_EXPOSICIONES1">
     <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
     <End Role="EXPOSICIONESPORRESERVA" Type="Self.EXPOSICIONESPORRESERVA" Multiplicity="*" />
     <ReferentialConstraint>
@@ -363,7 +350,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_HORARIOSTRABAJOS">
+  <Association Name="FK_EXPOSICIONES2">
+    <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
+    <End Role="EXPOSICIONESPORSEDE" Type="Self.EXPOSICIONESPORSEDE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EXPOSICIONES">
+        <PropertyRef Name="Id_Exposicion" />
+      </Principal>
+      <Dependent Role="EXPOSICIONESPORSEDE">
+        <PropertyRef Name="Id_Exposicion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HORARIOSTRABAJOS0">
     <End Role="HORARIOSTRABAJOS" Type="Self.HORARIOSTRABAJOS" Multiplicity="0..1" />
     <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
     <ReferentialConstraint>
@@ -413,6 +412,18 @@
   </Association>
   <Association Name="FK_RESERVAS0">
     <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="0..1" />
+    <End Role="EXPOSICIONESPORRESERVA" Type="Self.EXPOSICIONESPORRESERVA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVAS">
+        <PropertyRef Name="Id_Reserva" />
+      </Principal>
+      <Dependent Role="EXPOSICIONESPORRESERVA">
+        <PropertyRef Name="Id_Reserva" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RESERVAS1">
+    <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="0..1" />
     <End Role="ASIGNACIONESVISITAPORRESERVA" Type="Self.ASIGNACIONESVISITAPORRESERVA" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="RESERVAS">
@@ -423,7 +434,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RESERVAS1">
+  <Association Name="FK_RESERVAS2">
     <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="0..1" />
     <End Role="CAMBIOSESTADOSPORRESERVA" Type="Self.CAMBIOSESTADOSPORRESERVA" Multiplicity="*" />
     <ReferentialConstraint>
@@ -435,19 +446,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RESERVAS2">
-    <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="0..1" />
-    <End Role="EXPOSICIONESPORRESERVA" Type="Self.EXPOSICIONESPORRESERVA" Multiplicity="*" />
+  <Association Name="FK_SEDES0">
+    <End Role="SEDES" Type="Self.SEDES" Multiplicity="0..1" />
+    <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="RESERVAS">
-        <PropertyRef Name="Id_Reserva" />
+      <Principal Role="SEDES">
+        <PropertyRef Name="Id_Sede" />
       </Principal>
-      <Dependent Role="EXPOSICIONESPORRESERVA">
-        <PropertyRef Name="Id_Reserva" />
+      <Dependent Role="EMPLEADOS">
+        <PropertyRef Name="Id_Sede" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SEDES0">
+  <Association Name="FK_SEDES1">
     <End Role="SEDES" Type="Self.SEDES" Multiplicity="0..1" />
     <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
     <ReferentialConstraint>
@@ -459,7 +470,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SEDES1">
+  <Association Name="FK_SEDES2">
     <End Role="SEDES" Type="Self.SEDES" Multiplicity="0..1" />
     <End Role="EXPOSICIONESPORSEDE" Type="Self.EXPOSICIONESPORSEDE" Multiplicity="*" />
     <ReferentialConstraint>
@@ -467,19 +478,7 @@
         <PropertyRef Name="Id_Sede" />
       </Principal>
       <Dependent Role="EXPOSICIONESPORSEDE">
-        <PropertyRef Name="Id_Sede" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SEDES2">
-    <End Role="SEDES" Type="Self.SEDES" Multiplicity="0..1" />
-    <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SEDES">
-        <PropertyRef Name="Id_Sede" />
-      </Principal>
-      <Dependent Role="EMPLEADOS">
-        <PropertyRef Name="Id_Sede" />
+        <PropertyRef Name="Id_Exposicion" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -531,7 +530,7 @@
     <EntitySet Name="TIPOSEXPOSICION" EntityType="Self.TIPOSEXPOSICION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOSVISITA" EntityType="Self.TIPOSVISITA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_ASIGNACIONESVISITA1" Association="Self.FK_ASIGNACIONESVISITA1">
+    <AssociationSet Name="FK_ASIGNACIONESVISITA0" Association="Self.FK_ASIGNACIONESVISITA0">
       <End Role="ASIGNACIONESVISITA" EntitySet="ASIGNACIONESVISITA" />
       <End Role="ASIGNACIONESVISITAPORRESERVA" EntitySet="ASIGNACIONESVISITAPORRESERVA" />
     </AssociationSet>
@@ -539,7 +538,7 @@
       <End Role="CAMBIOSESTADOS" EntitySet="CAMBIOSESTADOS" />
       <End Role="CAMBIOSESTADOSPORRESERVA" EntitySet="CAMBIOSESTADOSPORRESERVA" />
     </AssociationSet>
-    <AssociationSet Name="FK_CARGOS1" Association="Self.FK_CARGOS1">
+    <AssociationSet Name="FK_CARGOS0" Association="Self.FK_CARGOS0">
       <End Role="CARGOS" EntitySet="CARGOS" />
       <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
     </AssociationSet>
@@ -553,11 +552,11 @@
     </AssociationSet>
     <AssociationSet Name="FK_EMPLEADOS1" Association="Self.FK_EMPLEADOS1">
       <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-      <End Role="ASIGNACIONESVISITA" EntitySet="ASIGNACIONESVISITA" />
+      <End Role="RESERVAS" EntitySet="RESERVAS" />
     </AssociationSet>
     <AssociationSet Name="FK_EMPLEADOS2" Association="Self.FK_EMPLEADOS2">
       <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-      <End Role="RESERVAS" EntitySet="RESERVAS" />
+      <End Role="ASIGNACIONESVISITA" EntitySet="ASIGNACIONESVISITA" />
     </AssociationSet>
     <AssociationSet Name="FK_ESTADOS0" Association="Self.FK_ESTADOS0">
       <End Role="ESTADOS" EntitySet="ESTADOS" />
@@ -565,17 +564,17 @@
     </AssociationSet>
     <AssociationSet Name="FK_EXPOSICIONES0" Association="Self.FK_EXPOSICIONES0">
       <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
-      <End Role="EXPOSICIONESPORSEDE" EntitySet="EXPOSICIONESPORSEDE" />
+      <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
     </AssociationSet>
     <AssociationSet Name="FK_EXPOSICIONES1" Association="Self.FK_EXPOSICIONES1">
       <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
-      <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
+      <End Role="EXPOSICIONESPORRESERVA" EntitySet="EXPOSICIONESPORRESERVA" />
     </AssociationSet>
     <AssociationSet Name="FK_EXPOSICIONES2" Association="Self.FK_EXPOSICIONES2">
       <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
-      <End Role="EXPOSICIONESPORRESERVA" EntitySet="EXPOSICIONESPORRESERVA" />
+      <End Role="EXPOSICIONESPORSEDE" EntitySet="EXPOSICIONESPORSEDE" />
     </AssociationSet>
-    <AssociationSet Name="FK_HORARIOSTRABAJOS" Association="Self.FK_HORARIOSTRABAJOS">
+    <AssociationSet Name="FK_HORARIOSTRABAJOS0" Association="Self.FK_HORARIOSTRABAJOS0">
       <End Role="HORARIOSTRABAJOS" EntitySet="HORARIOSTRABAJOS" />
       <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
     </AssociationSet>
@@ -593,27 +592,27 @@
     </AssociationSet>
     <AssociationSet Name="FK_RESERVAS0" Association="Self.FK_RESERVAS0">
       <End Role="RESERVAS" EntitySet="RESERVAS" />
-      <End Role="ASIGNACIONESVISITAPORRESERVA" EntitySet="ASIGNACIONESVISITAPORRESERVA" />
+      <End Role="EXPOSICIONESPORRESERVA" EntitySet="EXPOSICIONESPORRESERVA" />
     </AssociationSet>
     <AssociationSet Name="FK_RESERVAS1" Association="Self.FK_RESERVAS1">
       <End Role="RESERVAS" EntitySet="RESERVAS" />
-      <End Role="CAMBIOSESTADOSPORRESERVA" EntitySet="CAMBIOSESTADOSPORRESERVA" />
+      <End Role="ASIGNACIONESVISITAPORRESERVA" EntitySet="ASIGNACIONESVISITAPORRESERVA" />
     </AssociationSet>
     <AssociationSet Name="FK_RESERVAS2" Association="Self.FK_RESERVAS2">
       <End Role="RESERVAS" EntitySet="RESERVAS" />
-      <End Role="EXPOSICIONESPORRESERVA" EntitySet="EXPOSICIONESPORRESERVA" />
+      <End Role="CAMBIOSESTADOSPORRESERVA" EntitySet="CAMBIOSESTADOSPORRESERVA" />
     </AssociationSet>
     <AssociationSet Name="FK_SEDES0" Association="Self.FK_SEDES0">
       <End Role="SEDES" EntitySet="SEDES" />
-      <End Role="RESERVAS" EntitySet="RESERVAS" />
+      <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
     </AssociationSet>
     <AssociationSet Name="FK_SEDES1" Association="Self.FK_SEDES1">
       <End Role="SEDES" EntitySet="SEDES" />
-      <End Role="EXPOSICIONESPORSEDE" EntitySet="EXPOSICIONESPORSEDE" />
+      <End Role="RESERVAS" EntitySet="RESERVAS" />
     </AssociationSet>
     <AssociationSet Name="FK_SEDES2" Association="Self.FK_SEDES2">
       <End Role="SEDES" EntitySet="SEDES" />
-      <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+      <End Role="EXPOSICIONESPORSEDE" EntitySet="EXPOSICIONESPORSEDE" />
     </AssociationSet>
     <AssociationSet Name="FK_TIPOSEXPOSICION0" Association="Self.FK_TIPOSEXPOSICION0">
       <End Role="TIPOSEXPOSICION" EntitySet="TIPOSEXPOSICION" />

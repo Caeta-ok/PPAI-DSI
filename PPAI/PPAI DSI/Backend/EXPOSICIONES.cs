@@ -17,9 +17,9 @@ namespace PPAI_DSI.Backend
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EXPOSICIONES()
         {
-            this.EXPOSICIONESPORSEDE = new HashSet<EXPOSICIONESPORSEDE>();
             this.OBRASPOREXPOSICION = new HashSet<OBRASPOREXPOSICION>();
             this.EXPOSICIONESPORRESERVA = new HashSet<EXPOSICIONESPORRESERVA>();
+            this.EXPOSICIONESPORSEDE = new HashSet<EXPOSICIONESPORSEDE>();
         }
     
         public int Id_Exposicion { get; set; }
@@ -36,11 +36,11 @@ namespace PPAI_DSI.Backend
     
         public virtual DETALLESEXPOSICION DETALLESEXPOSICION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EXPOSICIONESPORSEDE> EXPOSICIONESPORSEDE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OBRASPOREXPOSICION> OBRASPOREXPOSICION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EXPOSICIONESPORRESERVA> EXPOSICIONESPORRESERVA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EXPOSICIONESPORSEDE> EXPOSICIONESPORSEDE { get; set; }
         public virtual PUBLICOSDESTINO PUBLICOSDESTINO { get; set; }
         public virtual TIPOSEXPOSICION TIPOSEXPOSICION { get; set; }
     }
