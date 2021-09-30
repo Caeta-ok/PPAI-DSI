@@ -13,6 +13,11 @@ namespace PPAI_DSI.Negocio
         private DateTime _fechaHoraInicio;
         private DateTime _fechaHoraFin;
         private Estado _estado;
+
+        public int Id { get => _id; set => _id = value; }
+        public DateTime FechaHoraInicio { get => _fechaHoraInicio; set => _fechaHoraInicio = value; }
+        public DateTime FechaHoraFin { get => _fechaHoraFin; set => _fechaHoraFin = value; }
+        public Estado Estado { get => _estado; set => _estado = value; }
         
         public CambioEstado(CAMBIOSESTADOS cambioEstado)
         {
@@ -20,28 +25,12 @@ namespace PPAI_DSI.Negocio
             _fechaHoraInicio = cambioEstado.FechaHoraInicio.Value;
             if(cambioEstado.FechaHoraFin != null)
                 _fechaHoraFin = cambioEstado.FechaHoraFin.Value;
+
+            // No se incluye el objeto Estado porque el ORM 
+            // solo entrega el Id (int) correspondiente
+            // a la llave foránea
         }
 
         public CambioEstado() { }
-
-        public void conocerEstado(Estado estado)
-        {
-            _estado = estado;
-        }
-
-        public Estado getEstado()
-        {
-            return _estado;
-        }
-        
-        public void setFechaHoraInicio(DateTime fechaHoraInicio)
-        {
-            _fechaHoraInicio = fechaHoraInicio;
-        }
-
-        public DateTime getFechaHoraInicio()
-        {
-            return _fechaHoraInicio;
-        }
     }
 }

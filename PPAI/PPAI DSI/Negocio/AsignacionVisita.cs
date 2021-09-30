@@ -14,32 +14,32 @@ namespace PPAI_DSI.Negocio
         private DateTime _horaInicio;
         private DateTime _horaFin;
         private Empleado _empleado;
-        
+
+        public DateTime FechaInicio { get => _fechaInicio; set => _fechaInicio = value; }
+        public DateTime FechaFin { get => _fechaFin; set => _fechaFin = value; }
+        public DateTime HoraInicio { get => _horaInicio; set => _horaInicio = value; }
+        public DateTime HoraFin { get => _horaFin; set => _horaFin = value; }
+        public Empleado Empleado { get => _empleado; set => _empleado = value; }
+
         public AsignacionVisita(ASIGNACIONESVISITA asignacionVisita)
         {
-            _fechaInicio = asignacionVisita.FechaInicio.Value;
-            _fechaFin = asignacionVisita.FechaFin.Value;
-            _horaInicio = DateTime.Parse(asignacionVisita.HoraInicio.Value.ToString());
-            _horaFin = DateTime.Parse(asignacionVisita.HoraFin.Value.ToString());
+            FechaInicio = asignacionVisita.FechaInicio.Value;
+            FechaFin = asignacionVisita.FechaFin.Value;
+            HoraInicio = DateTime.Parse(asignacionVisita.HoraInicio.Value.ToString());
+            HoraFin = DateTime.Parse(asignacionVisita.HoraFin.Value.ToString());
+
+            // No se incluye el objeto Empleado porque el ORM
+            // solo entrega el Id (int) correspondiente a la llave foránea
         }
 
         public AsignacionVisita() { }
 
-        public void conocerEmpleado(Empleado empleado)
-        {
-            _empleado = empleado;
-        }
-
-        public Empleado getEmpleado()
-        {
-            return _empleado;
-        }
-
         public bool estaAsignadoEnFechaVisita(Empleado empleado, DateTime fechaReserva)
         {
-            if(empleado.getId() == _empleado.getId())
+
+            if (empleado.Id == _empleado.Id)
             {
-                if(_fechaInicio == fechaReserva)
+                if (_fechaInicio == fechaReserva)
                 {
                     return true;
                 }
@@ -64,46 +64,6 @@ namespace PPAI_DSI.Negocio
             if (horaFinReservaEnMinutos < horaInicioAsignEnMinutos || horaInicioReservaEnMinutos > horaFinAsignEnMinutos)
                 return true;
             return false;
-        }
-
-        public void setFechaInicio(DateTime fechaInicio)
-        {
-            _fechaInicio = fechaInicio;
-        }
-
-        public DateTime getFechaInicio()
-        {
-            return _fechaInicio;
-        }
-
-        public void setFechaFin(DateTime fechaFin)
-        {
-            _fechaFin = fechaFin;
-        }
-
-        public DateTime getFechaFin()
-        {
-            return _fechaFin;
-        }
-
-        public void setHoraInicio(DateTime horaInicio)
-        {
-            _horaInicio = horaInicio;
-        }
-
-        public DateTime getHoraInicio()
-        {
-            return _horaInicio;
-        }
-
-        public void setHoraFin(DateTime horaFin)
-        {
-            _horaFin = horaFin;
-        }
-
-        public DateTime getHoraFin()
-        {
-            return _horaFin;
         }
     }
 }

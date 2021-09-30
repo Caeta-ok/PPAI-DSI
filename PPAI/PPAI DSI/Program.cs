@@ -16,7 +16,6 @@ namespace PPAI_DSI.Formularios
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new PantallaAdmReserva());
             Application.Run(new FormEscritorio());
         }
     }
