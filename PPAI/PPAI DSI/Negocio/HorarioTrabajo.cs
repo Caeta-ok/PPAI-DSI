@@ -11,6 +11,10 @@ namespace PPAI_DSI.Negocio
     {
         private DateTime _horaEntrada;
         private DateTime _horaSalida;
+
+        public DateTime HoraEntrada { get => _horaEntrada; set => _horaEntrada = value; }
+        public DateTime HoraSalida { get => _horaSalida; set => _horaSalida = value; }
+
         public HorarioTrabajo(HORARIOSTRABAJOS horarioTrabajo)
         {
             _horaEntrada = DateTime.Parse(horarioTrabajo.HoraEntrada.Value.ToString());
@@ -36,14 +40,14 @@ namespace PPAI_DSI.Negocio
             return false;
         }
 
-        public DateTime getHoraEntrada()
-        {
-            return _horaEntrada;
-        }
+        //public DateTime getHoraEntrada()
+        //{
+        //    return _horaEntrada;
+        //}
 
-        public DateTime getHoraSalida()
-        {
-            return _horaSalida;
-        }
+        //public DateTime getHoraSalida()
+        //{
+        //    return _horaSalida;
+        //}
     }
 }

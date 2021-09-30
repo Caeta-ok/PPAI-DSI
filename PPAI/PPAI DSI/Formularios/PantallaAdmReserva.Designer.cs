@@ -47,9 +47,9 @@
             this.cmb_escuelas = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txt_cantidad_alumnos = new System.Windows.Forms.TextBox();
+            this.cmb_cantidad_alumnos = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.txt_cantidad_alumnos = new System.Windows.Forms.Label();
             this.dt_fecha_reserva = new System.Windows.Forms.DateTimePicker();
             this.grid_sedes = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
@@ -76,9 +76,9 @@
             this.group_registrar_reserva.Controls.Add(this.cmb_escuelas);
             this.group_registrar_reserva.Controls.Add(this.label1);
             this.group_registrar_reserva.Controls.Add(this.label6);
-            this.group_registrar_reserva.Controls.Add(this.txt_cantidad_alumnos);
+            this.group_registrar_reserva.Controls.Add(this.cmb_cantidad_alumnos);
             this.group_registrar_reserva.Controls.Add(this.label4);
-            this.group_registrar_reserva.Controls.Add(this.label3);
+            this.group_registrar_reserva.Controls.Add(this.txt_cantidad_alumnos);
             this.group_registrar_reserva.Controls.Add(this.dt_fecha_reserva);
             this.group_registrar_reserva.Controls.Add(this.grid_sedes);
             this.group_registrar_reserva.Controls.Add(this.label5);
@@ -229,6 +229,7 @@
             // 
             // cmb_escuelas
             // 
+            this.cmb_escuelas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_escuelas.FormattingEnabled = true;
             this.cmb_escuelas.Location = new System.Drawing.Point(20, 43);
             this.cmb_escuelas.Name = "cmb_escuelas";
@@ -254,14 +255,14 @@
             this.label6.TabIndex = 49;
             this.label6.Text = "Hora de reserva";
             // 
-            // txt_cantidad_alumnos
+            // cmb_cantidad_alumnos
             // 
-            this.txt_cantidad_alumnos.Enabled = false;
-            this.txt_cantidad_alumnos.Location = new System.Drawing.Point(229, 44);
-            this.txt_cantidad_alumnos.Name = "txt_cantidad_alumnos";
-            this.txt_cantidad_alumnos.Size = new System.Drawing.Size(47, 20);
-            this.txt_cantidad_alumnos.TabIndex = 29;
-            this.txt_cantidad_alumnos.TextChanged += new System.EventHandler(this.tomarNumeroVisitantes);
+            this.cmb_cantidad_alumnos.Enabled = false;
+            this.cmb_cantidad_alumnos.Location = new System.Drawing.Point(229, 44);
+            this.cmb_cantidad_alumnos.Name = "cmb_cantidad_alumnos";
+            this.cmb_cantidad_alumnos.Size = new System.Drawing.Size(47, 20);
+            this.cmb_cantidad_alumnos.TabIndex = 29;
+            this.cmb_cantidad_alumnos.TextChanged += new System.EventHandler(this.tomarNumeroVisitantes);
             // 
             // label4
             // 
@@ -272,14 +273,14 @@
             this.label4.TabIndex = 48;
             this.label4.Text = "Fecha de reserva";
             // 
-            // label3
+            // txt_cantidad_alumnos
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(226, 27);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(159, 13);
-            this.label3.TabIndex = 30;
-            this.label3.Text = "Ingrese la cantidad de visitantes";
+            this.txt_cantidad_alumnos.AutoSize = true;
+            this.txt_cantidad_alumnos.Location = new System.Drawing.Point(226, 27);
+            this.txt_cantidad_alumnos.Name = "txt_cantidad_alumnos";
+            this.txt_cantidad_alumnos.Size = new System.Drawing.Size(159, 13);
+            this.txt_cantidad_alumnos.TabIndex = 30;
+            this.txt_cantidad_alumnos.Text = "Ingrese la cantidad de visitantes";
             // 
             // dt_fecha_reserva
             // 
@@ -325,6 +326,7 @@
             // 
             // cmb_tipo_visita
             // 
+            this.cmb_tipo_visita.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_tipo_visita.Enabled = false;
             this.cmb_tipo_visita.FormattingEnabled = true;
             this.cmb_tipo_visita.Location = new System.Drawing.Point(594, 47);
@@ -384,9 +386,9 @@
         private System.Windows.Forms.ComboBox cmb_escuelas;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txt_cantidad_alumnos;
+        private System.Windows.Forms.TextBox cmb_cantidad_alumnos;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label txt_cantidad_alumnos;
         private System.Windows.Forms.DateTimePicker dt_fecha_reserva;
         private System.Windows.Forms.DataGridView grid_sedes;
         private System.Windows.Forms.Label label5;

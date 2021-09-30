@@ -10,9 +10,7 @@ namespace PPAI_DSI.Negocio
     {
         private List<Obra> _listaObras = new List<Obra>();
 
-        public DetalleExposicion()
-        {
-        }
+        public DetalleExposicion(){}
 
         public void conocerObra(Obra obra)
         {
@@ -29,7 +27,7 @@ namespace PPAI_DSI.Negocio
             int duracionDeExposicion = 0;
             foreach (Obra obra in _listaObras)
             {
-                duracionDeExposicion += obra.getDuracionExtendida();
+                duracionDeExposicion += obra.DuracionExtendida;
             }
             return duracionDeExposicion;
         }

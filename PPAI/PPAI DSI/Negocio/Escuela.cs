@@ -15,34 +15,19 @@ namespace PPAI_DSI.Negocio
         private Int64 _telefonoCelular;
         private string _domicilio;
 
+        public int Id { get => _id; set => _id = value; }
+        public string Nombre { get => _nombre; set => _nombre = value; }
+        public string Email { get => _email; set => _email = value; }
+        public Int64 TelefonoCelular { get => _telefonoCelular; set => _telefonoCelular = value; }
+        public string Domicilio { get => _domicilio; set => _domicilio = value; }
+
         public Escuela(ESCUELAS escuela)
         {
-            _id = escuela.Id_Escuela;
-            _nombre = escuela.Nombre;
-            _email = escuela.Email;
-            _telefonoCelular = escuela.NroTelefono.Value;
-            _domicilio = escuela.Domicilio;
-        }
-
-        public string id_esc
-        {
-            get
-            {
-                return _id.ToString();
-            }
-        }
-
-        public string getNombre
-        {
-            get
-            {
-                return _nombre;
-            }
-        }
-
-        public int getId()
-        {
-            return _id;
+            Id = escuela.Id_Escuela;
+            Nombre = escuela.Nombre;
+            Email = escuela.Email;
+            TelefonoCelular = escuela.NroTelefono.Value;
+            Domicilio = escuela.Domicilio;
         }
     }
 }

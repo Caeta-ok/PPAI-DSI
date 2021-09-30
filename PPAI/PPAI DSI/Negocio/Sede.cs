@@ -11,14 +11,14 @@ namespace PPAI_DSI.Negocio
     {
         private int _id;
         private string _nombre;
-        private int _cantidadMaximaVisitantes;
-        private int _cantidadMaximaPorGuia;
+        private int _cantidadMaximaDeVisitantes;
+        private int _cantidadMaximaDeVisitantesPorGuia;
         private List<Exposicion> _listaExposiciones = new List<Exposicion>();
 
         public int Id { get => _id; set => _id = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
-        public int CantidadMaximaDeVisitantes { get => _cantidadMaximaVisitantes; set => _cantidadMaximaVisitantes = value; }
-        public int CantidadMaximaDeVisitantesPorGuia { get => _cantidadMaximaPorGuia; set => _cantidadMaximaPorGuia = value; }
+        public int CantidadMaximaDeVisitantes { get => _cantidadMaximaDeVisitantes; set => _cantidadMaximaDeVisitantes = value; }
+        public int CantidadMaximaDeVisitantesPorGuia { get => _cantidadMaximaDeVisitantesPorGuia; set => _cantidadMaximaDeVisitantesPorGuia = value; }
         public List<Exposicion> ListaExposiciones { get => _listaExposiciones; set => _listaExposiciones = value; }
 
         public Sede(SEDES sede)
@@ -38,49 +38,7 @@ namespace PPAI_DSI.Negocio
             ListaExposiciones = list;
         }
 
-        public Sede()
-        {
-        }
-
-        public void setId(int id)
-        {
-            _id = id;
-        }
-
-        public int getId()
-        {
-            return _id;
-        }
-
-        public void setNombre(string nombre)
-        {
-            Nombre = nombre;
-        }
-
-        public string getNombre()
-        {
-            return Nombre;
-        }
-
-        public void setCantidadMaximaPorGuia(int cantidadMaximaPorGuia)
-        {
-            CantidadMaximaDeVisitantesPorGuia = cantidadMaximaPorGuia;
-        }
-
-        public int getCantidadMaximaPorGuia()
-        {
-            return CantidadMaximaDeVisitantesPorGuia;
-        }
-
-        public int getCantidadMaixmaVisitantes()
-        {
-            return CantidadMaximaDeVisitantes;
-        }
-
-        public void setCantidadMaximaVisitantes(int cantidadMaximaVisitantes)
-        {
-            CantidadMaximaDeVisitantes = cantidadMaximaVisitantes;
-        }
+        public Sede(){}
 
         public void setExposicion(Exposicion exposicion)
         {
@@ -102,19 +60,6 @@ namespace PPAI_DSI.Negocio
             return duracionDeExposicion;
         }
 
-        //public List<Reserva> buscarReservasPorFecha(DateTime fecha)
-        //{
-        //    List<Reserva> listaReservas = Persistencia.traerReservasPorIdSede(_id);
-        //    foreach (Reserva reserva in listaReservas) // Mientras existan reservas
-        //    {
-        //        if (reserva.esDeFecha(fecha))
-        //        {
-        //            listaReservas.Add(reserva);
-        //        }
-        //    }
-        //    return listaReservas;
-        //}
-
         public List<int> getCantidadVisitantesEnReservasPorFecha(DateTime fecha)
         {
             List<Reserva> listaReservas = Persistencia.traerReservasPorIdSede(_id); // corregir consulta sql
@@ -124,7 +69,7 @@ namespace PPAI_DSI.Negocio
                 if (reserva.esDeFecha(fecha))
                 {
                     listaReservas.Add(reserva);
-                    listaCantidadesVisitantes.Add(reserva.getCantidadAlumnos());
+                    listaCantidadesVisitantes.Add(reserva.CantidadAlumnos);
                 }
             }
             return listaCantidadesVisitantes;
@@ -141,17 +86,6 @@ namespace PPAI_DSI.Negocio
             return cantidadVisitantes;
         }
 
-        //public int sumarCantidadDeVisitantes(DateTime fecha)
-        //{
-        //    int cantidadAlumnos = 0;
-        //    List<Reserva> listaReservas = buscarReservasPorFecha(fecha);
-        //    foreach (Reserva res in listaReservas)
-        //    {
-        //        cantidadAlumnos += res.getCantidadAlumnos();
-        //    }
-        //    return cantidadAlumnos;
-        //}
-
         public List<Empleado> buscarGuias()
         {
             List<Empleado> listaGuias = new List<Empleado>();
@@ -161,45 +95,16 @@ namespace PPAI_DSI.Negocio
 
         public double getCantidadGuiasNecesarios(double alumnos)
         {
-            return Math.Round(Convert.ToDouble(alumnos / getCantidadMaximaPorGuia()));
+            return Math.Round(Convert.ToDouble(alumnos / CantidadMaximaDeVisitantesPorGuia));
+
         }
 
         public bool validarCapacidadVisitantes(DateTime fechaReserva, int cantidadVisitantes)
         {
             int cantidadTotal = cantidadVisitantes + sumarCantidadDeVisitantesEnFecha(fechaReserva);
-            if (cantidadTotal <= _cantidadMaximaVisitantes)
+            if (cantidadTotal <= _cantidadMaximaDeVisitantes)
                 return true;
             return false;
         }
-
-        //private List<Exposicion> _exposiciones;
-        //private string _nombre;
-
-        //public string nombre
-        //{
-        //    get { return _nombre; }
-        //    set { _nombre = value; }
-        //}
-
-        //public void conocerExposicion(Exposicion exposicion)
-        //{
-        //    _exposiciones.Add(exposicion);
-        //}
-
-        //public Sede getSede()
-        //{
-        //    Sede sede = new Sede();
-        //    sede.nombre = this.nombre;
-        //    foreach(Exposicion e in _exposiciones)
-        //    {
-        //        sede.conocerExposicion(e);
-        //    }
-        //    return sede;
-        //}
-
-        /*
-        public int calcularDuracionEstimada()
-        {
-        }*/
     }
 }

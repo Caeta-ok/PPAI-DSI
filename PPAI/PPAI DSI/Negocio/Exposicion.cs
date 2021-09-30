@@ -33,16 +33,9 @@ namespace PPAI_DSI.Negocio
         public TipoExposicion TipoExposicion { get => _tipoExposicion; set => _tipoExposicion = value; }
         public Empleado Empleado { get => _empleado; set => _empleado = value; }
         public PublicoDestino PublicoDestino { get => _publicoDestino; set => _publicoDestino = value; }
-
-        public String PublicoDeDestino
-        {
-            get { return _publicoDestino.Nombre; }
-            set { _publicoDestino.Nombre = value; }
-        }
-
         public DetalleExposicion DetalleExposicion { get => _detalleExposicion; set => _detalleExposicion = value; }
 
-        public Exposicion(EXPOSICIONES exposicion)
+        public Exposicion(EXPOSICIONES exposicion) //EXPOSICIONES es un tipo del ORM
         {
             Id = exposicion.Id_Exposicion;
             Nombre = exposicion.Nombre;
@@ -52,31 +45,9 @@ namespace PPAI_DSI.Negocio
             FechaFinReplanificada = exposicion.FechaFinReplanificada.Value;
             HoraApertura = DateTime.Parse(exposicion.HoraApertura.Value.ToString());
             HoraCierre = DateTime.Parse(exposicion.HoraCierre.Value.ToString());
-        }
 
-        public void conocerTipoExposicion(TipoExposicion tipoExposicion)
-        {
-            TipoExposicion = tipoExposicion;
-        }
-
-        public void conocerEmpelado(Empleado empleado)
-        {
-            Empleado = empleado;
-        }
-
-        public void conocerPublicoDestino(PublicoDestino publicoDestino)
-        {
-            PublicoDestino = publicoDestino;
-        }
-
-        public void conocerDetalleExposicion(DetalleExposicion detalleExposicion)
-        {
-            DetalleExposicion = detalleExposicion;
-        }
-
-        public TipoExposicion getTipoExposicion()
-        {
-            return TipoExposicion;
+            // No se incluye los objetos TipoExposicion, Empleado, PublicoDestino y DetalleExposicion
+            // no se incluyen porque el ORM solo entrega el Id (int) correspondiente a la llave foránea
         }
 
         public bool esVigente()
@@ -89,46 +60,6 @@ namespace PPAI_DSI.Negocio
                 }
             }
             return false;
-        }
-
-        public int getId()
-        {
-            return Id;
-        }
-
-        public string getNombre()
-        {
-            return Nombre;
-        }
-
-        public DateTime getFechaFin()
-        {
-            return FechaFin;
-        }
-
-        public DateTime getFechaInicio()
-        {
-            return FechaInicio;
-        }
-
-        public DateTime getHoraApertura()
-        {
-            return HoraApertura;
-        }
-
-        public DateTime getHoraCierre()
-        {
-            return HoraCierre;
-        }
-
-        public PublicoDestino getPublicoDestino()
-        {
-            return PublicoDestino;
-        }
-
-        public DetalleExposicion getDetalleExposicion()
-        {
-            return DetalleExposicion;
         }
 
         public int calcularDuracionObrasExpuestas()

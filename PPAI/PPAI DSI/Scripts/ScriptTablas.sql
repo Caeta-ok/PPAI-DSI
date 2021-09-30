@@ -29,14 +29,6 @@ create table HORARIOSTRABAJOS
 	HoraEntrada time(0),
 	HoraSalida time(0))
 
-/*Con PK compuesta*/
---create table HORARIOSTRABAJOS
---	(HoraEntrada time,
---	HoraSalida time,
---	Id_Dia int,
---	constraint PK_HORARIOSTRABAJOS primary key(HoraEntrada, HoraSalida),
---	constraint FK_DIAS0 foreign key (Id_Dia) references DIAS(Id_Dia))
-
 -------------------------------------------------------------------------------------------------- SEDES
 create table SEDES
 	(Id_Sede int identity(1, 1) not null primary key,
@@ -64,25 +56,6 @@ create table EMPLEADOS
 	constraint FK_CARGOS0 foreign key(Id_Cargo) references CARGOS(Id_Cargo),
 	constraint FK_HORARIOSTRABAJOS0 foreign key (Id_HorarioTrabajo) references HORARIOSTRABAJOS(Id_HorarioTrabajo),
 	constraint FK_SEDES0 foreign key (Id_Sede) references SEDES(Id_Sede))
-
---create table EMPLEADOS
---	(Id_Empleado int identity(1, 1) not null primary key,
---	Nombre varchar(50),
---	Apellido varchar(50),
---	CodigoValidacion varchar(50),
---	Cuit int,
---	Dni int,
---	Domicilio varchar(100),
---	FechaIngreso date,
---	FechaNacimiento date,
---	Email varchar(50) unique,
---	Sexo varchar(20),
---	NroTelefono int,
---	Id_Cargo int,
---	Id_HorarioEntrada time,
---	Id_HorarioSalida time,
---	constraint FK_CARGOS1 foreign key(Id_Cargo) references CARGOS(Id_Cargo),
---	constraint FK_HORARIOSTRABAJOS foreign key (Id_HorarioEntrada, Id_HorarioSalida) references HORARIOSTRABAJOS(HoraEntrada, HoraSalida)))
 
 -------------------------------------------------------------------------------------------------- USUARIOS
 create table USUARIOS
@@ -143,8 +116,8 @@ create table EXPOSICIONES
 	FechaInicioReplanificada date,
 	FechaFin date,
 	FechaFinReplanificada date,
-	HoraApertura time,
-	HoraCierre time,
+	HoraApertura time(0),
+	HoraCierre time(0),
 	Id_TipoExposicion int,
 	Id_DetalleExposicion int,
 	Id_PublicoDestino int,
@@ -219,14 +192,6 @@ create table ESTADOS -- Estados de Reserva
 	 Ambito varchar(50))
 
 -------------------------------------------------------------------------------------------------- CAMBIOSESTADOS
-/*Con FK compuesta*/
---create table CAMBIOSESTADOS
---	(FechaHoraInicio datetime,
---	FechaHoraFin datetime,
---	Id_Estado int,
---	constraint PK_CAMBIOSESTADOS1 primary key(FechaHoraInicio, Id_Estado),
---	constraint FK_ESTADOS0 foreign key (Id_Estado) references ESTADOS(Id_Estado))
-
 create table CAMBIOSESTADOS
 	(Id_CambioEstado int identity(1, 1) not null primary key,
 	FechaHoraInicio datetime2(0),

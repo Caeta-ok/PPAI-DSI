@@ -14,17 +14,17 @@ namespace PPAI_DSI.Negocio
         private string _descripcion;
         private string _ambito;
 
+        public int Id { get => _id; set => _id = value; }
+        public string Nombre { get => _nombre; set => _nombre = value; }
+        public string Descripcion { get => _descripcion; set => _descripcion = value; }
+        public string Ambito { get => _ambito; set => _ambito = value; }
+
         public Estado(ESTADOS estado)
         {
-            _id = estado.Id_Estado;
-            _nombre = estado.Nombre;
-            _descripcion = estado.Descripcion;
-            _ambito = estado.Ambito;
-        }
-
-        public int getId()
-        {
-            return _id;
+            Id = estado.Id_Estado;
+            Nombre = estado.Nombre;
+            Descripcion = estado.Descripcion;
+            Ambito = estado.Ambito;
         }
     }
 }

@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
-//using PPAI_DSI.Formularios;
 using PPAI_DSI.Backend;
 
 namespace PPAI_DSI.Negocio
@@ -39,9 +37,9 @@ namespace PPAI_DSI.Negocio
         {
             Usuario usuario = Persistencia.traerUsuarioPorId(1);
             _sesionActual = new Sesion();
-            _sesionActual.setFechaHoraInicio(DateTime.Now);
-            _sesionActual.setFechaHoraFin(DateTime.Now);
-            _sesionActual.conocerUsuario(usuario);
+            _sesionActual.FechaHoraInicio = DateTime.Now;
+            _sesionActual.FechaHoraFin = DateTime.Now;
+            _sesionActual.Usuario = usuario;
         }
 
         public void nuevaReserva()
@@ -90,10 +88,6 @@ namespace PPAI_DSI.Negocio
             return _listaTiposVisitas = Persistencia.traerTipoVisita();
         }
 
-        //public void tomarSeleccionTipoVisita(TipoVisita tipo_visita_seleccionada)
-        //{
-        //    _tipoVisitaSeleccionada = tipo_visita_seleccionada;
-        //}
         public void tomarSeleccionPorExposicion(TipoVisita tipo_visita_seleccionada)
         {
             _tipoVisitaSeleccionada = tipo_visita_seleccionada;
@@ -101,35 +95,11 @@ namespace PPAI_DSI.Negocio
 
         public bool esTipoVisitaPorExposicion(TipoVisita tipoVisitaSeleccionada)
         {
-            if (tipoVisitaSeleccionada.getNombre() == "Por exposicion")
+            if (tipoVisitaSeleccionada.Nombre == "Por exposicion")
                 return true;
             else
                 return false;
         }
-
-        //public List<Exposicion> buscarExposicionesTemporales()
-        //{
-        //    _listaExposiciones.Clear();
-        //    _listaExposicionesVigentes.Clear();
-        //    _listaExposicionesTemporalesVigentes.Clear();
-
-        //    _listaExposiciones = Persistencia.traerExposiciones(_sedeSeleccionada);
-        //    foreach (Exposicion expo_vigente in _listaExposiciones) // Loop Mientras haya exposiciones
-        //    {
-        //        if (expo_vigente.esVigente())
-        //        {
-        //            _listaExposicionesVigentes.Add(expo_vigente);
-        //            if()
-        //        }
-        //    }
-        //    foreach (Exposicion expo_temporal in _listaExposicionesVigentes)
-        //    {
-        //        //Obtengo del objeto Exposicion el objeto TipoExposicion y le pregunto si es Temporal si es asi relleno la lista
-        //        if (expo_temporal.getTipoExposicion().esExposicionTemporal())
-        //            _listaExposicionesTemporalesVigentes.Add(expo_temporal);
-        //    }
-        //    return _listaExposicionesTemporalesVigentes;
-        //}
 
         public List<Exposicion> buscarExposicionesTemporales()
         {
@@ -140,7 +110,7 @@ namespace PPAI_DSI.Negocio
             {
                 if (exposicion.esVigente())
                 {
-                    if (exposicion.getTipoExposicion().esExposicionTemporal())
+                    if (exposicion.TipoExposicion.esExposicionTemporal())
                     {
                         _listaExposicionesTemporalesVigentes.Add(exposicion);
                     }
@@ -199,7 +169,7 @@ namespace PPAI_DSI.Negocio
             bool flag_disponible = true;
             foreach (Empleado guia in listaGuiasSede)
             {
-                if (guia.getHorarioTrabajo().estaDisponibleEnHora(_horaReserva, _duracionEstimada))
+                if (guia.HorarioTrabajo.estaDisponibleEnHora(_horaReserva, _duracionEstimada))
                 { // Si su horario de trabajo permite abarcar la reserva
                     foreach (AsignacionVisita asign in listaAsignacionesVisitas)
                     {
@@ -243,7 +213,7 @@ namespace PPAI_DSI.Negocio
 
         private void buscarEmpleadoLogeado()
         {
-            _empleadoRegistrador = _sesionActual.getUsuario().getEmpleadoLogeado();
+            _empleadoRegistrador = _sesionActual.Usuario.getEmpleadoLogeado();
         }
 
         private void buscarUltimoNroReserva()
@@ -260,23 +230,24 @@ namespace PPAI_DSI.Negocio
         public void registrarReserva()
         {
             Reserva reserva = new Reserva();
-            reserva.setCantidadAlumnos(_cantidadAlumnos);
-            reserva.setFechaReserva(_fechaReserva);
-            reserva.setHoraReserva(_horaReserva);
-            reserva.setFechaHoraCreacion(DateTime.Now);
-            reserva.conocerEscuela(_escuelaSeleccionada);
-            reserva.setNroReserva(_nroReserva);
-            reserva.setSede(_sedeSeleccionada);
-            reserva.setDuracionEstimada(_duracionEstimada);
-            reserva.conocerEmpleadoRegistrador(_empleadoRegistrador);
+            reserva.CantidadAlumnos = _cantidadAlumnos;
+            reserva.FechaReserva = _fechaReserva;
+            reserva.HoraReserva = _horaReserva;
+            reserva.FechaHoraCreacion = DateTime.Now;
+            reserva.Escuela = _escuelaSeleccionada;
+            reserva.NroReserva = _nroReserva;
+            reserva.Sede = _sedeSeleccionada;
+            reserva.DuracionEstimada = _duracionEstimada;
+            reserva.EmpleadoRegistrador = _empleadoRegistrador;
+
             reserva.crearAsignaciones(_listaGuiasSeleccionados);
             foreach (Exposicion expoTemporal in _listaExposicionesTemporalesSeleccionadas)
             {
                 reserva.conocerExposicion(expoTemporal);
             }
             CambioEstado cambioEstado = new CambioEstado();
-            cambioEstado.setFechaHoraInicio(DateTime.Now);
-            cambioEstado.conocerEstado(_estado);
+            cambioEstado.FechaHoraInicio = DateTime.Now;
+            cambioEstado.Estado = _estado;
             reserva.conocerCambioEstado(cambioEstado);
 
             Persistencia.insertarReserva(reserva);

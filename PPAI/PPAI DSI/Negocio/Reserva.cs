@@ -26,7 +26,21 @@ namespace PPAI_DSI.Negocio
         private Escuela _escuela;
         private int _nroReserva;
 
-        public Reserva(RESERVAS reserva)
+        public int Id { get => _id; set => _id = value; }
+        public int DuracionEstimada { get => _duracionEstimada; set => _duracionEstimada = value; }
+        public DateTime FechaHoraCreacion { get => _fechaHoraCreacion; set => _fechaHoraCreacion = value; }
+        public DateTime FechaReserva { get => _fechaReserva; set => _fechaReserva = value; }
+        public DateTime HoraReserva { get => _horaReserva; set => _horaReserva = value; }
+        public DateTime HoraInicioReal { get => _horaInicioReal; set => _horaInicioReal = value; }
+        public DateTime HoraFinReal { get => _horaFinReal; set => _horaFinReal = value; }
+        public int CantidadAlumnos { get => _cantidadAlumnos; set => _cantidadAlumnos = value; }
+        public int CantidadAlumnosConfirmados { get => _cantidadAlumnosConfirmados; set => _cantidadAlumnosConfirmados= value; }
+        public Sede Sede { get => _sede; set => _sede = value; }
+        public Empleado EmpleadoRegistrador { get => _empleadoRegistrador; set => _empleadoRegistrador = value; }
+        public Escuela Escuela { get => _escuela; set => _escuela = value; }
+        public int NroReserva { get => _nroReserva; set => _nroReserva = value; }
+
+        public Reserva(RESERVAS reserva) // RESERVAS es un tipo del ORM
         {
             _id = reserva.Id_Reserva;
             _duracionEstimada = reserva.DuracionEstimada.Value;
@@ -40,14 +54,12 @@ namespace PPAI_DSI.Negocio
             _cantidadAlumnos = reserva.CantidadAlumnos.Value;
             if(reserva.CantidadAlumnosConfirmados != null)
                 _cantidadAlumnosConfirmados = reserva.CantidadAlumnosConfirmados.Value;
+
+            // No se incluye los objetos Sede, Empleado y Escuela porque el ORM 
+            // solo entrega el Id (int) correspondiente a la llave foránea
         }
 
         public Reserva() { }
-
-        public int getId()
-        {
-            return _id;
-        }
 
         public void conocerAsignacionVisita(AsignacionVisita asignacionVisita)
         {
@@ -69,27 +81,12 @@ namespace PPAI_DSI.Negocio
             CambioEstado cambioEstado = _listaCambiosEstado[0];
             foreach(CambioEstado cambioEst in _listaCambiosEstado)
             {
-                if(cambioEst.getFechaHoraInicio() > cambioEstado.getFechaHoraInicio())
+                if(cambioEst.FechaHoraInicio > cambioEstado.FechaHoraInicio)
                 {
                     cambioEstado = cambioEst;
                 }
             }
             return cambioEstado;
-        }
-
-        public void conocerEmpleadoRegistrador(Empleado empleado)
-        {
-            _empleadoRegistrador = empleado;
-        }
-
-        public Empleado getEmpeladoRegistrador()
-        {
-            return _empleadoRegistrador;
-        }
-
-        public void conocerEscuela(Escuela escuela)
-        {
-            _escuela = escuela;
         }
 
         public void conocerExposicion(Exposicion exposicion)
@@ -102,81 +99,6 @@ namespace PPAI_DSI.Negocio
             return _listaExposiciones;
         }
 
-        public void conocerSede(Sede sede)
-        {
-            _sede = sede;
-        }
-
-        public void setCantidadAlumnos(int cantidadAlumnos)
-        {
-            _cantidadAlumnos = cantidadAlumnos;
-        }
-
-        public void setSede(Sede sede)
-        {
-            _sede = sede;
-        }
-
-        public Sede getSede()
-        {
-            return _sede;
-        }
-
-        public void setHoraInicioReal(DateTime horaInicio)
-        {
-            _horaInicioReal = horaInicio;
-        }
-
-        public void setFechaReserva(DateTime fechaReserva)
-        {
-            _fechaReserva = fechaReserva;
-        }
-
-        public void setHoraReserva(DateTime horaReserva)
-        {
-            _horaReserva = horaReserva;
-        }
-
-        public void setDuracionEstimada(int duracion)
-        {
-            _duracionEstimada = duracion;
-        }
-
-        public int getDuracionEstimada()
-        {
-            return _duracionEstimada;
-        }
-
-        public DateTime getFechaReserva()
-        {
-            return _fechaReserva;
-        }
-
-        public int getCantidadAlumnosConfirmados()
-        {
-            return _cantidadAlumnosConfirmados;
-        }
-
-        public int getCantidadAlumnos()
-        {
-            return _cantidadAlumnos;
-        }
-
-        public DateTime getHoraReserva()
-        {
-            return _horaReserva;
-        }
-
-        public void setNroReserva(int nroReserva)
-        {
-            _nroReserva = nroReserva;
-        }
-
-        public int getNroReserva()
-        {
-            return _nroReserva;
-        }
-
         public void crearAsignaciones(List<Empleado> guiasSeleccionados)
         {
             foreach(Empleado guia in guiasSeleccionados)
@@ -184,23 +106,15 @@ namespace PPAI_DSI.Negocio
                 AsignacionVisita asignacionVisita = new AsignacionVisita();
                 DateTime horaFinAsignacion = _horaReserva;
                 horaFinAsignacion.AddMinutes(double.Parse(_duracionEstimada.ToString()));
-                asignacionVisita.setFechaInicio(_fechaReserva);
-                asignacionVisita.setFechaFin(_fechaReserva);
-                asignacionVisita.setHoraInicio(_horaReserva);
-                asignacionVisita.setHoraFin(_horaReserva.AddMinutes(_duracionEstimada));
-                asignacionVisita.conocerEmpleado(guia);
+
+                asignacionVisita.FechaInicio = _fechaReserva;
+                asignacionVisita.FechaFin = _fechaReserva;
+                asignacionVisita.HoraInicio = _horaReserva;
+                asignacionVisita.HoraFin = _horaReserva.AddMinutes(_duracionEstimada);
+                asignacionVisita.Empleado = guia;
+
                 _listaAsignacionesVisita.Add(asignacionVisita);
             }
-        }
-
-        public void setFechaHoraCreacion(DateTime fechaHoraCreacion)
-        {
-            _fechaHoraCreacion = fechaHoraCreacion;
-        }
-
-        public DateTime getFechaHoraCreacion()
-        {
-            return _fechaHoraCreacion;
         }
 
         public bool esDeFecha(DateTime fecha)

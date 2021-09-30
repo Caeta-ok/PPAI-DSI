@@ -14,21 +14,16 @@ namespace PPAI_DSI.Negocio
         public string _contrasenia;
         private Empleado _empleado;
 
+        public int Id { get => _id; set => _id = value; }
+        public string Nombre { get => _nombre; set => _nombre = value; }
+        public string Contrasenia { get => _contrasenia; set => _contrasenia = value; }
+        public Empleado Empleado { get => _empleado; set => _empleado = value; }
+
         public Usuario(USUARIOS usuario)
         {
-            _id = usuario.Id_Usuario;
-            _nombre = usuario.Nombre;
-            _contrasenia = usuario.Contrasenia;
-        }
-
-        public void conocerEmpleado(Empleado empleado)
-        {
-            _empleado = empleado;
-        }
-
-        public int getId()
-        {
-            return _id;
+            Id = usuario.Id_Usuario;
+            Nombre = usuario.Nombre;
+            Contrasenia = usuario.Contrasenia;
         }
 
         public Empleado getEmpleadoLogeado()

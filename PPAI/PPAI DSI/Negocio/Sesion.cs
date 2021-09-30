@@ -14,41 +14,11 @@ namespace PPAI_DSI.Negocio
         private DateTime _fechaHoraFin;
         private Usuario _usuario;
 
+        public int Id { get => _id; set => _id = value; }
+        public DateTime FechaHoraInicio { get => _fechaHoraInicio; set => _fechaHoraInicio = value; }
+        public DateTime FechaHoraFin { get => _fechaHoraFin; set => _fechaHoraFin = value; }
+        public Usuario Usuario { get => _usuario; set => _usuario = value; }
+
         public Sesion() { }
-
-        public int getId()
-        {
-            return _id;
-        }
-
-        public void conocerUsuario(Usuario usuario)
-        {
-            _usuario = usuario;
-        }
-
-        public void setFechaHoraInicio(DateTime fechaHoraInicio)
-        {
-            _fechaHoraInicio = fechaHoraInicio;
-        }
-
-        public DateTime getFechaHoraInicio()
-        {
-            return _fechaHoraInicio;
-        }
-
-        public void setFechaHoraFin(DateTime fechaHoraFin)
-        {
-            _fechaHoraFin = fechaHoraFin;
-        }
-
-        public DateTime getFechaHoraFin()
-        {
-            return _fechaHoraFin;
-        }
-
-        public Usuario getUsuario()
-        {
-            return _usuario;
-        }
     }
 }

@@ -10,14 +10,11 @@ namespace PPAI_DSI.Negocio
     public class Obra
     {
         private int _duracionExtendida;
+        public int DuracionExtendida { get => _duracionExtendida; set => _duracionExtendida = value; }
+
         public Obra(OBRAS obra)
         {
-            _duracionExtendida = obra.DuracionExtendida.Value;
-        }
-
-        public int getDuracionExtendida()
-        {
-            return _duracionExtendida;
+            DuracionExtendida = obra.DuracionExtendida.Value;
         }
     }
 }

@@ -13,11 +13,15 @@ namespace PPAI_DSI.Negocio
         private string _nombre;
         private string _descripcion;
 
+        public int Id { get => _id; set => _id = value; }
+        public string Nombre { get => _nombre; set => _nombre = value; }
+        public string Descripcion { get => _descripcion; set => _descripcion = value; }
+
         public Cargo(CARGOS cargo)
         {
-            _id = cargo.Id_Cargo;
-            _nombre = cargo.Nombre;
-            _descripcion = cargo.Descripcion;
+            Id = cargo.Id_Cargo;
+            Nombre = cargo.Nombre;
+            Descripcion = cargo.Descripcion;
         }
     }
 }

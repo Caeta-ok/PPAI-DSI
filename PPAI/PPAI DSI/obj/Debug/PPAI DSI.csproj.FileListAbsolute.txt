@@ -39,18 +39,6 @@ D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csp
 D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
 D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
 D:\david\programacion\Git\Proyects\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe.config
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.pdb
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.dll
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.xml
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Properties.Resources.resources
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.GenerateResource.cache
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
 C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe.config
 C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe
 C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.pdb
@@ -66,14 +54,10 @@ C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.C
 C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
 C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
 C:\Users\Nico\Develop\UTN\DSI\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.PantallaAdmReserva.resources
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.PantallaAdmReserva.resources
 D:\david\programacion\DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.Sharp.dll
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
 D:\david\programacion\DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.Sharp.dll
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources
 C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csprojAssemblyReference.cache
 C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
 C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources
@@ -92,4 +76,19 @@ C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.
 C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.xml
 C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Athelion\Documents\GitHub\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
-C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csprojAssemblyReference.cache
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.dll
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe.config
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.exe
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\PPAI DSI.pdb
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\FontAwesome.Sharp.dll
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.xml
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormEscritorio.resources
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.FormLogIn.resources
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Formularios.PantallaAdmReserva.resources
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI_DSI.Properties.Resources.resources
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.GenerateResource.cache
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb

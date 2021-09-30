@@ -44,7 +44,8 @@ namespace PPAI_DSI.Backend
             List<Exposicion> listaExposicion = new List<Exposicion>();
             using (PPAIEntities db = new PPAIEntities())
             {
-                int i = sede.getId();
+                //int i = sede.getId();
+                int i = sede.Id;
                 var listaExposPorSedeSql = db.EXPOSICIONESPORSEDE.Where(e => e.Id_Sede == i);
                 foreach (EXPOSICIONESPORSEDE expoPorSedeSql in listaExposPorSedeSql)
                 {
@@ -94,9 +95,9 @@ namespace PPAI_DSI.Backend
                 publicoDestino = new PublicoDestino(publicDestinoSql);
 
                 exposicion = new Exposicion(expoSql);
-                exposicion.conocerDetalleExposicion(detalleExposicion);
-                exposicion.conocerTipoExposicion(tipoExposicion);
-                exposicion.conocerPublicoDestino(publicoDestino);
+                exposicion.DetalleExposicion = detalleExposicion;
+                exposicion.TipoExposicion = tipoExposicion;
+                exposicion.PublicoDestino = publicoDestino;
             }
             return exposicion;
         }
@@ -118,7 +119,7 @@ namespace PPAI_DSI.Backend
                         ASIGNACIONESVISITA asignacionVisitaSql = db.ASIGNACIONESVISITA.Find(asign.Id_AsignacionVisita);
                         Empleado empleado = traerEmpleadoPorId(asignacionVisitaSql.Id_Empleado.Value);
                         AsignacionVisita asignacionVisita = new AsignacionVisita(asignacionVisitaSql);
-                        asignacionVisita.conocerEmpleado(empleado);
+                        asignacionVisita.Empleado = empleado;
                         reserva.conocerAsignacionVisita(asignacionVisita);
                     }
 
@@ -140,7 +141,7 @@ namespace PPAI_DSI.Backend
                     }
 
                     // Asignar la sede
-                    reserva.conocerSede(traerSedePorId(Id_Sede));
+                    reserva.Sede = traerSedePorId(Id_Sede);
                 }
             }
             return listaReservas;
@@ -156,8 +157,8 @@ namespace PPAI_DSI.Backend
                 CARGOS cargoSql = db.CARGOS.Find(empleadoSql.Id_Cargo);
 
                 empleado = new Empleado(empleadoSql);
-                empleado.conocerHorario(new HorarioTrabajo(horarioTrabajoSql));
-                empleado.conocerCargo(new Cargo(cargoSql));
+                empleado.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
+                empleado.Cargo = new Cargo(cargoSql);
             }
             return empleado;
         }
@@ -185,8 +186,8 @@ namespace PPAI_DSI.Backend
                     HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(emp.Id_HorarioTrabajo);
                     CARGOS cargoSql = db.CARGOS.Find(emp.Id_Cargo);
 
-                    empleado.conocerHorario(new HorarioTrabajo(horarioTrabajoSql));
-                    empleado.conocerCargo(new Cargo(cargoSql));
+                    empleado.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
+                    empleado.Cargo = new Cargo(cargoSql);
                     listaGuias.Add(empleado);
                 }
             }
@@ -206,8 +207,8 @@ namespace PPAI_DSI.Backend
                     HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(empleadoSql.Id_HorarioTrabajo);
                     CARGOS cargoSql = db.CARGOS.Find(empleadoSql.Id_Cargo);
 
-                    empleado.conocerHorario(new HorarioTrabajo(horarioTrabajoSql));
-                    empleado.conocerCargo(new Cargo(cargoSql));
+                    empleado.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
+                    empleado.Cargo = new Cargo(cargoSql);
                     listaEmpleados.Add(empleado);
                 }
             }
@@ -226,8 +227,8 @@ namespace PPAI_DSI.Backend
                     CARGOS cargoSql = db.CARGOS.Find(guiaSql.Id_Cargo);
 
                     Empleado guia = new Empleado(guiaSql);
-                    guia.conocerHorario(new HorarioTrabajo(horarioTrabajoSql));
-                    guia.conocerCargo(new Cargo(cargoSql));
+                    guia.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
+                    guia.Cargo = new Cargo(cargoSql);
                     listaGuias.Add(guia);
                 }
             }
@@ -244,7 +245,7 @@ namespace PPAI_DSI.Backend
                 {
                     AsignacionVisita asignacionVisita = new AsignacionVisita(asign);
                     Empleado empleado = traerEmpleadoPorId(asign.Id_Empleado.Value);
-                    asignacionVisita.conocerEmpleado(empleado);
+                    asignacionVisita.Empleado = empleado;
                     listaAsignacionesVisita.Add(asignacionVisita);
                 }
             }
@@ -259,7 +260,7 @@ namespace PPAI_DSI.Backend
                 USUARIOS usuarioSql = db.USUARIOS.Find(Id_Usuario);
                 Empleado empleado = traerEmpleadoPorId(usuarioSql.Id_Empleado.Value);
                 usuario = new Usuario(usuarioSql);
-                usuario.conocerEmpleado(empleado);
+                usuario.Empleado = empleado;
             }
             return usuario;
         }
@@ -285,19 +286,6 @@ namespace PPAI_DSI.Backend
             return estado;
         }
 
-        /*
-        private static int insertarReservaParcialGetId(RESERVAS reserva)
-        {
-            int idReserva = 0;
-            using (PPAIEntities db = new PPAIEntities())
-            {
-                db.RESERVAS.Add(reserva);
-                db.SaveChanges();
-                idReserva = reserva.Id_Reserva;
-            }
-            return idReserva;
-        }*/
-
         public static void insertarReserva(Reserva reserva)
         {
             // Se debe pasar la reserva completa
@@ -315,11 +303,12 @@ namespace PPAI_DSI.Backend
                             ASIGNACIONESVISITA asignacionSql = new ASIGNACIONESVISITA //Crear objecto asignacionSql
                             {
                                 // Asignarle los datos que traemos de la capa de negocio
-                                FechaInicio = asignacion.getFechaInicio(),
-                                FechaFin = asignacion.getFechaFin(),
-                                HoraInicio = TimeSpan.Parse(asignacion.getHoraInicio().ToString("HH:mm:ss")),
-                                HoraFin = TimeSpan.Parse(asignacion.getHoraFin().ToString("HH:mm:ss")),
-                                Id_Empleado = asignacion.getEmpleado().getId()
+                                FechaInicio = asignacion.FechaInicio,
+                                FechaFin = asignacion.FechaFin,
+                                HoraInicio = TimeSpan.Parse(asignacion.HoraInicio.ToString("HH:mm:ss")),
+                                HoraFin = TimeSpan.Parse(asignacion.HoraFin.ToString("HH:mm:ss")),
+                                Id_Empleado = asignacion.Empleado.Id
+
                             };
 
                             // Insertar objeto
@@ -332,8 +321,8 @@ namespace PPAI_DSI.Backend
                         CambioEstado cambioEstado = reserva.getCambioEstadoActual();
                         CAMBIOSESTADOS cambioEstadoSql = new CAMBIOSESTADOS
                         {
-                            FechaHoraInicio = cambioEstado.getFechaHoraInicio(),
-                            Id_Estado = cambioEstado.getEstado().getId()
+                            FechaHoraInicio = cambioEstado.FechaHoraInicio,
+                            Id_Estado = cambioEstado.Estado.Id
                         };
                         db.CAMBIOSESTADOS.Add(cambioEstadoSql);
                         db.SaveChanges();
@@ -341,14 +330,14 @@ namespace PPAI_DSI.Backend
                         // ------------------------------------------------------------------------- 3) Insertar Reserva
                         RESERVAS reservaSql = new RESERVAS
                         {
-                            FechaHoraCreacion = reserva.getFechaHoraCreacion(),
-                            FechaReserva = reserva.getFechaReserva(),
-                            HoraReserva = TimeSpan.Parse(reserva.getHoraReserva().ToString("HH:mm:ss")),
-                            CantidadAlumnos = reserva.getCantidadAlumnos(),
-                            Id_Sede = reserva.getSede().getId(),
-                            Id_Empleado = reserva.getEmpeladoRegistrador().getId(),
-                            DuracionEstimada = reserva.getDuracionEstimada(),
-                            NroReserva = reserva.getNroReserva()
+                            FechaHoraCreacion = reserva.FechaHoraCreacion,
+                            FechaReserva = reserva.FechaReserva,
+                            HoraReserva = TimeSpan.Parse(reserva.HoraReserva.ToString("HH:mm:ss")),
+                            CantidadAlumnos = reserva.CantidadAlumnos,
+                            Id_Sede = reserva.Sede.Id,
+                            Id_Empleado = reserva.EmpleadoRegistrador.Id,
+                            DuracionEstimada = reserva.DuracionEstimada,
+                            NroReserva = reserva.NroReserva
                         };
                         db.RESERVAS.Add(reservaSql);
                         db.SaveChanges();
@@ -371,7 +360,7 @@ namespace PPAI_DSI.Backend
                             EXPOSICIONESPORRESERVA exposicionPorReservaSql = new EXPOSICIONESPORRESERVA
                             {
                                 Id_Reserva = reservaSql.Id_Reserva,
-                                Id_Exposicion = exposicion.getId()
+                                Id_Exposicion = exposicion.Id
                             };
                             db.EXPOSICIONESPORRESERVA.Add(exposicionPorReservaSql);
                             db.SaveChanges();
@@ -399,50 +388,15 @@ namespace PPAI_DSI.Backend
             }
         }
 
-        /*
-        private static int insertarAsignacionVisitaGetId(ASIGNACIONESVISITA asignacionVisitaSql)
-        {
-            int idAsignacionVisita = 0;
-            using (PPAIEntities db = new PPAIEntities())
-            {
-                db.ASIGNACIONESVISITA.Add(asignacionVisitaSql);
-                db.SaveChanges();
-                idAsignacionVisita = asignacionVisitaSql.Id_AsignacionVisita;
-            }
-            return idAsignacionVisita;
-        }*/
-
-        /*
-        private static int insertarCambioEstadoGetId(CAMBIOSESTADOS cambioEstadosql)
-        {
-            int idCambioEstado = 0;
-            using (PPAIEntities db = new PPAIEntities())
-            {
-                db.CAMBIOSESTADOS.Add(cambioEstadosql);
-                db.SaveChanges();
-                idCambioEstado = cambioEstadosql.Id_CambioEstado;
-            }
-            return idCambioEstado;
-        }*/
-
-        /*
-        private static void insertarExposicionPorReserva(EXPOSICIONESPORRESERVA exposicionPorReservaSql)
-        {
-            using (PPAIEntities db = new PPAIEntities())
-            {
-                db.EXPOSICIONESPORRESERVA.Add(exposicionPorReservaSql);
-                db.SaveChanges();
-            }
-        }*/
-
         public static void insertarSesion(Sesion sesion)
         {
             using (PPAIEntities db = new PPAIEntities())
             {
                 SESIONES sesionSql = new SESIONES();
-                sesionSql.FechaHoraInicio = sesion.getFechaHoraInicio();
-                sesionSql.FechaHoraFin = sesion.getFechaHoraFin();
-                sesionSql.Id_Usuario = sesion.getUsuario().getId();
+                sesionSql.FechaHoraInicio = sesion.FechaHoraInicio;
+                sesionSql.FechaHoraFin = sesion.FechaHoraFin;
+                sesionSql.Id_Usuario = sesion.Usuario.Id;
+
                 db.SESIONES.Add(sesionSql);
                 db.SaveChanges();
             }
