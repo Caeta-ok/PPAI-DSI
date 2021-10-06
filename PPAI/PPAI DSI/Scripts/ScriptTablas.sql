@@ -119,19 +119,19 @@ create table EXPOSICIONES
 	HoraApertura time(0),
 	HoraCierre time(0),
 	Id_TipoExposicion int,
-	Id_DetalleExposicion int,
 	Id_PublicoDestino int,
 	constraint FK_TIPOSEXPOSICION0 foreign key (Id_TipoExposicion) references TIPOSEXPOSICION(Id_TipoExposicion),
-	constraint FK_DETALLESEXPOSICION0 foreign key(Id_DetalleExposicion) references DETALLESEXPOSICION(Id_DetalleExposicion),
 	constraint FK_PUBLICOSDESTINO0 foreign key (Id_PublicoDestino) references PUBLICOSDESTINO(Id_PublicoDestino))
 
--------------------------------------------------------------------------------------------------- OBRASPOREXPOSICION
-create table OBRASPOREXPOSICION
-	(Id_ObraPorExposicion int identity(1, 1) not null primary key,
-	 Id_Obra int,
-	 Id_Exposicion int,
-	 constraint FK_OBRAS1 foreign key (Id_Obra) references OBRAS(Id_Obra),
-	 constraint FK_EXPOSICIONES0 foreign key (Id_Exposicion) references EXPOSICIONES(Id_Exposicion))
+-------------------------------------------------------------------------------------------------- DETALLESPOREXPOSICION
+create table DETALLESPOREXPOSICION
+(
+	Id_DetallesPorExposicion int identity(1, 1) not null primary key,
+	Id_Exposicion int,
+	Id_DetalleExposicion int,
+	constraint FK_EXPOSICIONES3 foreign key(Id_Exposicion) references EXPOSICIONES(Id_Exposicion),
+	constraint FK_DETALLESEXPOSICION0 foreign key(Id_DetalleExposicion) references DETALLESEXPOSICION(Id_DetalleExposicion)
+)
 
 -------------------------------------------------------------------------------------------------- RESERVAS
 create table RESERVAS

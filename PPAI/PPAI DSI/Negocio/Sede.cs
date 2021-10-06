@@ -55,7 +55,7 @@ namespace PPAI_DSI.Negocio
             int duracionDeExposicion = 0;
             foreach (Exposicion exposicion in expo_seleccionadas)
             {
-                duracionDeExposicion += exposicion.calcularDuracionObrasExpuestas();
+                duracionDeExposicion += exposicion.calcularDuracionExtendida();
             }
             return duracionDeExposicion;
         }

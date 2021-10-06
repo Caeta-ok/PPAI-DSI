@@ -57,6 +57,14 @@
           <Property Name="LugarAsignado" Type="varchar" MaxLength="50" />
           <Property Name="Id_Obra" Type="int" />
         </EntityType>
+        <EntityType Name="DETALLESPOREXPOSICION">
+          <Key>
+            <PropertyRef Name="Id_DetallesPorExposicion" />
+          </Key>
+          <Property Name="Id_DetallesPorExposicion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Exposicion" Type="int" />
+          <Property Name="Id_DetalleExposicion" Type="int" />
+        </EntityType>
         <EntityType Name="DIAS">
           <Key>
             <PropertyRef Name="Id_Dia" />
@@ -113,10 +121,9 @@
           <Property Name="FechaInicioReplanificada" Type="date" />
           <Property Name="FechaFin" Type="date" />
           <Property Name="FechaFinReplanificada" Type="date" />
-          <Property Name="HoraApertura" Type="time" Precision="7" />
-          <Property Name="HoraCierre" Type="time" Precision="7" />
+          <Property Name="HoraApertura" Type="time" Precision="0" />
+          <Property Name="HoraCierre" Type="time" Precision="0" />
           <Property Name="Id_TipoExposicion" Type="int" />
-          <Property Name="Id_DetalleExposicion" Type="int" />
           <Property Name="Id_PublicoDestino" Type="int" />
         </EntityType>
         <EntityType Name="EXPOSICIONESPORRESERVA">
@@ -159,14 +166,6 @@
           <Property Name="Peso" Type="int" />
           <Property Name="Valuacion" Type="int" />
           <Property Name="CodigoSensor" Type="int" />
-        </EntityType>
-        <EntityType Name="OBRASPOREXPOSICION">
-          <Key>
-            <PropertyRef Name="Id_ObraPorExposicion" />
-          </Key>
-          <Property Name="Id_ObraPorExposicion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Id_Obra" Type="int" />
-          <Property Name="Id_Exposicion" Type="int" />
         </EntityType>
         <EntityType Name="PUBLICOSDESTINO">
           <Key>
@@ -273,12 +272,12 @@
         </Association>
         <Association Name="FK_DETALLESEXPOSICION0">
           <End Role="DETALLESEXPOSICION" Type="Self.DETALLESEXPOSICION" Multiplicity="0..1" />
-          <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="*" />
+          <End Role="DETALLESPOREXPOSICION" Type="Self.DETALLESPOREXPOSICION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DETALLESEXPOSICION">
               <PropertyRef Name="Id_DetalleExposicion" />
             </Principal>
-            <Dependent Role="EXPOSICIONES">
+            <Dependent Role="DETALLESPOREXPOSICION">
               <PropertyRef Name="Id_DetalleExposicion" />
             </Dependent>
           </ReferentialConstraint>
@@ -331,18 +330,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EXPOSICIONES0">
-          <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
-          <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EXPOSICIONES">
-              <PropertyRef Name="Id_Exposicion" />
-            </Principal>
-            <Dependent Role="OBRASPOREXPOSICION">
-              <PropertyRef Name="Id_Exposicion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EXPOSICIONES1">
           <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
           <End Role="EXPOSICIONESPORRESERVA" Type="Self.EXPOSICIONESPORRESERVA" Multiplicity="*" />
@@ -367,6 +354,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EXPOSICIONES3">
+          <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
+          <End Role="DETALLESPOREXPOSICION" Type="Self.DETALLESPOREXPOSICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXPOSICIONES">
+              <PropertyRef Name="Id_Exposicion" />
+            </Principal>
+            <Dependent Role="DETALLESPOREXPOSICION">
+              <PropertyRef Name="Id_Exposicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HORARIOSTRABAJOS0">
           <End Role="HORARIOSTRABAJOS" Type="Self.HORARIOSTRABAJOS" Multiplicity="0..1" />
           <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
@@ -387,18 +386,6 @@
               <PropertyRef Name="Id_Obra" />
             </Principal>
             <Dependent Role="DETALLESEXPOSICION">
-              <PropertyRef Name="Id_Obra" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OBRAS1">
-          <End Role="OBRAS" Type="Self.OBRAS" Multiplicity="0..1" />
-          <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OBRAS">
-              <PropertyRef Name="Id_Obra" />
-            </Principal>
-            <Dependent Role="OBRASPOREXPOSICION">
               <PropertyRef Name="Id_Obra" />
             </Dependent>
           </ReferentialConstraint>
@@ -518,6 +505,7 @@
           <EntitySet Name="CAMBIOSESTADOSPORRESERVA" EntityType="Self.CAMBIOSESTADOSPORRESERVA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARGOS" EntityType="Self.CARGOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DETALLESEXPOSICION" EntityType="Self.DETALLESEXPOSICION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DETALLESPOREXPOSICION" EntityType="Self.DETALLESPOREXPOSICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DIAS" EntityType="Self.DIAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLEADOS" EntityType="Self.EMPLEADOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESCUELAS" EntityType="Self.ESCUELAS" Schema="dbo" store:Type="Tables" />
@@ -527,7 +515,6 @@
           <EntitySet Name="EXPOSICIONESPORSEDE" EntityType="Self.EXPOSICIONESPORSEDE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HORARIOSTRABAJOS" EntityType="Self.HORARIOSTRABAJOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OBRAS" EntityType="Self.OBRAS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OBRASPOREXPOSICION" EntityType="Self.OBRASPOREXPOSICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PUBLICOSDESTINO" EntityType="Self.PUBLICOSDESTINO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESERVAS" EntityType="Self.RESERVAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SEDES" EntityType="Self.SEDES" Schema="dbo" store:Type="Tables" />
@@ -549,7 +536,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_DETALLESEXPOSICION0" Association="Self.FK_DETALLESEXPOSICION0">
             <End Role="DETALLESEXPOSICION" EntitySet="DETALLESEXPOSICION" />
-            <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
+            <End Role="DETALLESPOREXPOSICION" EntitySet="DETALLESPOREXPOSICION" />
           </AssociationSet>
           <AssociationSet Name="FK_EMPLEADOS0" Association="Self.FK_EMPLEADOS0">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
@@ -567,10 +554,6 @@
             <End Role="ESTADOS" EntitySet="ESTADOS" />
             <End Role="CAMBIOSESTADOS" EntitySet="CAMBIOSESTADOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_EXPOSICIONES0" Association="Self.FK_EXPOSICIONES0">
-            <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
-            <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
-          </AssociationSet>
           <AssociationSet Name="FK_EXPOSICIONES1" Association="Self.FK_EXPOSICIONES1">
             <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
             <End Role="EXPOSICIONESPORRESERVA" EntitySet="EXPOSICIONESPORRESERVA" />
@@ -579,6 +562,10 @@
             <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
             <End Role="EXPOSICIONESPORSEDE" EntitySet="EXPOSICIONESPORSEDE" />
           </AssociationSet>
+          <AssociationSet Name="FK_EXPOSICIONES3" Association="Self.FK_EXPOSICIONES3">
+            <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
+            <End Role="DETALLESPOREXPOSICION" EntitySet="DETALLESPOREXPOSICION" />
+          </AssociationSet>
           <AssociationSet Name="FK_HORARIOSTRABAJOS0" Association="Self.FK_HORARIOSTRABAJOS0">
             <End Role="HORARIOSTRABAJOS" EntitySet="HORARIOSTRABAJOS" />
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
@@ -586,10 +573,6 @@
           <AssociationSet Name="FK_OBRAS0" Association="Self.FK_OBRAS0">
             <End Role="OBRAS" EntitySet="OBRAS" />
             <End Role="DETALLESEXPOSICION" EntitySet="DETALLESEXPOSICION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OBRAS1" Association="Self.FK_OBRAS1">
-            <End Role="OBRAS" EntitySet="OBRAS" />
-            <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
           </AssociationSet>
           <AssociationSet Name="FK_PUBLICOSDESTINO0" Association="Self.FK_PUBLICOSDESTINO0">
             <End Role="PUBLICOSDESTINO" EntitySet="PUBLICOSDESTINO" />
@@ -693,8 +676,18 @@
           <Property Name="Id_DetalleExposicion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LugarAsignado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Id_Obra" Type="Int32" />
-          <NavigationProperty Name="EXPOSICIONES" Relationship="Self.FK_DETALLESEXPOSICION0" FromRole="DETALLESEXPOSICION" ToRole="EXPOSICIONES" />
+          <NavigationProperty Name="DETALLESPOREXPOSICION" Relationship="Self.FK_DETALLESEXPOSICION0" FromRole="DETALLESEXPOSICION" ToRole="DETALLESPOREXPOSICION" />
           <NavigationProperty Name="OBRAS" Relationship="Self.FK_OBRAS0" FromRole="DETALLESEXPOSICION" ToRole="OBRAS" />
+        </EntityType>
+        <EntityType Name="DETALLESPOREXPOSICION">
+          <Key>
+            <PropertyRef Name="Id_DetallesPorExposicion" />
+          </Key>
+          <Property Name="Id_DetallesPorExposicion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Exposicion" Type="Int32" />
+          <Property Name="Id_DetalleExposicion" Type="Int32" />
+          <NavigationProperty Name="DETALLESEXPOSICION" Relationship="Self.FK_DETALLESEXPOSICION0" FromRole="DETALLESPOREXPOSICION" ToRole="DETALLESEXPOSICION" />
+          <NavigationProperty Name="EXPOSICIONES" Relationship="Self.FK_EXPOSICIONES3" FromRole="DETALLESPOREXPOSICION" ToRole="EXPOSICIONES" />
         </EntityType>
         <EntityType Name="DIAS">
           <Key>
@@ -759,13 +752,11 @@
           <Property Name="FechaInicioReplanificada" Type="DateTime" Precision="0" />
           <Property Name="FechaFin" Type="DateTime" Precision="0" />
           <Property Name="FechaFinReplanificada" Type="DateTime" Precision="0" />
-          <Property Name="HoraApertura" Type="Time" Precision="7" />
-          <Property Name="HoraCierre" Type="Time" Precision="7" />
+          <Property Name="HoraApertura" Type="Time" Precision="0" />
+          <Property Name="HoraCierre" Type="Time" Precision="0" />
           <Property Name="Id_TipoExposicion" Type="Int32" />
-          <Property Name="Id_DetalleExposicion" Type="Int32" />
           <Property Name="Id_PublicoDestino" Type="Int32" />
-          <NavigationProperty Name="DETALLESEXPOSICION" Relationship="Self.FK_DETALLESEXPOSICION0" FromRole="EXPOSICIONES" ToRole="DETALLESEXPOSICION" />
-          <NavigationProperty Name="OBRASPOREXPOSICION" Relationship="Self.FK_EXPOSICIONES0" FromRole="EXPOSICIONES" ToRole="OBRASPOREXPOSICION" />
+          <NavigationProperty Name="DETALLESPOREXPOSICION" Relationship="Self.FK_EXPOSICIONES3" FromRole="EXPOSICIONES" ToRole="DETALLESPOREXPOSICION" />
           <NavigationProperty Name="EXPOSICIONESPORRESERVA" Relationship="Self.FK_EXPOSICIONES1" FromRole="EXPOSICIONES" ToRole="EXPOSICIONESPORRESERVA" />
           <NavigationProperty Name="EXPOSICIONESPORSEDE" Relationship="Self.FK_EXPOSICIONES2" FromRole="EXPOSICIONES" ToRole="EXPOSICIONESPORSEDE" />
           <NavigationProperty Name="PUBLICOSDESTINO" Relationship="Self.FK_PUBLICOSDESTINO0" FromRole="EXPOSICIONES" ToRole="PUBLICOSDESTINO" />
@@ -817,17 +808,6 @@
           <Property Name="Valuacion" Type="Int32" />
           <Property Name="CodigoSensor" Type="Int32" />
           <NavigationProperty Name="DETALLESEXPOSICION" Relationship="Self.FK_OBRAS0" FromRole="OBRAS" ToRole="DETALLESEXPOSICION" />
-          <NavigationProperty Name="OBRASPOREXPOSICION" Relationship="Self.FK_OBRAS1" FromRole="OBRAS" ToRole="OBRASPOREXPOSICION" />
-        </EntityType>
-        <EntityType Name="OBRASPOREXPOSICION">
-          <Key>
-            <PropertyRef Name="Id_ObraPorExposicion" />
-          </Key>
-          <Property Name="Id_ObraPorExposicion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Obra" Type="Int32" />
-          <Property Name="Id_Exposicion" Type="Int32" />
-          <NavigationProperty Name="EXPOSICIONES" Relationship="Self.FK_EXPOSICIONES0" FromRole="OBRASPOREXPOSICION" ToRole="EXPOSICIONES" />
-          <NavigationProperty Name="OBRAS" Relationship="Self.FK_OBRAS1" FromRole="OBRASPOREXPOSICION" ToRole="OBRAS" />
         </EntityType>
         <EntityType Name="PUBLICOSDESTINO">
           <Key>
@@ -995,12 +975,12 @@
         </Association>
         <Association Name="FK_DETALLESEXPOSICION0">
           <End Role="DETALLESEXPOSICION" Type="Self.DETALLESEXPOSICION" Multiplicity="0..1" />
-          <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="*" />
+          <End Role="DETALLESPOREXPOSICION" Type="Self.DETALLESPOREXPOSICION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DETALLESEXPOSICION">
               <PropertyRef Name="Id_DetalleExposicion" />
             </Principal>
-            <Dependent Role="EXPOSICIONES">
+            <Dependent Role="DETALLESPOREXPOSICION">
               <PropertyRef Name="Id_DetalleExposicion" />
             </Dependent>
           </ReferentialConstraint>
@@ -1014,6 +994,18 @@
             </Principal>
             <Dependent Role="DETALLESEXPOSICION">
               <PropertyRef Name="Id_Obra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EXPOSICIONES3">
+          <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
+          <End Role="DETALLESPOREXPOSICION" Type="Self.DETALLESPOREXPOSICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXPOSICIONES">
+              <PropertyRef Name="Id_Exposicion" />
+            </Principal>
+            <Dependent Role="DETALLESPOREXPOSICION">
+              <PropertyRef Name="Id_Exposicion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1062,18 +1054,6 @@
             </Principal>
             <Dependent Role="EMPLEADOS">
               <PropertyRef Name="Id_Sede" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EXPOSICIONES0">
-          <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
-          <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EXPOSICIONES">
-              <PropertyRef Name="Id_Exposicion" />
-            </Principal>
-            <Dependent Role="OBRASPOREXPOSICION">
-              <PropertyRef Name="Id_Exposicion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1149,18 +1129,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OBRAS1">
-          <End Role="OBRAS" Type="Self.OBRAS" Multiplicity="0..1" />
-          <End Role="OBRASPOREXPOSICION" Type="Self.OBRASPOREXPOSICION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OBRAS">
-              <PropertyRef Name="Id_Obra" />
-            </Principal>
-            <Dependent Role="OBRASPOREXPOSICION">
-              <PropertyRef Name="Id_Obra" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SEDES1">
           <End Role="SEDES" Type="Self.SEDES" Multiplicity="0..1" />
           <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
@@ -1192,6 +1160,7 @@
           <EntitySet Name="CAMBIOSESTADOSPORRESERVA" EntityType="Self.CAMBIOSESTADOSPORRESERVA" />
           <EntitySet Name="CARGOS" EntityType="Self.CARGOS" />
           <EntitySet Name="DETALLESEXPOSICION" EntityType="Self.DETALLESEXPOSICION" />
+          <EntitySet Name="DETALLESPOREXPOSICION" EntityType="Self.DETALLESPOREXPOSICION" />
           <EntitySet Name="DIAS" EntityType="Self.DIAS" />
           <EntitySet Name="EMPLEADOS" EntityType="Self.EMPLEADOS" />
           <EntitySet Name="ESCUELAS" EntityType="Self.ESCUELAS" />
@@ -1201,7 +1170,6 @@
           <EntitySet Name="EXPOSICIONESPORSEDE" EntityType="Self.EXPOSICIONESPORSEDE" />
           <EntitySet Name="HORARIOSTRABAJOS" EntityType="Self.HORARIOSTRABAJOS" />
           <EntitySet Name="OBRAS" EntityType="Self.OBRAS" />
-          <EntitySet Name="OBRASPOREXPOSICION" EntityType="Self.OBRASPOREXPOSICION" />
           <EntitySet Name="PUBLICOSDESTINO" EntityType="Self.PUBLICOSDESTINO" />
           <EntitySet Name="RESERVAS" EntityType="Self.RESERVAS" />
           <EntitySet Name="SEDES" EntityType="Self.SEDES" />
@@ -1239,11 +1207,15 @@
           </AssociationSet>
           <AssociationSet Name="FK_DETALLESEXPOSICION0" Association="Self.FK_DETALLESEXPOSICION0">
             <End Role="DETALLESEXPOSICION" EntitySet="DETALLESEXPOSICION" />
-            <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
+            <End Role="DETALLESPOREXPOSICION" EntitySet="DETALLESPOREXPOSICION" />
           </AssociationSet>
           <AssociationSet Name="FK_OBRAS0" Association="Self.FK_OBRAS0">
             <End Role="OBRAS" EntitySet="OBRAS" />
             <End Role="DETALLESEXPOSICION" EntitySet="DETALLESEXPOSICION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXPOSICIONES3" Association="Self.FK_EXPOSICIONES3">
+            <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
+            <End Role="DETALLESPOREXPOSICION" EntitySet="DETALLESPOREXPOSICION" />
           </AssociationSet>
           <AssociationSet Name="FK_EMPLEADOS0" Association="Self.FK_EMPLEADOS0">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
@@ -1260,10 +1232,6 @@
           <AssociationSet Name="FK_SEDES0" Association="Self.FK_SEDES0">
             <End Role="SEDES" EntitySet="SEDES" />
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EXPOSICIONES0" Association="Self.FK_EXPOSICIONES0">
-            <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
-            <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
           </AssociationSet>
           <AssociationSet Name="FK_EXPOSICIONES1" Association="Self.FK_EXPOSICIONES1">
             <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
@@ -1288,10 +1256,6 @@
           <AssociationSet Name="FK_SEDES2" Association="Self.FK_SEDES2">
             <End Role="SEDES" EntitySet="SEDES" />
             <End Role="EXPOSICIONESPORSEDE" EntitySet="EXPOSICIONESPORSEDE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OBRAS1" Association="Self.FK_OBRAS1">
-            <End Role="OBRAS" EntitySet="OBRAS" />
-            <End Role="OBRASPOREXPOSICION" EntitySet="OBRASPOREXPOSICION" />
           </AssociationSet>
           <AssociationSet Name="FK_SEDES1" Association="Self.FK_SEDES1">
             <End Role="SEDES" EntitySet="SEDES" />
@@ -1366,6 +1330,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DETALLESPOREXPOSICION">
+            <EntityTypeMapping TypeName="PPAIModel.DETALLESPOREXPOSICION">
+              <MappingFragment StoreEntitySet="DETALLESPOREXPOSICION">
+                <ScalarProperty Name="Id_DetallesPorExposicion" ColumnName="Id_DetallesPorExposicion" />
+                <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
+                <ScalarProperty Name="Id_DetalleExposicion" ColumnName="Id_DetalleExposicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DIAS">
             <EntityTypeMapping TypeName="PPAIModel.DIAS">
               <MappingFragment StoreEntitySet="DIAS">
@@ -1428,7 +1401,6 @@
                 <ScalarProperty Name="HoraApertura" ColumnName="HoraApertura" />
                 <ScalarProperty Name="HoraCierre" ColumnName="HoraCierre" />
                 <ScalarProperty Name="Id_TipoExposicion" ColumnName="Id_TipoExposicion" />
-                <ScalarProperty Name="Id_DetalleExposicion" ColumnName="Id_DetalleExposicion" />
                 <ScalarProperty Name="Id_PublicoDestino" ColumnName="Id_PublicoDestino" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1475,15 +1447,6 @@
                 <ScalarProperty Name="Peso" ColumnName="Peso" />
                 <ScalarProperty Name="Valuacion" ColumnName="Valuacion" />
                 <ScalarProperty Name="CodigoSensor" ColumnName="CodigoSensor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OBRASPOREXPOSICION">
-            <EntityTypeMapping TypeName="PPAIModel.OBRASPOREXPOSICION">
-              <MappingFragment StoreEntitySet="OBRASPOREXPOSICION">
-                <ScalarProperty Name="Id_ObraPorExposicion" ColumnName="Id_ObraPorExposicion" />
-                <ScalarProperty Name="Id_Obra" ColumnName="Id_Obra" />
-                <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

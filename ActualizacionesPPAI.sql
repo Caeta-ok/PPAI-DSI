@@ -1,7 +1,4 @@
 --------------------------------------------------------------------------------------------------------------- Actualizaciones 26/09/2021
--- Las actualizaciones también están contempladas en los archivos ScriptDatos.sql y ScriptTablas.sql
--- Eliminar y volver a crear el ORM luego de actualizar la base de datos
-
 -- Actualización de las fechas de fin de las exposiciones para que sean vigentes y aparezcan en la grilla
 update EXPOSICIONES set FechaFin = '2100-08-05' where Id_Exposicion = 1
 update EXPOSICIONES set FechaFin = '2100-09-10' where Id_Exposicion = 2
@@ -26,9 +23,6 @@ alter table EXPOSICIONES alter column HoraApertura time(0)
 alter table EXPOSICIONES alter column HoraCierre time(0)
 
 -- Solo hay una obra por DetalleExposicion según el modelo dominio de las profes
------- Se modifican y actualizan EXPOSICIONES, DETALLESEXPOSICIONES
------- Se elimina OBRASPOREXPOSICION
------- Se crea la tabla DETALLESPOREXPOSICION con sus respectivos datos (Coincidentes con los que estaban en OBRASPOREXPOSICION)
 alter table EXPOSICIONES drop constraint FK_DETALLESEXPOSICION0
 alter table EXPOSICIONES drop column Id_DetalleExposicion
 
@@ -117,3 +111,11 @@ insert into DETALLESPOREXPOSICION(Id_DetallesPorExposicion, Id_Exposicion, Id_De
 insert into DETALLESPOREXPOSICION(Id_DetallesPorExposicion, Id_Exposicion, Id_DetalleExposicion) values(53, 8, 9)
 insert into DETALLESPOREXPOSICION(Id_DetallesPorExposicion, Id_Exposicion, Id_DetalleExposicion) values(54, 8, 10)
 set identity_insert DETALLESPOREXPOSICION off
+
+
+
+
+
+
+
+

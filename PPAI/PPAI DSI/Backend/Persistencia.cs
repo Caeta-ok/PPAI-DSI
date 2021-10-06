@@ -74,7 +74,6 @@ namespace PPAI_DSI.Backend
         public static Exposicion traerExposicionPorId(int Id_Exposicion)
         {
             Exposicion exposicion;
-            DetalleExposicion detalleExposicion = new DetalleExposicion();
             TipoExposicion tipoExposicion;
             PublicoDestino publicoDestino;
             using (PPAIEntities db = new PPAIEntities())
@@ -82,20 +81,25 @@ namespace PPAI_DSI.Backend
                 EXPOSICIONES expoSql = db.EXPOSICIONES.Find(Id_Exposicion);
                 TIPOSEXPOSICION tipoExpoSql = db.TIPOSEXPOSICION.Find(expoSql.Id_TipoExposicion);
                 PUBLICOSDESTINO publicDestinoSql = db.PUBLICOSDESTINO.Find(expoSql.Id_PublicoDestino);
-                var listaObrasPorExposicionSql = db.OBRASPOREXPOSICION.Where(ob => ob.Id_Exposicion == expoSql.Id_Exposicion);
-
-                foreach (var ob in listaObrasPorExposicionSql)
-                {
-                    OBRAS obraSql = db.OBRAS.Find(ob.Id_Obra);
-                    Obra obra = new Obra(obraSql);
-                    detalleExposicion.conocerObra(obra);
-                }
+                var listaDetallesPorExposicionSql = db.DETALLESPOREXPOSICION.Where(detalle => detalle.Id_Exposicion == expoSql.Id_Exposicion);
 
                 tipoExposicion = new TipoExposicion(tipoExpoSql);
                 publicoDestino = new PublicoDestino(publicDestinoSql);
 
                 exposicion = new Exposicion(expoSql);
-                exposicion.DetalleExposicion = detalleExposicion;
+                exposicion.TipoExposicion = tipoExposicion;
+                exposicion.PublicoDestino = publicoDestino;
+
+                foreach (var detallePorExposicionSql in listaDetallesPorExposicionSql)
+                {
+                    DETALLESEXPOSICION detalleExposicionSql = db.DETALLESEXPOSICION.Find(detallePorExposicionSql.Id_DetalleExposicion);
+                    DetalleExposicion detalleExposicion = new DetalleExposicion(detalleExposicionSql);
+
+                    OBRAS obraSql = db.OBRAS.Find(detalleExposicionSql.Id_Obra);
+                    Obra obra = new Obra(obraSql);
+                    detalleExposicion.Obra = obra;
+                    exposicion.conocerDetalleExposicion(detalleExposicion);
+                }
                 exposicion.TipoExposicion = tipoExposicion;
                 exposicion.PublicoDestino = publicoDestino;
             }

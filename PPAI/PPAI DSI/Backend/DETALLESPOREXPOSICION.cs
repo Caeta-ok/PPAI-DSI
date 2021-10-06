@@ -12,13 +12,13 @@ namespace PPAI_DSI.Backend
     using System;
     using System.Collections.Generic;
     
-    public partial class OBRASPOREXPOSICION
+    public partial class DETALLESPOREXPOSICION
     {
-        public int Id_ObraPorExposicion { get; set; }
-        public Nullable<int> Id_Obra { get; set; }
+        public int Id_DetallesPorExposicion { get; set; }
         public Nullable<int> Id_Exposicion { get; set; }
+        public Nullable<int> Id_DetalleExposicion { get; set; }
     
+        public virtual DETALLESEXPOSICION DETALLESEXPOSICION { get; set; }
         public virtual EXPOSICIONES EXPOSICIONES { get; set; }
-        public virtual OBRAS OBRAS { get; set; }
     }
 }

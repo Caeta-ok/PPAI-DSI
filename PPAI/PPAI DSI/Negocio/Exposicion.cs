@@ -20,7 +20,7 @@ namespace PPAI_DSI.Negocio
         private TipoExposicion _tipoExposicion;
         private Empleado _empleado;
         private PublicoDestino _publicoDestino;
-        private DetalleExposicion _detalleExposicion;
+        private List<DetalleExposicion> _listaDetalles = new List<DetalleExposicion>();
 
         public int Id { get => _id; set => _id = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
@@ -33,7 +33,6 @@ namespace PPAI_DSI.Negocio
         public TipoExposicion TipoExposicion { get => _tipoExposicion; set => _tipoExposicion = value; }
         public Empleado Empleado { get => _empleado; set => _empleado = value; }
         public PublicoDestino PublicoDestino { get => _publicoDestino; set => _publicoDestino = value; }
-        public DetalleExposicion DetalleExposicion { get => _detalleExposicion; set => _detalleExposicion = value; }
 
         public Exposicion(EXPOSICIONES exposicion) //EXPOSICIONES es un tipo del ORM
         {
@@ -62,9 +61,34 @@ namespace PPAI_DSI.Negocio
             return false;
         }
 
-        public int calcularDuracionObrasExpuestas()
+        public List<DetalleExposicion> getDetalles()
         {
-            return DetalleExposicion.buscarDuracionExtraObra();
+            return this._listaDetalles;
+        }
+
+        public void conocerDetalleExposicion(DetalleExposicion detalleExposicion)
+        {
+            this._listaDetalles.Add(detalleExposicion);
+        }
+
+        public int calcularDuracionExtendida()
+        {
+            int duracionDeExposicion = 0;
+            foreach (DetalleExposicion detalle in this._listaDetalles)
+            {
+                duracionDeExposicion += detalle.Obra.DuracionExtendida;
+            }
+            return duracionDeExposicion;
+        }
+
+        public int calcularDuracionResumida()
+        {
+            int duracionDeExposicion = 0;
+            foreach (DetalleExposicion detalle in this._listaDetalles)
+            {
+                duracionDeExposicion += detalle.Obra.DuracionResumida;
+            }
+            return duracionDeExposicion;
         }
     }
 }

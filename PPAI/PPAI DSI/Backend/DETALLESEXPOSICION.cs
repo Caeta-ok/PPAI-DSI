@@ -17,7 +17,7 @@ namespace PPAI_DSI.Backend
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DETALLESEXPOSICION()
         {
-            this.EXPOSICIONES = new HashSet<EXPOSICIONES>();
+            this.DETALLESPOREXPOSICION = new HashSet<DETALLESPOREXPOSICION>();
         }
     
         public int Id_DetalleExposicion { get; set; }
@@ -25,7 +25,7 @@ namespace PPAI_DSI.Backend
         public Nullable<int> Id_Obra { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EXPOSICIONES> EXPOSICIONES { get; set; }
+        public virtual ICollection<DETALLESPOREXPOSICION> DETALLESPOREXPOSICION { get; set; }
         public virtual OBRAS OBRAS { get; set; }
     }
 }

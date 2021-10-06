@@ -20,5 +20,21 @@ namespace PPAI_DSI.Negocio
             Id = tipoVisita.Id_TipoVisita;
             Nombre = tipoVisita.Nombre;
         }
+
+        public bool esPorExposicion()
+        {
+            if (Id == 2)
+                return true;
+            else
+                return false;
+        }
+
+        public bool esCompleta()
+        {
+            if (Id == 1)
+                return true;
+            else
+                return false;
+        }
     }
 }

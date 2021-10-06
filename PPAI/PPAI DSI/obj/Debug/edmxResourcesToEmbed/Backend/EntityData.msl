@@ -59,6 +59,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DETALLESPOREXPOSICION">
+      <EntityTypeMapping TypeName="PPAIModel.DETALLESPOREXPOSICION">
+        <MappingFragment StoreEntitySet="DETALLESPOREXPOSICION">
+          <ScalarProperty Name="Id_DetallesPorExposicion" ColumnName="Id_DetallesPorExposicion" />
+          <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
+          <ScalarProperty Name="Id_DetalleExposicion" ColumnName="Id_DetalleExposicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="DIAS">
       <EntityTypeMapping TypeName="PPAIModel.DIAS">
         <MappingFragment StoreEntitySet="DIAS">
@@ -121,7 +130,6 @@
           <ScalarProperty Name="HoraApertura" ColumnName="HoraApertura" />
           <ScalarProperty Name="HoraCierre" ColumnName="HoraCierre" />
           <ScalarProperty Name="Id_TipoExposicion" ColumnName="Id_TipoExposicion" />
-          <ScalarProperty Name="Id_DetalleExposicion" ColumnName="Id_DetalleExposicion" />
           <ScalarProperty Name="Id_PublicoDestino" ColumnName="Id_PublicoDestino" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -168,15 +176,6 @@
           <ScalarProperty Name="Peso" ColumnName="Peso" />
           <ScalarProperty Name="Valuacion" ColumnName="Valuacion" />
           <ScalarProperty Name="CodigoSensor" ColumnName="CodigoSensor" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OBRASPOREXPOSICION">
-      <EntityTypeMapping TypeName="PPAIModel.OBRASPOREXPOSICION">
-        <MappingFragment StoreEntitySet="OBRASPOREXPOSICION">
-          <ScalarProperty Name="Id_ObraPorExposicion" ColumnName="Id_ObraPorExposicion" />
-          <ScalarProperty Name="Id_Obra" ColumnName="Id_Obra" />
-          <ScalarProperty Name="Id_Exposicion" ColumnName="Id_Exposicion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
