@@ -1,5 +1,5 @@
 # Proyecto Práctico de Aplicación Integrador
-Catedra: Diseño de Sistemas
+Proyecto Práctico de Aplicación Integrador de la cátedra Diseño de Sistemas de la UTN
 
 Dominio: Museo
 
