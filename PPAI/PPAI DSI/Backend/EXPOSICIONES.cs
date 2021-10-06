@@ -17,7 +17,7 @@ namespace PPAI_DSI.Backend
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EXPOSICIONES()
         {
-            this.OBRASPOREXPOSICION = new HashSet<OBRASPOREXPOSICION>();
+            this.DETALLESPOREXPOSICION = new HashSet<DETALLESPOREXPOSICION>();
             this.EXPOSICIONESPORRESERVA = new HashSet<EXPOSICIONESPORRESERVA>();
             this.EXPOSICIONESPORSEDE = new HashSet<EXPOSICIONESPORSEDE>();
         }
@@ -31,12 +31,10 @@ namespace PPAI_DSI.Backend
         public Nullable<System.TimeSpan> HoraApertura { get; set; }
         public Nullable<System.TimeSpan> HoraCierre { get; set; }
         public Nullable<int> Id_TipoExposicion { get; set; }
-        public Nullable<int> Id_DetalleExposicion { get; set; }
         public Nullable<int> Id_PublicoDestino { get; set; }
     
-        public virtual DETALLESEXPOSICION DETALLESEXPOSICION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OBRASPOREXPOSICION> OBRASPOREXPOSICION { get; set; }
+        public virtual ICollection<DETALLESPOREXPOSICION> DETALLESPOREXPOSICION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EXPOSICIONESPORRESERVA> EXPOSICIONESPORRESERVA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

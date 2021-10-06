@@ -162,19 +162,12 @@ namespace PPAI_DSI.Formularios
             }
         }
 
-        //Envia el Tipo de Visita seleccionada al gestor y muestra los tipos de visita y pide al gestor que compruebe que la seleccion de visita sea por exposicion
+        //Envia el Tipo de Visita seleccionada al gestor
         private void tomarSeleccionTipoVisita(object sender, EventArgs e)
         {
-            //grid_sedes.Enabled = false;
             var _tipoVisitaSeleccionada = (TipoVisita)cmb_tipo_visita.SelectedItem;
-            if (gestorReserva.esTipoVisitaPorExposicion(_tipoVisitaSeleccionada))
-            {
-                gestorReserva.tomarSeleccionPorExposicion(_tipoVisitaSeleccionada);
-                mostrarExposiciones();
-                return;
-            }
-            else
-                MessageBox.Show("Por el momento las visitas Completas estan deshabilitadas");
+            gestorReserva.tomarSeleccionTipoVisita(_tipoVisitaSeleccionada);
+            mostrarExposiciones();
         }
 
         //Muestra las exposiciones depuradas
@@ -190,7 +183,6 @@ namespace PPAI_DSI.Formularios
             grid_exposiciones.Columns["FechaFin"].Visible = false;
             grid_exposiciones.Columns["FechaFinReplanificada"].Visible = false;
             grid_exposiciones.Columns["Empleado"].Visible = false;
-            grid_exposiciones.Columns["DetalleExposicion"].Visible = false;
             grid_exposiciones.Columns["TipoExposicion"].Visible = false;
             grid_exposiciones.Columns["PublicoDestino"].Visible = false;
             solicitarSeleccionExposicion();

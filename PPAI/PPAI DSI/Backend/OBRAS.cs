@@ -18,7 +18,6 @@ namespace PPAI_DSI.Backend
         public OBRAS()
         {
             this.DETALLESEXPOSICION = new HashSet<DETALLESEXPOSICION>();
-            this.OBRASPOREXPOSICION = new HashSet<OBRASPOREXPOSICION>();
         }
     
         public int Id_Obra { get; set; }
@@ -36,7 +35,5 @@ namespace PPAI_DSI.Backend
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DETALLESEXPOSICION> DETALLESEXPOSICION { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OBRASPOREXPOSICION> OBRASPOREXPOSICION { get; set; }
     }
 }

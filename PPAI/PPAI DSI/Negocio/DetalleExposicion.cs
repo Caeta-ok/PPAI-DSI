@@ -3,33 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PPAI_DSI.Backend;
 
 namespace PPAI_DSI.Negocio
 {
     public class DetalleExposicion
     {
-        private List<Obra> _listaObras = new List<Obra>();
+        //private List<Obra> _listaObras = new List<Obra>();
+        private Obra _obra;
+        private string _lugarAsignado;
 
-        public DetalleExposicion(){}
+        public Obra Obra { get => _obra; set => _obra = value; }
+        public string LugarAsignado { get => _lugarAsignado; set => _lugarAsignado = value; }
 
-        public void conocerObra(Obra obra)
+        public DetalleExposicion(DETALLESEXPOSICION detalleExposicion) // DETALLESEXPOSICION es un tipo del ORM
         {
-            _listaObras.Add(obra);
-        }
-
-        public List<Obra> getObras()
-        {
-            return _listaObras;
-        }
-
-        public int buscarDuracionExtraObra()
-        {
-            int duracionDeExposicion = 0;
-            foreach (Obra obra in _listaObras)
-            {
-                duracionDeExposicion += obra.DuracionExtendida;
-            }
-            return duracionDeExposicion;
+            this.LugarAsignado = detalleExposicion.LugarAsignado;
+            //No se incluye Obra porque el ORM solo deveulve el valor de la clave foránea (int)
         }
     }
 }

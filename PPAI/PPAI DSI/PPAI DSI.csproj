@@ -76,6 +76,9 @@
     <Compile Include="Backend\DETALLESEXPOSICION.cs">
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Backend\DETALLESPOREXPOSICION.cs">
+      <DependentUpon>EntityData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Backend\DIAS.cs">
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
@@ -116,9 +119,6 @@
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
     <Compile Include="Backend\OBRAS.cs">
-      <DependentUpon>EntityData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Backend\OBRASPOREXPOSICION.cs">
       <DependentUpon>EntityData.tt</DependentUpon>
     </Compile>
     <Compile Include="Backend\Persistencia.cs" />

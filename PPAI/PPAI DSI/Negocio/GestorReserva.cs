@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using PPAI_DSI.Backend;
 
 namespace PPAI_DSI.Negocio
@@ -88,17 +89,16 @@ namespace PPAI_DSI.Negocio
             return _listaTiposVisitas = Persistencia.traerTipoVisita();
         }
 
-        public void tomarSeleccionPorExposicion(TipoVisita tipo_visita_seleccionada)
+        public void tomarSeleccionTipoVisita(TipoVisita tipoVisitaSeleccionada)
         {
-            _tipoVisitaSeleccionada = tipo_visita_seleccionada;
-        }
-
-        public bool esTipoVisitaPorExposicion(TipoVisita tipoVisitaSeleccionada)
-        {
-            if (tipoVisitaSeleccionada.Nombre == "Por exposicion")
-                return true;
+            if(tipoVisitaSeleccionada.esPorExposicion())
+            {
+                _tipoVisitaSeleccionada = tipoVisitaSeleccionada;
+            }
             else
-                return false;
+            {
+                MessageBox.Show("Por el momento las visitas Completas estan deshabilitadas");
+            }
         }
 
         public List<Exposicion> buscarExposicionesTemporales()

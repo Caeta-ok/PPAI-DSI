@@ -31,6 +31,7 @@ namespace PPAI_DSI.Backend
         public virtual DbSet<CAMBIOSESTADOSPORRESERVA> CAMBIOSESTADOSPORRESERVA { get; set; }
         public virtual DbSet<CARGOS> CARGOS { get; set; }
         public virtual DbSet<DETALLESEXPOSICION> DETALLESEXPOSICION { get; set; }
+        public virtual DbSet<DETALLESPOREXPOSICION> DETALLESPOREXPOSICION { get; set; }
         public virtual DbSet<DIAS> DIAS { get; set; }
         public virtual DbSet<EMPLEADOS> EMPLEADOS { get; set; }
         public virtual DbSet<ESCUELAS> ESCUELAS { get; set; }
@@ -40,7 +41,6 @@ namespace PPAI_DSI.Backend
         public virtual DbSet<EXPOSICIONESPORSEDE> EXPOSICIONESPORSEDE { get; set; }
         public virtual DbSet<HORARIOSTRABAJOS> HORARIOSTRABAJOS { get; set; }
         public virtual DbSet<OBRAS> OBRAS { get; set; }
-        public virtual DbSet<OBRASPOREXPOSICION> OBRASPOREXPOSICION { get; set; }
         public virtual DbSet<PUBLICOSDESTINO> PUBLICOSDESTINO { get; set; }
         public virtual DbSet<RESERVAS> RESERVAS { get; set; }
         public virtual DbSet<SEDES> SEDES { get; set; }

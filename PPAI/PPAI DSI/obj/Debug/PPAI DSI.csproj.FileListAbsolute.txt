@@ -92,3 +92,4 @@ C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csproj.CopyComplete
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.exe
 C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.pdb
+C:\Users\Caeta\Desktop\Documents\Repositorios Github\PPAI-DSI\PPAI\PPAI DSI\obj\Debug\PPAI DSI.csprojAssemblyReference.cache
