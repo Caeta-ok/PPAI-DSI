@@ -86,12 +86,12 @@ namespace PPAI_DSI.Negocio
             return cantidadVisitantes;
         }
 
-        public List<Empleado> buscarGuias()
-        {
-            List<Empleado> listaGuias = new List<Empleado>();
-            listaGuias = Persistencia.traerEmpeladosGuiasPorIdSede(_id);
-            return listaGuias;
-        }
+        //public List<Empleado> buscarGuias() 
+        //{
+        //    List<Empleado> listaGuias = new List<Empleado>();
+        //    listaGuias = Persistencia.traerEmpeladosGuiasPorIdSede(_id);
+        //    return listaGuias;
+        //}
 
         public double getCantidadGuiasNecesarios(double alumnos)
         {

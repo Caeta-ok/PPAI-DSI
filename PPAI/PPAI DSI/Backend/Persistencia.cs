@@ -178,25 +178,25 @@ namespace PPAI_DSI.Backend
             return sede;
         }
 
-        public static List<Empleado> traerEmpeladosGuias()
-        {
-            List<Empleado> listaGuias = new List<Empleado>();
-            using (PPAIEntities db = new PPAIEntities())
-            {
-                var listaGuiasSql = db.EMPLEADOS.Where(emp => emp.Id_Cargo == 13).ToList();
-                foreach (EMPLEADOS emp in listaGuiasSql)
-                {
-                    Empleado empleado = new Empleado(emp);
-                    HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(emp.Id_HorarioTrabajo);
-                    CARGOS cargoSql = db.CARGOS.Find(emp.Id_Cargo);
+        //public static List<Empleado> traerEmpeladosGuias() // No se permite su uso para la cátedra
+        //{
+        //    List<Empleado> listaGuias = new List<Empleado>();
+        //    using (PPAIEntities db = new PPAIEntities())
+        //    {
+        //        var listaGuiasSql = db.EMPLEADOS.Where(emp => emp.Id_Cargo == 13).ToList();
+        //        foreach (EMPLEADOS emp in listaGuiasSql)
+        //        {
+        //            Empleado empleado = new Empleado(emp);
+        //            HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(emp.Id_HorarioTrabajo);
+        //            CARGOS cargoSql = db.CARGOS.Find(emp.Id_Cargo);
 
-                    empleado.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
-                    empleado.Cargo = new Cargo(cargoSql);
-                    listaGuias.Add(empleado);
-                }
-            }
-            return listaGuias;
-        }
+        //            empleado.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
+        //            empleado.Cargo = new Cargo(cargoSql);
+        //            listaGuias.Add(empleado);
+        //        }
+        //    }
+        //    return listaGuias;
+        //}
 
         public static List<Empleado> traerEmpleados()
         {
@@ -210,34 +210,36 @@ namespace PPAI_DSI.Backend
                     Empleado empleado = new Empleado(empleadoSql);
                     HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(empleadoSql.Id_HorarioTrabajo);
                     CARGOS cargoSql = db.CARGOS.Find(empleadoSql.Id_Cargo);
+                    Sede sedeDondeTrabaja = traerSedePorId(empleadoSql.Id_Sede.Value);
 
                     empleado.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
                     empleado.Cargo = new Cargo(cargoSql);
+                    empleado.SedeDondeTrabaja = sedeDondeTrabaja;
                     listaEmpleados.Add(empleado);
                 }
             }
             return listaEmpleados;
         }
 
-        public static List<Empleado> traerEmpeladosGuiasPorIdSede(int Id_Sede)
-        {
-            List<Empleado> listaGuias = new List<Empleado>();
-            using (PPAIEntities db = new PPAIEntities())
-            {
-                var listaGuiasSql = db.EMPLEADOS.Where(guia => guia.Id_Sede == Id_Sede && guia.Id_Cargo == 13);
-                foreach (EMPLEADOS guiaSql in listaGuiasSql)
-                {
-                    HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(guiaSql.Id_HorarioTrabajo);
-                    CARGOS cargoSql = db.CARGOS.Find(guiaSql.Id_Cargo);
+        //public static List<Empleado> traerEmpeladosGuiasPorIdSede(int Id_Sede) // No se permite su uso para la cátedra
+        //{
+        //    List<Empleado> listaGuias = new List<Empleado>();
+        //    using (PPAIEntities db = new PPAIEntities())
+        //    {
+        //        var listaGuiasSql = db.EMPLEADOS.Where(guia => guia.Id_Sede == Id_Sede && guia.Id_Cargo == 13);
+        //        foreach (EMPLEADOS guiaSql in listaGuiasSql)
+        //        {
+        //            HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(guiaSql.Id_HorarioTrabajo);
+        //            CARGOS cargoSql = db.CARGOS.Find(guiaSql.Id_Cargo);
 
-                    Empleado guia = new Empleado(guiaSql);
-                    guia.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
-                    guia.Cargo = new Cargo(cargoSql);
-                    listaGuias.Add(guia);
-                }
-            }
-            return listaGuias;
-        }
+        //            Empleado guia = new Empleado(guiaSql);
+        //            guia.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
+        //            guia.Cargo = new Cargo(cargoSql);
+        //            listaGuias.Add(guia);
+        //        }
+        //    }
+        //    return listaGuias;
+        //}
 
         public static List<AsignacionVisita> traerAsignacionesVisita()
         {

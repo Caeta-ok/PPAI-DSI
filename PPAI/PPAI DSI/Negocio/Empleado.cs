@@ -16,6 +16,7 @@ namespace PPAI_DSI.Negocio
         private Int64 _nroTelefono;
         private HorarioTrabajo _horarioTrabajo;
         private Cargo _cargo;
+        private Sede _sedeDondeTrabaja;
 
         public int Id { get => _id; set => _id = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
@@ -23,7 +24,8 @@ namespace PPAI_DSI.Negocio
         public string Email { get => _email; set => _email = value; }
         public Int64 NroTelefono { get => _nroTelefono; set => _nroTelefono = value; }
         public HorarioTrabajo HorarioTrabajo { get => _horarioTrabajo; set => _horarioTrabajo = value; }
-        public Cargo Cargo { get => _cargo; set => _cargo = Cargo; }
+        public Cargo Cargo { get => _cargo; set => _cargo = value; }
+        public Sede SedeDondeTrabaja { get => _sedeDondeTrabaja; set => _sedeDondeTrabaja = value; }
 
         public Empleado(EMPLEADOS empleado) // El tipo EMPLEADO es un objeto del ORM
         {
@@ -36,5 +38,22 @@ namespace PPAI_DSI.Negocio
             // porque el ORM solo entrega el Id (int) correspondiente
             // a la llave foránea
         }
+
+        public bool esDeSede(Sede sede)
+        {
+            if(this.SedeDondeTrabaja.Id == sede.Id)
+                return true;
+            return false;
+        }
+
+        public bool esGuia()
+        {
+            if (this.Cargo.Id == 13)
+                return true;
+            return false;
+
+        }
+
+
     }
 }
