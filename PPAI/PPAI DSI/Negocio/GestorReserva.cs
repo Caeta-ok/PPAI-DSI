@@ -164,31 +164,39 @@ namespace PPAI_DSI.Negocio
         {
             calcularGuiasNecesarios();
             _listaGuiasDisponibles.Clear();
-            List<Empleado> listaGuiasSede = _sedeSeleccionada.buscarGuias();
+            List<Empleado> listaEmpleados = Persistencia.traerEmpleados();
+
+            //List<Empleado> listaGuiasSede = _sedeSeleccionada.buscarGuias();
             List<AsignacionVisita> listaAsignacionesVisitas = Persistencia.traerAsignacionesVisita();
             bool flag_disponible = true;
-            foreach (Empleado guia in listaGuiasSede)
+            foreach (Empleado empleado in listaEmpleados)
             {
-                if (guia.HorarioTrabajo.estaDisponibleEnHora(_horaReserva, _duracionEstimada))
-                { // Si su horario de trabajo permite abarcar la reserva
-                    foreach (AsignacionVisita asign in listaAsignacionesVisitas)
+                if(empleado.esDeSede(this._sedeSeleccionada))
+                {
+                    if(empleado.esGuia())
                     {
-                        if (asign.estaAsignadoEnFechaVisita(guia, _fechaReserva)) // Si está asignado en esa fecha
-                        {
-                            if (asign.estaDisponibleEnHora(_horaReserva, _duracionEstimada))
-                            { // Si el horario de la reserva se choca con el de la asignación
-                                flag_disponible = false;
-                                break;
+                        if (empleado.HorarioTrabajo.estaDisponibleEnHora(_horaReserva, _duracionEstimada))
+                        { // Si su horario de trabajo permite abarcar la reserva
+                            foreach (AsignacionVisita asign in listaAsignacionesVisitas)
+                            {
+                                if (asign.estaAsignadoEnFechaVisita(empleado, _fechaReserva)) // Si está asignado en esa fecha
+                                {
+                                    if (asign.estaDisponibleEnHora(_horaReserva, _duracionEstimada))
+                                    { // Si el horario de la reserva se choca con el de la asignación
+                                        flag_disponible = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (flag_disponible)
+                            {
+                                _listaGuiasDisponibles.Add(empleado);
+                            }
+                            else
+                            {
+                                flag_disponible = true;
                             }
                         }
-                    }
-                    if (flag_disponible)
-                    {
-                        _listaGuiasDisponibles.Add(guia);
-                    }
-                    else
-                    {
-                        flag_disponible = true;
                     }
                 }
             }
