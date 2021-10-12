@@ -21,26 +21,20 @@ namespace PPAI_DSI.Negocio
         public int CantidadMaximaDeVisitantesPorGuia { get => _cantidadMaximaDeVisitantesPorGuia; set => _cantidadMaximaDeVisitantesPorGuia = value; }
         public List<Exposicion> ListaExposiciones { get => _listaExposiciones; set => _listaExposiciones = value; }
 
-        public Sede(SEDES sede)
+        public Sede(SEDES sede) // SEDE es un tipo del ORM
         {
             Id = sede.Id_Sede;
             Nombre = sede.Nombre;
             CantidadMaximaDeVisitantesPorGuia = sede.CantidadMaximaPorGuia.Value;
             CantidadMaximaDeVisitantes = sede.CantidadMaximaVisitantes.Value;
-        }
 
-        public Sede(int id, string nom, int cant_max_vi, int cant_max_gui, List<Exposicion> list)
-        {
-            Id = id;
-            Nombre = nom;
-            CantidadMaximaDeVisitantes = cant_max_vi;
-            CantidadMaximaDeVisitantesPorGuia = cant_max_gui;
-            ListaExposiciones = list;
+            // No se incluyen las exposiciones porque el ORM
+            //solo devuelve el id de la llave foránea (int)
         }
 
         public Sede(){}
 
-        public void setExposicion(Exposicion exposicion)
+        public void addExposicion(Exposicion exposicion)
         {
             ListaExposiciones.Add(exposicion);
         }
@@ -50,10 +44,12 @@ namespace PPAI_DSI.Negocio
             return ListaExposiciones;
         }
 
-        public int getDuracionDeExposicion(List<Exposicion> expo_seleccionadas)
+        public int getDuracionDeExposicion(List<Exposicion> exposicionesSeleccionadas)
         {
+            //Se calcula con la duración extendida
+
             int duracionDeExposicion = 0;
-            foreach (Exposicion exposicion in expo_seleccionadas)
+            foreach (Exposicion exposicion in exposicionesSeleccionadas)
             {
                 duracionDeExposicion += exposicion.calcularDuracionExtendida();
             }
@@ -62,7 +58,10 @@ namespace PPAI_DSI.Negocio
 
         public List<int> getCantidadVisitantesEnReservasPorFecha(DateTime fecha)
         {
-            List<Reserva> listaReservas = Persistencia.traerReservasPorIdSede(_id); // corregir consulta sql
+            //List<Reserva> listaReservas = Persistencia.traerReservasPorIdSede(_id); // corregir consulta sql
+
+            List<Reserva> listaReservas = Persistencia.traerReservas();
+
             List<int> listaCantidadesVisitantes = new List<int>();
             foreach (Reserva reserva in listaReservas) // Loop Mientras existan reservas
             {
@@ -93,10 +92,10 @@ namespace PPAI_DSI.Negocio
         //    return listaGuias;
         //}
 
-        public double getCantidadGuiasNecesarios(double alumnos)
+        public int getCantidadGuiasNecesarios(double alumnos)
         {
-            return Math.Round(Convert.ToDouble(alumnos / CantidadMaximaDeVisitantesPorGuia));
-
+            double cantidadNecesaria = Math.Round(Convert.ToDouble(alumnos / CantidadMaximaDeVisitantesPorGuia));
+            return (int)cantidadNecesaria;
         }
 
         public bool validarCapacidadVisitantes(DateTime fechaReserva, int cantidadVisitantes)

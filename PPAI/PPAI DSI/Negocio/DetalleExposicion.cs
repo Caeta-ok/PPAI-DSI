@@ -9,7 +9,6 @@ namespace PPAI_DSI.Negocio
 {
     public class DetalleExposicion
     {
-        //private List<Obra> _listaObras = new List<Obra>();
         private Obra _obra;
         private string _lugarAsignado;
 

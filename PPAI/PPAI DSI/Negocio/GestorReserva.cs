@@ -221,7 +221,7 @@ namespace PPAI_DSI.Negocio
 
         private void buscarEmpleadoLogeado()
         {
-            _empleadoRegistrador = _sesionActual.Usuario.getEmpleadoLogeado();
+            _empleadoRegistrador = _sesionActual.Usuario.Empleado;
         }
 
         private void buscarUltimoNroReserva()

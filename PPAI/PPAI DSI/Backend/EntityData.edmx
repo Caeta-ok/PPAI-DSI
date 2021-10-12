@@ -191,6 +191,7 @@
           <Property Name="Id_Sede" Type="int" />
           <Property Name="Id_Empleado" Type="int" />
           <Property Name="NroReserva" Type="int" />
+          <Property Name="Id_Escuela" Type="int" />
         </EntityType>
         <EntityType Name="SEDES">
           <Key>
@@ -315,6 +316,18 @@
             </Principal>
             <Dependent Role="ASIGNACIONESVISITA">
               <PropertyRef Name="Id_Empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ESCUELAS0">
+          <End Role="ESCUELAS" Type="Self.ESCUELAS" Multiplicity="0..1" />
+          <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESCUELAS">
+              <PropertyRef Name="Id_Escuela" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="Id_Escuela" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -550,6 +563,10 @@
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
             <End Role="ASIGNACIONESVISITA" EntitySet="ASIGNACIONESVISITA" />
           </AssociationSet>
+          <AssociationSet Name="FK_ESCUELAS0" Association="Self.FK_ESCUELAS0">
+            <End Role="ESCUELAS" EntitySet="ESCUELAS" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
           <AssociationSet Name="FK_ESTADOS0" Association="Self.FK_ESTADOS0">
             <End Role="ESTADOS" EntitySet="ESTADOS" />
             <End Role="CAMBIOSESTADOS" EntitySet="CAMBIOSESTADOS" />
@@ -731,6 +748,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Domicilio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NroTelefono" Type="Int64" />
+          <NavigationProperty Name="RESERVAS" Relationship="Self.FK_ESCUELAS0" FromRole="ESCUELAS" ToRole="RESERVAS" />
         </EntityType>
         <EntityType Name="ESTADOS">
           <Key>
@@ -834,9 +852,11 @@
           <Property Name="Id_Sede" Type="Int32" />
           <Property Name="Id_Empleado" Type="Int32" />
           <Property Name="NroReserva" Type="Int32" />
+          <Property Name="Id_Escuela" Type="Int32" />
           <NavigationProperty Name="ASIGNACIONESVISITAPORRESERVA" Relationship="Self.FK_RESERVAS1" FromRole="RESERVAS" ToRole="ASIGNACIONESVISITAPORRESERVA" />
           <NavigationProperty Name="CAMBIOSESTADOSPORRESERVA" Relationship="Self.FK_RESERVAS2" FromRole="RESERVAS" ToRole="CAMBIOSESTADOSPORRESERVA" />
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS1" FromRole="RESERVAS" ToRole="EMPLEADOS" />
+          <NavigationProperty Name="ESCUELAS" Relationship="Self.FK_ESCUELAS0" FromRole="RESERVAS" ToRole="ESCUELAS" />
           <NavigationProperty Name="EXPOSICIONESPORRESERVA" Relationship="Self.FK_RESERVAS0" FromRole="RESERVAS" ToRole="EXPOSICIONESPORRESERVA" />
           <NavigationProperty Name="SEDES" Relationship="Self.FK_SEDES1" FromRole="RESERVAS" ToRole="SEDES" />
         </EntityType>
@@ -1057,6 +1077,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ESCUELAS0">
+          <End Role="ESCUELAS" Type="Self.ESCUELAS" Multiplicity="0..1" />
+          <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESCUELAS">
+              <PropertyRef Name="Id_Escuela" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="Id_Escuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EXPOSICIONES1">
           <End Role="EXPOSICIONES" Type="Self.EXPOSICIONES" Multiplicity="0..1" />
           <End Role="EXPOSICIONESPORRESERVA" Type="Self.EXPOSICIONESPORRESERVA" Multiplicity="*" />
@@ -1232,6 +1264,10 @@
           <AssociationSet Name="FK_SEDES0" Association="Self.FK_SEDES0">
             <End Role="SEDES" EntitySet="SEDES" />
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ESCUELAS0" Association="Self.FK_ESCUELAS0">
+            <End Role="ESCUELAS" EntitySet="ESCUELAS" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
           </AssociationSet>
           <AssociationSet Name="FK_EXPOSICIONES1" Association="Self.FK_EXPOSICIONES1">
             <End Role="EXPOSICIONES" EntitySet="EXPOSICIONES" />
@@ -1474,6 +1510,7 @@
                 <ScalarProperty Name="Id_Sede" ColumnName="Id_Sede" />
                 <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
                 <ScalarProperty Name="NroReserva" ColumnName="NroReserva" />
+                <ScalarProperty Name="Id_Escuela" ColumnName="Id_Escuela" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

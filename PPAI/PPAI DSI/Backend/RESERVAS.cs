@@ -34,12 +34,14 @@ namespace PPAI_DSI.Backend
         public Nullable<int> Id_Sede { get; set; }
         public Nullable<int> Id_Empleado { get; set; }
         public Nullable<int> NroReserva { get; set; }
+        public Nullable<int> Id_Escuela { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASIGNACIONESVISITAPORRESERVA> ASIGNACIONESVISITAPORRESERVA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CAMBIOSESTADOSPORRESERVA> CAMBIOSESTADOSPORRESERVA { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }
+        public virtual ESCUELAS ESCUELAS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EXPOSICIONESPORRESERVA> EXPOSICIONESPORRESERVA { get; set; }
         public virtual SEDES SEDES { get; set; }
