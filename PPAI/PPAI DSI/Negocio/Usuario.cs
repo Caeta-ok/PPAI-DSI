@@ -25,10 +25,5 @@ namespace PPAI_DSI.Negocio
             Nombre = usuario.Nombre;
             Contrasenia = usuario.Contrasenia;
         }
-
-        public Empleado getEmpleadoLogeado()
-        {
-            return _empleado;
-        }
     }
 }
