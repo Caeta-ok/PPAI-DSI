@@ -14,10 +14,19 @@ namespace PPAI_DSI.Backend
     
     public partial class ESCUELAS
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ESCUELAS()
+        {
+            this.RESERVAS = new HashSet<RESERVAS>();
+        }
+    
         public int Id_Escuela { get; set; }
         public string Nombre { get; set; }
         public string Email { get; set; }
         public string Domicilio { get; set; }
         public Nullable<long> NroTelefono { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RESERVAS> RESERVAS { get; set; }
     }
 }

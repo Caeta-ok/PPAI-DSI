@@ -12,18 +12,13 @@ namespace PPAI_DSI.Negocio
         private string _caracteristicas;
         private string _nombre;
 
+        public string Caracteristicas { get => _caracteristicas; set => _caracteristicas = value; }
+        public string Nombre { get => _nombre; set => _nombre = value; }
+
         public PublicoDestino(PUBLICOSDESTINO publicoDestino)
         {
             Nombre = publicoDestino.Nombre;
             Caracteristicas = publicoDestino.Caracteristicas;
-        }
-
-        public string Caracteristicas { get => _caracteristicas; set => _caracteristicas = value; }
-        public string Nombre { get => _nombre; set => _nombre = value; }
-
-        public string getNombre()
-        {
-            return Nombre;
         }
     }
 }

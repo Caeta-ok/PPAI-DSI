@@ -44,7 +44,6 @@ namespace PPAI_DSI.Backend
             List<Exposicion> listaExposicion = new List<Exposicion>();
             using (PPAIEntities db = new PPAIEntities())
             {
-                //int i = sede.getId();
                 int i = sede.Id;
                 var listaExposPorSedeSql = db.EXPOSICIONESPORSEDE.Where(e => e.Id_Sede == i);
                 foreach (EXPOSICIONESPORSEDE expoPorSedeSql in listaExposPorSedeSql)
@@ -54,6 +53,168 @@ namespace PPAI_DSI.Backend
                 }
             }
             return listaExposicion;
+        }
+
+        private static Escuela traerEscuelaPorId(int idEscuela)
+        {
+            Escuela escuela;
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                ESCUELAS escuelaSql = db.ESCUELAS.Find(idEscuela);
+                escuela = new Escuela(escuelaSql);
+            }
+            return escuela;
+        }
+
+        private static PublicoDestino traerPublicoDestinoPorId(int idPublicoDestino)
+        {
+            PublicoDestino publicoDestino;
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                PUBLICOSDESTINO publicoDestinoSql = db.PUBLICOSDESTINO.Find(idPublicoDestino);
+                publicoDestino = new PublicoDestino(publicoDestinoSql);
+            }
+            return publicoDestino;
+        }
+
+        private static List<Exposicion> traerExposicionesPorIdReserva(int idReserva)
+        {
+            List<Exposicion> listaExposiciones = new List<Exposicion>(); ;
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaExposicionesPorReservaSql = db.EXPOSICIONESPORRESERVA.Where(expoPorRes => (expoPorRes.Id_Reserva == idReserva));
+                foreach (EXPOSICIONESPORRESERVA expoPorReservaSql in listaExposicionesPorReservaSql)
+                {
+                    var exposicionSql = db.EXPOSICIONES.Where(expo => (expo.Id_Exposicion == expoPorReservaSql.Id_Exposicion)).First();
+                    PublicoDestino publicoDestino = traerPublicoDestinoPorId(exposicionSql.Id_PublicoDestino.Value);
+                    Exposicion exposicion = new Exposicion(exposicionSql);
+                    exposicion.PublicoDestino = publicoDestino;
+
+                    var listaDetallesPorExposicionSql = db.DETALLESPOREXPOSICION.Where(dtePorExpo => (dtePorExpo.Id_Exposicion == exposicionSql.Id_Exposicion));
+                    foreach (DETALLESPOREXPOSICION detallePorExpo in listaDetallesPorExposicionSql)
+                    {
+                        DetalleExposicion detalleExposicion = traerDetalleExposicionPorId(detallePorExpo.Id_DetalleExposicion.Value);
+                        exposicion.conocerDetalleExposicion(detalleExposicion);
+                    }
+                    listaExposiciones.Add(exposicion);
+                }
+            }
+            return listaExposiciones;
+        }
+
+        private static DetalleExposicion traerDetalleExposicionPorId(int idDetalleExposicion)
+        {
+            DetalleExposicion detalleExposicion;
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                DETALLESEXPOSICION detalleExposicionSql = db.DETALLESEXPOSICION.Find(idDetalleExposicion);
+                detalleExposicion = new DetalleExposicion(detalleExposicionSql);
+                Obra obra = traerObraPorId(detalleExposicionSql.Id_Obra.Value);
+                detalleExposicion.Obra = obra;
+            }
+            return detalleExposicion;
+        }
+
+        private static Obra traerObraPorId(int idObra)
+        {
+            Obra obra;
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                OBRAS obraSql = db.OBRAS.Find(idObra);
+                obra = new Obra(obraSql);
+            }
+            return obra;
+        }
+
+        private static AsignacionVisita traerAsignacionVisitaPorId(int idAsignacionVisita)
+        {
+            AsignacionVisita asignacionVisita;
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                ASIGNACIONESVISITA asignacionVisitaSql = db.ASIGNACIONESVISITA.Find(idAsignacionVisita);
+                asignacionVisita = new AsignacionVisita(asignacionVisitaSql);
+
+                Empleado guiaAsignado = traerEmpleadoPorId(asignacionVisitaSql.Id_Empleado.Value);
+                asignacionVisita.Empleado = guiaAsignado;
+            }
+            return asignacionVisita;
+        }
+
+        private static List<AsignacionVisita> traerAsignacionesVisitasPorIdReserva(int idReserva)
+        {
+            List<AsignacionVisita> listaAsignacionesVisita = new List<AsignacionVisita>();
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaAsignacionesVisitaPorReservaSql = db.ASIGNACIONESVISITAPORRESERVA.Where(asignPorReserva => (asignPorReserva.Id_Reserva == idReserva));
+                foreach(ASIGNACIONESVISITAPORRESERVA asignPorReserva in listaAsignacionesVisitaPorReservaSql)
+                {
+                    AsignacionVisita asignacionVisita = traerAsignacionVisitaPorId(asignPorReserva.Id_AsignacionVisita.Value);
+                    listaAsignacionesVisita.Add(asignacionVisita);
+                }
+            }
+            return listaAsignacionesVisita;
+        }
+
+        public static List<Reserva> traerReservas()
+        {
+            List<Reserva> listaReservas = new List<Reserva>();
+
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaReservasSql = db.RESERVAS;
+                foreach (var reservaSql in listaReservasSql)
+                {
+                    Reserva reserva = new Reserva(reservaSql);
+                    Sede sede = traerSedePorId(reservaSql.Id_Sede.Value);
+                    Empleado empleadoRegistrador = traerEmpleadoPorId(reservaSql.Id_Empleado.Value);
+                    Escuela escuela = traerEscuelaPorId(reservaSql.Id_Escuela.Value);
+                    List<Exposicion> listaExposiciones = traerExposicionesPorIdReserva(reservaSql.Id_Reserva);
+                    List<CambioEstado> listaCambiosEstados = traerCambiosEstadoPorIdReserva(reservaSql.Id_Reserva);
+                    List<AsignacionVisita> listaAsignacionesVisita = traerAsignacionesVisitasPorIdReserva(reservaSql.Id_Reserva);
+
+                    reserva.Escuela = escuela;
+                    reserva.Sede = sede;
+                    reserva.EmpleadoRegistrador = empleadoRegistrador;
+
+                    foreach (Exposicion exposicion in listaExposiciones)
+                    {
+                        reserva.conocerExposicion(exposicion);
+                    }
+
+                    foreach(CambioEstado cambioEstado in listaCambiosEstados)
+                    {
+                        reserva.conocerCambioEstado(cambioEstado);
+                    }
+
+                    foreach(AsignacionVisita asignacionVisita in listaAsignacionesVisita)
+                    {
+                        reserva.conocerAsignacionVisita(asignacionVisita);
+                    }
+                    listaReservas.Add(reserva);
+                }
+            }
+            return listaReservas;
+        }
+
+        private static List<CambioEstado> traerCambiosEstadoPorIdReserva(int idReserva)
+        {
+            List<CambioEstado> listaCambioEstados = new List<CambioEstado>();
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaCambiosEstadosPorReserva = db.CAMBIOSESTADOSPORRESERVA.Where(cambioEstadoPorReserva => (cambioEstadoPorReserva.Id_Reserva == idReserva));
+                foreach (CAMBIOSESTADOSPORRESERVA cambioEstadoPorReservaSql in listaCambiosEstadosPorReserva)
+                {
+                    CAMBIOSESTADOS cambioEstadoSql = db.CAMBIOSESTADOS.Find(cambioEstadoPorReservaSql.Id_CambioEstado);
+                    ESTADOS estadoSql = db.ESTADOS.Find(cambioEstadoSql.Id_Estado);
+                       
+                    CambioEstado cambioEstado = new CambioEstado(cambioEstadoSql);
+                    Estado estado = new Estado(estadoSql);
+                    cambioEstado.Estado = estado;
+
+                    listaCambioEstados.Add(cambioEstado);
+                }
+            }
+            return listaCambioEstados;
         }
 
         public static List<TipoVisita> traerTipoVisita()
@@ -174,29 +335,27 @@ namespace PPAI_DSI.Backend
             {
                 SEDES sedeSql = db.SEDES.Find(Id_Sede);
                 sede = new Sede(sedeSql);
+
+                List<Exposicion> listaExposiciones = traerExposicionesPorIdSede(sedeSql.Id_Sede);
+                sede.ListaExposiciones = listaExposiciones;
             }
             return sede;
         }
 
-        //public static List<Empleado> traerEmpeladosGuias() // No se permite su uso para la cátedra
-        //{
-        //    List<Empleado> listaGuias = new List<Empleado>();
-        //    using (PPAIEntities db = new PPAIEntities())
-        //    {
-        //        var listaGuiasSql = db.EMPLEADOS.Where(emp => emp.Id_Cargo == 13).ToList();
-        //        foreach (EMPLEADOS emp in listaGuiasSql)
-        //        {
-        //            Empleado empleado = new Empleado(emp);
-        //            HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(emp.Id_HorarioTrabajo);
-        //            CARGOS cargoSql = db.CARGOS.Find(emp.Id_Cargo);
-
-        //            empleado.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
-        //            empleado.Cargo = new Cargo(cargoSql);
-        //            listaGuias.Add(empleado);
-        //        }
-        //    }
-        //    return listaGuias;
-        //}
+        private static List<Exposicion> traerExposicionesPorIdSede(int idSede)
+        {
+            List<Exposicion> listaExposiciones = new List<Exposicion>();
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaExposicionesPorSedeSql = db.EXPOSICIONESPORSEDE.Where(expoPorSede => (expoPorSede.Id_Sede == idSede));
+                foreach(EXPOSICIONESPORSEDE expoPorSedeSql in listaExposicionesPorSedeSql)
+                {
+                    Exposicion exposicion = traerExposicionPorId(expoPorSedeSql.Id_Exposicion.Value);
+                    listaExposiciones.Add(exposicion);
+                }
+            }
+            return listaExposiciones;
+        }
 
         public static List<Empleado> traerEmpleados()
         {
@@ -220,26 +379,6 @@ namespace PPAI_DSI.Backend
             }
             return listaEmpleados;
         }
-
-        //public static List<Empleado> traerEmpeladosGuiasPorIdSede(int Id_Sede) // No se permite su uso para la cátedra
-        //{
-        //    List<Empleado> listaGuias = new List<Empleado>();
-        //    using (PPAIEntities db = new PPAIEntities())
-        //    {
-        //        var listaGuiasSql = db.EMPLEADOS.Where(guia => guia.Id_Sede == Id_Sede && guia.Id_Cargo == 13);
-        //        foreach (EMPLEADOS guiaSql in listaGuiasSql)
-        //        {
-        //            HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(guiaSql.Id_HorarioTrabajo);
-        //            CARGOS cargoSql = db.CARGOS.Find(guiaSql.Id_Cargo);
-
-        //            Empleado guia = new Empleado(guiaSql);
-        //            guia.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
-        //            guia.Cargo = new Cargo(cargoSql);
-        //            listaGuias.Add(guia);
-        //        }
-        //    }
-        //    return listaGuias;
-        //}
 
         public static List<AsignacionVisita> traerAsignacionesVisita()
         {

@@ -39,15 +39,5 @@ namespace PPAI_DSI.Negocio
                 return true;
             return false;
         }
-
-        //public DateTime getHoraEntrada()
-        //{
-        //    return _horaEntrada;
-        //}
-
-        //public DateTime getHoraSalida()
-        //{
-        //    return _horaSalida;
-        //}
     }
 }
