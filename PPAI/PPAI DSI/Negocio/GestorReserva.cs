@@ -165,9 +165,8 @@ namespace PPAI_DSI.Negocio
             calcularGuiasNecesarios();
             _listaGuiasDisponibles.Clear();
             List<Empleado> listaEmpleados = Persistencia.traerEmpleados();
-
-            //List<Empleado> listaGuiasSede = _sedeSeleccionada.buscarGuias();
             List<AsignacionVisita> listaAsignacionesVisitas = Persistencia.traerAsignacionesVisita();
+
             bool flag_disponible = true;
             foreach (Empleado empleado in listaEmpleados)
             {

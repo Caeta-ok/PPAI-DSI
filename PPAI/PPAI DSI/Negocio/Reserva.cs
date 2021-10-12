@@ -125,5 +125,12 @@ namespace PPAI_DSI.Negocio
             }
             return false;
         }
+
+        public bool esDeSede(int idSede)
+        {
+            if (idSede == this.Id)
+                return true;
+            return false;
+        }
     }
 }
