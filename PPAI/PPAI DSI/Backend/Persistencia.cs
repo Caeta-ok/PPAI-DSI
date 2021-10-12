@@ -44,7 +44,6 @@ namespace PPAI_DSI.Backend
             List<Exposicion> listaExposicion = new List<Exposicion>();
             using (PPAIEntities db = new PPAIEntities())
             {
-                //int i = sede.getId();
                 int i = sede.Id;
                 var listaExposPorSedeSql = db.EXPOSICIONESPORSEDE.Where(e => e.Id_Sede == i);
                 foreach (EXPOSICIONESPORSEDE expoPorSedeSql in listaExposPorSedeSql)
@@ -191,6 +190,7 @@ namespace PPAI_DSI.Backend
                     {
                         reserva.conocerAsignacionVisita(asignacionVisita);
                     }
+                    listaReservas.Add(reserva);
                 }
             }
             return listaReservas;
@@ -216,7 +216,6 @@ namespace PPAI_DSI.Backend
             }
             return listaCambioEstados;
         }
-
 
         public static List<TipoVisita> traerTipoVisita()
         {
@@ -336,29 +335,27 @@ namespace PPAI_DSI.Backend
             {
                 SEDES sedeSql = db.SEDES.Find(Id_Sede);
                 sede = new Sede(sedeSql);
+
+                List<Exposicion> listaExposiciones = traerExposicionesPorIdSede(sedeSql.Id_Sede);
+                sede.ListaExposiciones = listaExposiciones;
             }
             return sede;
         }
 
-        //public static List<Empleado> traerEmpeladosGuias() // No se permite su uso para la cátedra
-        //{
-        //    List<Empleado> listaGuias = new List<Empleado>();
-        //    using (PPAIEntities db = new PPAIEntities())
-        //    {
-        //        var listaGuiasSql = db.EMPLEADOS.Where(emp => emp.Id_Cargo == 13).ToList();
-        //        foreach (EMPLEADOS emp in listaGuiasSql)
-        //        {
-        //            Empleado empleado = new Empleado(emp);
-        //            HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(emp.Id_HorarioTrabajo);
-        //            CARGOS cargoSql = db.CARGOS.Find(emp.Id_Cargo);
-
-        //            empleado.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
-        //            empleado.Cargo = new Cargo(cargoSql);
-        //            listaGuias.Add(empleado);
-        //        }
-        //    }
-        //    return listaGuias;
-        //}
+        private static List<Exposicion> traerExposicionesPorIdSede(int idSede)
+        {
+            List<Exposicion> listaExposiciones = new List<Exposicion>();
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaExposicionesPorSedeSql = db.EXPOSICIONESPORSEDE.Where(expoPorSede => (expoPorSede.Id_Sede == idSede));
+                foreach(EXPOSICIONESPORSEDE expoPorSedeSql in listaExposicionesPorSedeSql)
+                {
+                    Exposicion exposicion = traerExposicionPorId(expoPorSedeSql.Id_Exposicion.Value);
+                    listaExposiciones.Add(exposicion);
+                }
+            }
+            return listaExposiciones;
+        }
 
         public static List<Empleado> traerEmpleados()
         {
@@ -382,26 +379,6 @@ namespace PPAI_DSI.Backend
             }
             return listaEmpleados;
         }
-
-        //public static List<Empleado> traerEmpeladosGuiasPorIdSede(int Id_Sede) // No se permite su uso para la cátedra
-        //{
-        //    List<Empleado> listaGuias = new List<Empleado>();
-        //    using (PPAIEntities db = new PPAIEntities())
-        //    {
-        //        var listaGuiasSql = db.EMPLEADOS.Where(guia => guia.Id_Sede == Id_Sede && guia.Id_Cargo == 13);
-        //        foreach (EMPLEADOS guiaSql in listaGuiasSql)
-        //        {
-        //            HORARIOSTRABAJOS horarioTrabajoSql = db.HORARIOSTRABAJOS.Find(guiaSql.Id_HorarioTrabajo);
-        //            CARGOS cargoSql = db.CARGOS.Find(guiaSql.Id_Cargo);
-
-        //            Empleado guia = new Empleado(guiaSql);
-        //            guia.HorarioTrabajo = new HorarioTrabajo(horarioTrabajoSql);
-        //            guia.Cargo = new Cargo(cargoSql);
-        //            listaGuias.Add(guia);
-        //        }
-        //    }
-        //    return listaGuias;
-        //}
 
         public static List<AsignacionVisita> traerAsignacionesVisita()
         {

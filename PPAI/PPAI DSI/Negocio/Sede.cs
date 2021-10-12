@@ -34,20 +34,14 @@ namespace PPAI_DSI.Negocio
 
         public Sede(){}
 
-        public void addExposicion(Exposicion exposicion)
+        public void conocerExposicion(Exposicion exposicion)
         {
             ListaExposiciones.Add(exposicion);
-        }
-
-        public List<Exposicion> getExposiciones()
-        {
-            return ListaExposiciones;
         }
 
         public int getDuracionDeExposicion(List<Exposicion> exposicionesSeleccionadas)
         {
             //Se calcula con la duración extendida
-
             int duracionDeExposicion = 0;
             foreach (Exposicion exposicion in exposicionesSeleccionadas)
             {
@@ -58,17 +52,18 @@ namespace PPAI_DSI.Negocio
 
         public List<int> getCantidadVisitantesEnReservasPorFecha(DateTime fecha)
         {
-            //List<Reserva> listaReservas = Persistencia.traerReservasPorIdSede(_id); // corregir consulta sql
-
             List<Reserva> listaReservas = Persistencia.traerReservas();
 
             List<int> listaCantidadesVisitantes = new List<int>();
             foreach (Reserva reserva in listaReservas) // Loop Mientras existan reservas
             {
-                if (reserva.esDeFecha(fecha))
+                if(reserva.esDeSede(this.Id)) // Si es de esta sede
                 {
-                    listaReservas.Add(reserva);
-                    listaCantidadesVisitantes.Add(reserva.CantidadAlumnos);
+                    if (reserva.esDeFecha(fecha)) // Si coincide con la fecha
+                    {
+                        listaReservas.Add(reserva);
+                        listaCantidadesVisitantes.Add(reserva.CantidadAlumnos);
+                    }
                 }
             }
             return listaCantidadesVisitantes;
@@ -85,14 +80,7 @@ namespace PPAI_DSI.Negocio
             return cantidadVisitantes;
         }
 
-        //public List<Empleado> buscarGuias() 
-        //{
-        //    List<Empleado> listaGuias = new List<Empleado>();
-        //    listaGuias = Persistencia.traerEmpeladosGuiasPorIdSede(_id);
-        //    return listaGuias;
-        //}
-
-        public int getCantidadGuiasNecesarios(double alumnos)
+        public int getCantidadGuiasNecesarios(int alumnos)
         {
             double cantidadNecesaria = Math.Round(Convert.ToDouble(alumnos / CantidadMaximaDeVisitantesPorGuia));
             return (int)cantidadNecesaria;
