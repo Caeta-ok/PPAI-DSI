@@ -147,8 +147,10 @@ create table RESERVAS
 	Id_Sede int,
 	Id_Empleado int,
 	NroReserva int unique,
+	Id_Escuela int,
 	constraint FK_SEDES1 foreign key (Id_Sede) references SEDES(Id_Sede),
-	constraint FK_EMPLEADOS1 foreign key (Id_Empleado) references EMPLEADOS(Id_Empleado))
+	constraint FK_EMPLEADOS1 foreign key (Id_Empleado) references EMPLEADOS(Id_Empleado),
+	constraint FK_ESCUELAS0 foreign key (Id_Escuela) references ESCUELAS(Id_Escuela))
 
 -------------------------------------------------------------------------------------------------- EXPOSICIONESPORRESERVA
 create table EXPOSICIONESPORRESERVA
