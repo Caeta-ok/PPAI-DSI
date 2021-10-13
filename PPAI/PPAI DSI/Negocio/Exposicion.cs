@@ -61,6 +61,11 @@ namespace PPAI_DSI.Negocio
             return false;
         }
 
+        public bool esTemporal()
+        {
+            return this.TipoExposicion.esExposicionTemporal();
+        }
+
         public List<DetalleExposicion> getDetalles()
         {
             return this._listaDetalles;

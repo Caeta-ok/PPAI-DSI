@@ -26,5 +26,19 @@ namespace PPAI_DSI.Negocio
             Descripcion = estado.Descripcion;
             Ambito = estado.Ambito;
         }
+
+        public bool esAmbitoReserva()
+        {
+            if (this.Ambito == "Reservas")
+                return true;
+            return false;
+        }
+
+        public bool esPendienteDeConfirmacion()
+        {
+            if (this.Nombre == "Pendiente de confirmacion")
+                return true;
+            return false;
+        }
     }
 }
