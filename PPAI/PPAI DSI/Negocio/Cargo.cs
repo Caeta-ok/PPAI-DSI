@@ -23,5 +23,12 @@ namespace PPAI_DSI.Negocio
             Nombre = cargo.Nombre;
             Descripcion = cargo.Descripcion;
         }
+
+        public bool esGuia()
+        {
+            if (this.Id == 13)
+                return true;
+            return false;
+        }
     }
 }

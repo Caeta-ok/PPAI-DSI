@@ -39,21 +39,36 @@ namespace PPAI_DSI.Backend
             return listaSedes;
         }
 
-        public static List<Exposicion> traerExposiciones(Sede sede)
+        public static List<Estado> traerEstados()
         {
-            List<Exposicion> listaExposicion = new List<Exposicion>();
+            List<Estado> listaEstados = new List<Estado>();
             using (PPAIEntities db = new PPAIEntities())
             {
-                int i = sede.Id;
-                var listaExposPorSedeSql = db.EXPOSICIONESPORSEDE.Where(e => e.Id_Sede == i);
-                foreach (EXPOSICIONESPORSEDE expoPorSedeSql in listaExposPorSedeSql)
+                var listaEstadosSql = db.ESTADOS;
+                foreach(ESTADOS estadoSql in listaEstadosSql)
                 {
-                    Exposicion exposicion = traerExposicionPorId(expoPorSedeSql.Id_Exposicion.Value);
-                    listaExposicion.Add(exposicion);
+                    Estado estado = new Estado(estadoSql);
+                    listaEstados.Add(estado);
                 }
             }
-            return listaExposicion;
+            return listaEstados;
         }
+
+        public static List<Exposicion> traerExposiciones()
+        {
+            List<Exposicion> listaExposiciones = new List<Exposicion>();
+            using (PPAIEntities db = new PPAIEntities())
+            {
+                var listaExposicionesSql = db.EXPOSICIONES;
+                foreach(EXPOSICIONES exposicionSql in listaExposicionesSql)
+                {
+                    Exposicion exposicion = traerExposicionPorId(exposicionSql.Id_Exposicion);
+                    listaExposiciones.Add(exposicion);
+                }
+            }
+            return listaExposiciones;
+        }
+
 
         private static Escuela traerEscuelaPorId(int idEscuela)
         {
@@ -482,7 +497,8 @@ namespace PPAI_DSI.Backend
                             Id_Sede = reserva.Sede.Id,
                             Id_Empleado = reserva.EmpleadoRegistrador.Id,
                             DuracionEstimada = reserva.DuracionEstimada,
-                            NroReserva = reserva.NroReserva
+                            NroReserva = reserva.NroReserva,
+                            Id_Escuela = reserva.Escuela.Id
                         };
                         db.RESERVAS.Add(reservaSql);
                         db.SaveChanges();

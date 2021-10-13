@@ -48,10 +48,7 @@ namespace PPAI_DSI.Negocio
 
         public bool esGuia()
         {
-            if (this.Cargo.Id == 13)
-                return true;
-            return false;
-
+            return this.Cargo.esGuia();
         }
     }
 }

@@ -50,9 +50,9 @@ namespace PPAI_DSI.Negocio
             return duracionDeExposicion;
         }
 
-        public List<int> getCantidadVisitantesEnReservasPorFecha(DateTime fecha)
+        public List<int> getCantidadVisitantesEnReservasPorFecha(DateTime fecha, List<Reserva> listaReservas)
         {
-            List<Reserva> listaReservas = Persistencia.traerReservas();
+            //List<Reserva> listaReservas = Persistencia.traerReservas();
 
             List<int> listaCantidadesVisitantes = new List<int>();
             foreach (Reserva reserva in listaReservas) // Loop Mientras existan reservas
@@ -69,10 +69,10 @@ namespace PPAI_DSI.Negocio
             return listaCantidadesVisitantes;
         }
 
-        public int sumarCantidadDeVisitantesEnFecha(DateTime fecha)
+        public int sumarCantidadDeVisitantesEnFecha(DateTime fecha, List<Reserva> listaReservas)
         {
             int cantidadVisitantes = 0;
-            List<int> listaCantidadesVisitantes = getCantidadVisitantesEnReservasPorFecha(fecha);
+            List<int> listaCantidadesVisitantes = getCantidadVisitantesEnReservasPorFecha(fecha, listaReservas);
             foreach (int cantidad in listaCantidadesVisitantes)
             {
                 cantidadVisitantes += cantidad;
@@ -86,12 +86,13 @@ namespace PPAI_DSI.Negocio
             return (int)cantidadNecesaria;
         }
 
-        public bool validarCapacidadVisitantes(DateTime fechaReserva, int cantidadVisitantes)
+        public bool validarCapacidadVisitantes(DateTime fechaReserva, int cantidadVisitantes, List<Reserva> listaReservas)
         {
-            int cantidadTotal = cantidadVisitantes + sumarCantidadDeVisitantesEnFecha(fechaReserva);
+            int cantidadTotal = cantidadVisitantes + sumarCantidadDeVisitantesEnFecha(fechaReserva, listaReservas);
             if (cantidadTotal <= _cantidadMaximaDeVisitantes)
                 return true;
             return false;
         }
+
     }
 }

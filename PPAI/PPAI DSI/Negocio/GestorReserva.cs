@@ -26,7 +26,7 @@ namespace PPAI_DSI.Negocio
         private Sesion _sesionActual;
         private Estado _estado;
         private int _nroReserva;
-        private double _guiasNecesarios;
+        private int _guiasNecesarios;
         private Escuela _escuelaSeleccionada;
         private DateTime _fechaReserva;
         private DateTime _horaReserva;
@@ -105,7 +105,8 @@ namespace PPAI_DSI.Negocio
         {
             _listaExposiciones.Clear();
             _listaExposicionesTemporalesVigentes.Clear();
-            _listaExposiciones = Persistencia.traerExposiciones(_sedeSeleccionada);
+            _listaExposiciones = this._sedeSeleccionada.ListaExposiciones;
+
             foreach (Exposicion exposicion in _listaExposiciones) // Loop Mientras haya exposiciones
             {
                 if (exposicion.esVigente())
@@ -150,14 +151,15 @@ namespace PPAI_DSI.Negocio
             _guiasNecesarios = _sedeSeleccionada.getCantidadGuiasNecesarios(_cantidadAlumnos);
         }
 
-        public double getGuiasNecesarios()
+        public int getGuiasNecesarios()
         {
             return _guiasNecesarios;
         }
 
         public bool validarCapacidadVisitantes()
         {
-            return _sedeSeleccionada.validarCapacidadVisitantes(_fechaReserva, _cantidadAlumnos);
+            List<Reserva> listaReservas = Persistencia.traerReservas();
+            return _sedeSeleccionada.validarCapacidadVisitantes(_fechaReserva, _cantidadAlumnos, listaReservas);
         }
 
         public void buscarGuiasDispFechaReserva() // Los guias tienen que pertenecer a las sedes
@@ -209,10 +211,17 @@ namespace PPAI_DSI.Negocio
         public void tomarSeleccionGuias(List<int> idGuiasSeleccionados)
         {
             _listaGuiasSeleccionados.Clear();
-            foreach (int id in idGuiasSeleccionados)
+            foreach(Empleado guiaDisp in this._listaGuiasDisponibles)
             {
-                _listaGuiasSeleccionados.Add(Persistencia.traerEmpleadoPorId(id));
+                foreach(int id in idGuiasSeleccionados)
+                {
+                    if(guiaDisp.Id == id)
+                    {
+                        _listaGuiasSeleccionados.Add(guiaDisp);
+                    }
+                }
             }
+
             buscarEmpleadoLogeado();
             buscarUltimoNroReserva();
             buscarEstadoReserva();
@@ -231,7 +240,18 @@ namespace PPAI_DSI.Negocio
 
         private void buscarEstadoReserva()
         {
-            _estado = Persistencia.traerEstadoPendienteParaReservas();
+            List<Estado> listaEstados = Persistencia.traerEstados();
+            foreach(Estado estado in listaEstados)
+            {
+                if(estado.esAmbitoReserva())
+                {
+                    if(estado.esPendienteDeConfirmacion())
+                    {
+                        _estado = estado;
+                        break;
+                    }
+                }
+            }
         }
 
         public void registrarReserva()
@@ -246,6 +266,7 @@ namespace PPAI_DSI.Negocio
             reserva.Sede = _sedeSeleccionada;
             reserva.DuracionEstimada = _duracionEstimada;
             reserva.EmpleadoRegistrador = _empleadoRegistrador;
+            reserva.Escuela = _escuelaSeleccionada;
 
             reserva.crearAsignaciones(_listaGuiasSeleccionados);
             foreach (Exposicion expoTemporal in _listaExposicionesTemporalesSeleccionadas)

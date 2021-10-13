@@ -18,11 +18,6 @@ namespace PPAI_DSI.Negocio
             _descripcion = tipoExposicion.Descripcion;
         }
 
-        public string getNombre()
-        {
-            return _nombre;
-        }
-
         public bool esExposicionTemporal()
         {
             return _nombre == "Temporal";

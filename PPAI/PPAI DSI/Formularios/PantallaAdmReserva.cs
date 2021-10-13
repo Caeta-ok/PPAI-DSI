@@ -79,7 +79,6 @@ namespace PPAI_DSI.Formularios
         private void tomarSeleccionEscuela(object sender, EventArgs e)
         {
             var _escuelaSeleccionada = (Escuela)cmb_escuelas.SelectedItem;
-            solicitarCantidadVisitantes(false);
             gestorReserva.tomarSeleccionEscuela(_escuelaSeleccionada);
             solicitarCantidadVisitantes();
         }
@@ -87,8 +86,7 @@ namespace PPAI_DSI.Formularios
         //Envia al gestor el numero de visitantes ingresado y muestra y habilita la seleccion de sedes
         private void tomarNumeroVisitantes(object sender, EventArgs e)
         {
-            solicitarSeleccionSede(false);
-            //cmb_escuelas.Enabled = false;
+            //solicitarSeleccionSede(false);
             grid_sedes.Enabled = true;
             if (cmb_cantidad_alumnos.Text != "")
             {
@@ -133,17 +131,17 @@ namespace PPAI_DSI.Formularios
         {
             // La sede de carlos paz tiene una exposicion temporal
             grid_exposiciones.Rows.Clear();
-            solicitarSeleccionTipoVisita(false);
+            //solicitarSeleccionTipoVisita(false);
             cmb_cantidad_alumnos.Enabled = false;
             cmb_tipo_visita.Enabled = true;
-            Sede sede_seleccionada = grid_sedes.SelectedRows[0].DataBoundItem as Sede;
-            gestorReserva.tomarSeleccionSede(sede_seleccionada);
-            mostrarTiposVisita(gestorReserva.buscarTipoVisita());
-            solicitarSeleccionTipoVisita(true);
+            Sede sedeSeleccionada = grid_sedes.SelectedRows[0].DataBoundItem as Sede;
+            gestorReserva.tomarSeleccionSede(sedeSeleccionada);
+            mostrarTiposVisita();
+            solicitarSeleccionTipoVisita();
         }
 
         //Carga el combo de Tipo de Visitas
-        private void mostrarTiposVisita(List<TipoVisita> listaTiposVisita)
+        private void mostrarTiposVisita()
         {
             cmb_tipo_visita.DataSource = gestorReserva.buscarTipoVisita();
             cmb_tipo_visita.DisplayMember = "Nombre";
@@ -165,15 +163,15 @@ namespace PPAI_DSI.Formularios
         //Envia el Tipo de Visita seleccionada al gestor
         private void tomarSeleccionTipoVisita(object sender, EventArgs e)
         {
-            var _tipoVisitaSeleccionada = (TipoVisita)cmb_tipo_visita.SelectedItem;
-            gestorReserva.tomarSeleccionTipoVisita(_tipoVisitaSeleccionada);
+            var tipoVisitaSeleccionada = (TipoVisita)cmb_tipo_visita.SelectedItem;
+            gestorReserva.tomarSeleccionTipoVisita(tipoVisitaSeleccionada);
             mostrarExposiciones();
         }
 
         //Muestra las exposiciones depuradas
         private void mostrarExposiciones()
         {
-            solicitarSeleccionExposicion(false);
+            //solicitarSeleccionExposicion(false);
             var datos = new BindingSource();
             datos.DataSource = gestorReserva.buscarExposicionesTemporales();
             grid_exposiciones.DataSource = datos;
@@ -204,16 +202,16 @@ namespace PPAI_DSI.Formularios
         //Envia las exposiciones seleccionadas al gestor y habilita la seleccion de fecha de reserva
         private void tomarSeleccionExposicion(object sender, DataGridViewCellEventArgs e)
         {
-            solicitarFechaReserva(false);
+            //solicitarFechaReserva(false);
             cmb_tipo_visita.Enabled = false;
-            List<Exposicion> exposicion_seleccionada = new List<Exposicion>();
+            List<Exposicion> exposicionSeleccionada = new List<Exposicion>();
 
             foreach (DataGridViewRow row in grid_exposiciones.SelectedRows)
             {
-                exposicion_seleccionada.Add(grid_exposiciones.SelectedRows[0].DataBoundItem as Exposicion);
+                exposicionSeleccionada.Add(grid_exposiciones.SelectedRows[0].DataBoundItem as Exposicion);
             }
-            gestorReserva.tomarSeleccionExposicion(exposicion_seleccionada);
-            solicitarFechaReserva(true);
+            gestorReserva.tomarSeleccionExposicion(exposicionSeleccionada);
+            solicitarFechaReserva();
         }
 
         //Habilita la seleccion de Fecha de reserva
@@ -246,10 +244,11 @@ namespace PPAI_DSI.Formularios
         private void tomarFechaReserva(object sender, EventArgs e)
         {
             // Faltan más validaciones
-            solicitarHoraReserva(false);
-            if (dt_fecha_reserva.Value > DateTime.Now)
+            //solicitarHoraReserva(false);
+            DateTime fechaSeleccionada = dt_fecha_reserva.Value;
+            if (fechaSeleccionada > DateTime.Now)
             {
-                gestorReserva.tomarFechaReserva(dt_fecha_reserva.Value);
+                gestorReserva.tomarFechaReserva(fechaSeleccionada);
                 solicitarHoraReserva();
             }
             else
@@ -261,15 +260,17 @@ namespace PPAI_DSI.Formularios
         //Envia la hora seleccionada al gestor ((X) gestor delega las validaciones a las clases)
         private void tomarHoraReserva(object sender, EventArgs e)
         {
-            gestorReserva.tomarHoraReserva(dt_hora_reserva.Value);
+            DateTime horaReserva = dt_hora_reserva.Value;
+            gestorReserva.tomarHoraReserva(horaReserva);
             grid_exposiciones.Enabled = false;
             grid_guias_disponibles.Enabled = true;
-            lbl_duracion.Text = gestorReserva.getDuracionEstimada() + " minutos";
+            this.mostrarDuracionEstimada();
+            //lbl_duracion.Text = gestorReserva.getDuracionEstimada() + " minutos";
             if (gestorReserva.validarCapacidadVisitantes())
             {
                 gestorReserva.buscarGuiasDispFechaReserva();
                 lbl_guias_necesarios.Text = gestorReserva.getGuiasNecesarios().ToString();
-                mostrarGuiasDisponibles(gestorReserva.getGuiasDisponibles());
+                mostrarGuiasDisponibles();
                 solicitarSeleccionGuia();
             }
             else
@@ -278,9 +279,15 @@ namespace PPAI_DSI.Formularios
             }
         }
 
-        //Muestra los guias disponibles ((X) Validar en el gestor y las clases correspondientes)
-        private void mostrarGuiasDisponibles(List<Empleado> listaGuiasDisponibles)
+        private void mostrarDuracionEstimada()
         {
+            lbl_duracion.Text = gestorReserva.getDuracionEstimada() + " minutos";
+        }
+
+        //Muestra los guias disponibles ((X) Validar en el gestor y las clases correspondientes)
+        private void mostrarGuiasDisponibles()
+        {
+            List<Empleado> listaGuiasDisponibles = gestorReserva.getGuiasDisponibles();
             grid_guias_disponibles.DataSource = null;
             grid_guias_disponibles.Rows.Clear();
             int i = 0;

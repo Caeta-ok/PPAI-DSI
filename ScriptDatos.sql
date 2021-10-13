@@ -159,14 +159,14 @@ set identity_insert CAMBIOSESTADOS off
 
 ---------------- Insert Reserva ------------------------ si
 set identity_insert RESERVAS on
-INSERT INTO RESERVAS(Id_Reserva, FechaHoraCreacion, FechaReserva, HoraInicioReal, HoraFinReal, CantidadAlumnos, CantidadAlumnosConfirmados, Id_Sede, Id_Empleado, DuracionEstimada, HoraReserva, NroReserva)
-VALUES(1, '2021-06-13', '2021-06-15', '14:30:00', '18:00:00', 48, 45, 1, 2, 60, '15:30:00', 1)
+INSERT INTO RESERVAS(Id_Reserva, FechaHoraCreacion, FechaReserva, HoraInicioReal, HoraFinReal, CantidadAlumnos, CantidadAlumnosConfirmados, Id_Sede, Id_Empleado, DuracionEstimada, HoraReserva, NroReserva, Id_Escuela)
+VALUES(1, '2021-06-13', '2021-06-15', '14:30:00', '18:00:00', 48, 45, 1, 2, 60, '15:30:00', 1, 2)
 
-INSERT INTO RESERVAS(Id_Reserva, FechaHoraCreacion, FechaReserva, HoraInicioReal, HoraFinReal, CantidadAlumnos, CantidadAlumnosConfirmados, Id_Sede, Id_Empleado, DuracionEstimada, HoraReserva, NroReserva)
-VALUES(2, '2021-06-10', '2021-06-25', '08:30:00', '14:30:00', 150, 145, 3, 3, 120, '10:00:00', 2)
+INSERT INTO RESERVAS(Id_Reserva, FechaHoraCreacion, FechaReserva, HoraInicioReal, HoraFinReal, CantidadAlumnos, CantidadAlumnosConfirmados, Id_Sede, Id_Empleado, DuracionEstimada, HoraReserva, NroReserva, Id_Escuela)
+VALUES(2, '2021-06-10', '2021-06-25', '08:30:00', '14:30:00', 150, 145, 3, 3, 120, '10:00:00', 2, 3)
 
-INSERT INTO RESERVAS(Id_Reserva, FechaHoraCreacion, FechaReserva, HoraInicioReal, HoraFinReal, CantidadAlumnos, CantidadAlumnosConfirmados, Id_Sede, Id_Empleado, DuracionEstimada, HoraReserva, NroReserva)
-VALUES(3, '2021-06-09', '2021-07-02', '14:30:00', '17:00:00', 16, 16, 5, 4, 50, '16:00:00', 3)
+INSERT INTO RESERVAS(Id_Reserva, FechaHoraCreacion, FechaReserva, HoraInicioReal, HoraFinReal, CantidadAlumnos, CantidadAlumnosConfirmados, Id_Sede, Id_Empleado, DuracionEstimada, HoraReserva, NroReserva, Id_Escuela)
+VALUES(3, '2021-06-09', '2021-07-02', '14:30:00', '17:00:00', 16, 16, 5, 4, 50, '16:00:00', 3, 4)
 set identity_insert RESERVAS off
 
 ---------------------- Insert DetallesPorExposicion ----------------------- si
