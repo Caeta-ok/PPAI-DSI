@@ -100,7 +100,6 @@ namespace PPAI_DSI.Negocio
         {
             if (this._tipoVisitaSeleccionada.esPorExposicion())
             {
-                //_tipoVisitaSeleccionada = tipoVisitaSeleccionada;
                 this._estrategiaCalculoDuracionEstimada = new EstrategiaCalculoVisitaPorExposicion();
             }
             else
@@ -146,7 +145,6 @@ namespace PPAI_DSI.Negocio
 
         private void calcularDuracionReserva()
         {
-            //_duracionEstimada = _sedeSeleccionada.getDuracionDeExposicion(_listaExposicionesTemporalesSeleccionadas);
             this._duracionEstimada = this._estrategiaCalculoDuracionEstimada.calcularDuracionEstimada(this._listaExposicionesTemporalesSeleccionadas);
         }
 
