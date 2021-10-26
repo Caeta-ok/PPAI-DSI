@@ -29,15 +29,35 @@ namespace PPAI_DSI.Backend
             List<Sede> listaSedes = new List<Sede>();
             using (PPAIEntities db = new PPAIEntities())
             {
-                var list = db.SEDES;
-                foreach (SEDES sede in list)
+                var listaSedesSql = db.SEDES;
+                foreach (SEDES sedeSql in listaSedesSql)
                 {
-                    Sede sedeNueva = new Sede(sede);
-                    listaSedes.Add(sedeNueva);
+                    Sede sede = new Sede(sedeSql);
+                    List<Exposicion> listaExposiciones = traerExposicionesPorIdSede(sede.Id);
+                    sede.ListaExposiciones = listaExposiciones;
+                    listaSedes.Add(sede);
+
                 }
             }
             return listaSedes;
         }
+
+        //private static List<Exposicion> traerExposicionesPorIdSede(int idSede)
+        //{
+        //    List<Exposicion> listaExposiciones = new List<Exposicion>();
+
+        //    using (PPAIEntities db = new PPAIEntities())
+        //    {
+        //        var listaExposicionesPorSedeSql = db.EXPOSICIONESPORSEDE.Where(expo => expo.Id_Sede == idSede);
+        //        foreach(EXPOSICIONESPORSEDE expoPorSedeSql in listaExposicionesPorSedeSql)
+        //        {
+        //            Exposicion exposicion = traerExposicionPorId(expoPorSedeSql.Id_Exposicion.Value);
+        //            listaExposiciones.Add(exposicion);
+        //        }
+        //    }
+
+        //    return listaExposiciones;
+        //}
 
         public static List<Estado> traerEstados()
         {

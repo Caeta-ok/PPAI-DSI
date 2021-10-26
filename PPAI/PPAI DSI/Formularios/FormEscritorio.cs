@@ -166,6 +166,7 @@ namespace PPAI_DSI.Formularios
         private void btn_NuevaReserva_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color5);
+            //OpenChildForm(new PantallaAdmReserva());
             OpenChildForm(new PantallaAdmReserva());
         }
 
