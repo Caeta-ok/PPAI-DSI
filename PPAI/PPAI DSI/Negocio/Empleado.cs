@@ -41,7 +41,7 @@ namespace PPAI_DSI.Negocio
 
         public bool esDeSede(Sede sede)
         {
-            if(this.SedeDondeTrabaja.Id == sede.Id)
+            if(this.SedeDondeTrabaja.Nombre == sede.Nombre)
                 return true;
             return false;
         }

@@ -86,7 +86,7 @@ namespace PPAI_DSI.Negocio
 
         public List<TipoVisita> buscarTipoVisita()
         {
-            return _listaTiposVisitas = Persistencia.traerTipoVisita();
+            return _listaTiposVisitas = Persistencia.traerTipoVisita();reg
         }
 
         public void tomarSeleccionTipoVisita(TipoVisita tipoVisitaSeleccionada)
@@ -266,7 +266,6 @@ namespace PPAI_DSI.Negocio
             reserva.Sede = _sedeSeleccionada;
             reserva.DuracionEstimada = _duracionEstimada;
             reserva.EmpleadoRegistrador = _empleadoRegistrador;
-            reserva.Escuela = _escuelaSeleccionada;
 
             reserva.crearAsignaciones(_listaGuiasSeleccionados);
             foreach (Exposicion expoTemporal in _listaExposicionesTemporalesSeleccionadas)
