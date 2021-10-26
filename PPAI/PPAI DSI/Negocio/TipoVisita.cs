@@ -23,7 +23,8 @@ namespace PPAI_DSI.Negocio
 
         public bool esPorExposicion()
         {
-            if (Id == 2)
+            //if (Id == 2)
+            if ( this.Nombre == "Por exposicion")
                 return true;
             else
                 return false;

@@ -26,7 +26,8 @@ namespace PPAI_DSI.Negocio
 
         public bool esGuia()
         {
-            if (this.Id == 13)
+            //if (this.Id == 13)
+            if (this.Nombre == "Guía")
                 return true;
             return false;
         }

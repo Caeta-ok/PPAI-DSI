@@ -57,7 +57,7 @@ namespace PPAI_DSI.Negocio
             List<int> listaCantidadesVisitantes = new List<int>();
             foreach (Reserva reserva in listaReservas) // Loop Mientras existan reservas
             {
-                if(reserva.esDeSede(this.Id)) // Si es de esta sede
+                if(reserva.esDeSede(this.Nombre)) // Si es de esta sede
                 {
                     if (reserva.esDeFecha(fecha)) // Si coincide con la fecha
                     {
