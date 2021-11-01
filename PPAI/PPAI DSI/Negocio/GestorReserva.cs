@@ -33,6 +33,7 @@ namespace PPAI_DSI.Negocio
         private int _duracionEstimada;
         private int _cantidadAlumnos;
         private Empleado _empleadoRegistrador;
+        private EstrategiaCalculoDuracionEstimada _estrategiaCalculoDuracionEstimada;
 
         public void iniciarSesion()
         {
@@ -86,18 +87,24 @@ namespace PPAI_DSI.Negocio
 
         public List<TipoVisita> buscarTipoVisita()
         {
-            return _listaTiposVisitas = Persistencia.traerTipoVisita();reg
+            return _listaTiposVisitas = Persistencia.traerTipoVisita();
         }
 
         public void tomarSeleccionTipoVisita(TipoVisita tipoVisitaSeleccionada)
         {
-            if(tipoVisitaSeleccionada.esPorExposicion())
+            this._tipoVisitaSeleccionada = tipoVisitaSeleccionada;
+            this.crearEstrategiaCalculoDuracionEstimada();
+        }
+
+        private void crearEstrategiaCalculoDuracionEstimada()
+        {
+            if (this._tipoVisitaSeleccionada.esPorExposicion())
             {
-                _tipoVisitaSeleccionada = tipoVisitaSeleccionada;
+                this._estrategiaCalculoDuracionEstimada = new EstrategiaCalculoVisitaPorExposicion();
             }
             else
             {
-                MessageBox.Show("Por el momento las visitas Completas estan deshabilitadas");
+                this._estrategiaCalculoDuracionEstimada = new EstrategiaCalculoVisitaCompleta();
             }
         }
 
@@ -138,7 +145,7 @@ namespace PPAI_DSI.Negocio
 
         private void calcularDuracionReserva()
         {
-            _duracionEstimada = _sedeSeleccionada.getDuracionDeExposicion(_listaExposicionesTemporalesSeleccionadas);
+            this._duracionEstimada = this._estrategiaCalculoDuracionEstimada.calcularDuracionEstimada(this._listaExposicionesTemporalesSeleccionadas);
         }
 
         public int getDuracionEstimada()

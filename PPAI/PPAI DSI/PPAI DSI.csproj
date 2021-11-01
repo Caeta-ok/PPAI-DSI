@@ -168,6 +168,9 @@
     <Compile Include="Negocio\Empleado.cs" />
     <Compile Include="Negocio\Escuela.cs" />
     <Compile Include="Negocio\Estado.cs" />
+    <Compile Include="Negocio\EstrategiaCalculoDuracionEstimada.cs" />
+    <Compile Include="Negocio\EstrategiaCalculoVisitaCompleta.cs" />
+    <Compile Include="Negocio\EstrategiaCalculoVisitaPorExposicion.cs" />
     <Compile Include="Negocio\Exposicion.cs" />
     <Compile Include="Negocio\GestorReserva.cs" />
     <Compile Include="Negocio\HorarioTrabajo.cs" />
