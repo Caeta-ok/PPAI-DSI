@@ -87,7 +87,7 @@ namespace PPAI_DSI.Negocio
 
         public List<TipoVisita> buscarTipoVisita()
         {
-            return _listaTiposVisitas = Persistencia.traerTipoVisita();reg
+            return _listaTiposVisitas = Persistencia.traerTipoVisita();
         }
 
         public void tomarSeleccionTipoVisita(TipoVisita tipoVisitaSeleccionada)
