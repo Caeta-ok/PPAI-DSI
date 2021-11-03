@@ -122,9 +122,11 @@ namespace PPAI_DSI.Formularios
             {
                 grillaSedes.Columns["Id"].Visible = false;
                 grillaSedes.CellClick += tomarSeleccionSede;
+                this.grillaSedes.Enabled = true;
             }
             else
             {
+                this.grillaSedes.Enabled = false;
                 grillaSedes.CellClick -= tomarSeleccionSede;
             }
         }
@@ -133,6 +135,7 @@ namespace PPAI_DSI.Formularios
         private void tomarSeleccionSede(object sender, DataGridViewCellEventArgs e)
         {
             // La sede de carlos paz tiene una exposicion temporal
+            solicitarSeleccionTipoVisita(false);
             grillaExposiciones.Rows.Clear();
             //solicitarSeleccionTipoVisita(false);
             textboxCantidadAlumnos.Enabled = false;
@@ -176,9 +179,11 @@ namespace PPAI_DSI.Formularios
         //Muestra las exposiciones depuradas
         private void mostrarExposiciones()
         {
-            //solicitarSeleccionExposicion(false);
+            solicitarSeleccionExposicion(false);
             var datos = new BindingSource();
-            datos.DataSource = gestorReserva.buscarExposicionesTemporales();
+            //datos.DataSource = gestorReserva.buscarExposicionesTemporales();
+
+            datos.DataSource = gestorReserva.ListaExposiciones;
             grillaExposiciones.DataSource = datos;
             grillaExposiciones.Columns["Id"].Visible = false;
             grillaExposiciones.Columns["FechaInicio"].Visible = false;
@@ -197,6 +202,7 @@ namespace PPAI_DSI.Formularios
             if (estado)
             {
                 grillaExposiciones.CellClick += tomarSeleccionExposicion;
+                grillaExposiciones.Enabled = true;
             }
             else
             {

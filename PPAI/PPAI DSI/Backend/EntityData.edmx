@@ -483,7 +483,7 @@
               <PropertyRef Name="Id_Sede" />
             </Principal>
             <Dependent Role="EXPOSICIONESPORSEDE">
-              <PropertyRef Name="Id_Exposicion" />
+              <PropertyRef Name="Id_Sede" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1157,7 +1157,7 @@
               <PropertyRef Name="Id_Sede" />
             </Principal>
             <Dependent Role="EXPOSICIONESPORSEDE">
-              <PropertyRef Name="Id_Exposicion" />
+              <PropertyRef Name="Id_Sede" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

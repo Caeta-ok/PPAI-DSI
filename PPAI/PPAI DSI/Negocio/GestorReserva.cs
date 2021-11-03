@@ -18,8 +18,6 @@ namespace PPAI_DSI.Negocio
         private TipoVisita _tipoVisitaSeleccionada;
         private Sede _sedeSeleccionada;
         private List<Exposicion> _listaExposiciones = new List<Exposicion>();
-        private List<Exposicion> _listaExposicionesVigentes = new List<Exposicion>();
-        private List<Exposicion> _listaExposicionesTemporalesVigentes = new List<Exposicion>();
         private List<Exposicion> _listaExposicionesTemporalesSeleccionadas = new List<Exposicion>();
         private List<Empleado> _listaGuiasDisponibles = new List<Empleado>();
         private List<Empleado> _listaGuiasSeleccionados = new List<Empleado>();
@@ -34,6 +32,8 @@ namespace PPAI_DSI.Negocio
         private int _cantidadAlumnos;
         private Empleado _empleadoRegistrador;
         private EstrategiaCalculoDuracionEstimada _estrategiaCalculoDuracionEstimada;
+
+        public List<Exposicion> ListaExposiciones { get => _listaExposiciones;  }
 
         public void iniciarSesion()
         {
@@ -100,31 +100,26 @@ namespace PPAI_DSI.Negocio
         {
             if (this._tipoVisitaSeleccionada.esPorExposicion())
             {
+                this.buscarExposicionesTemporales();
                 this._estrategiaCalculoDuracionEstimada = new EstrategiaCalculoVisitaPorExposicion();
             }
             else
             {
+                this.buscarExposicionesVigentes();
                 this._estrategiaCalculoDuracionEstimada = new EstrategiaCalculoVisitaCompleta();
             }
         }
 
-        public List<Exposicion> buscarExposicionesTemporales()
+        public void buscarExposicionesVigentes()
         {
             _listaExposiciones.Clear();
-            _listaExposicionesTemporalesVigentes.Clear();
-            _listaExposiciones = this._sedeSeleccionada.ListaExposiciones;
+            _listaExposiciones = this._sedeSeleccionada.getExposicionesVigentes();
+        }
 
-            foreach (Exposicion exposicion in _listaExposiciones) // Loop Mientras haya exposiciones
-            {
-                if (exposicion.esVigente())
-                {
-                    if (exposicion.TipoExposicion.esExposicionTemporal())
-                    {
-                        _listaExposicionesTemporalesVigentes.Add(exposicion);
-                    }
-                }
-            }
-            return _listaExposicionesTemporalesVigentes;
+        public void buscarExposicionesTemporales()
+        {
+            _listaExposiciones.Clear();
+            _listaExposiciones = this._sedeSeleccionada.getExposicionesTemporales();
         }
 
         public void tomarSeleccionExposicion(List<Exposicion> listaExposiciones)
@@ -145,7 +140,7 @@ namespace PPAI_DSI.Negocio
 
         private void calcularDuracionReserva()
         {
-            this._duracionEstimada = this._estrategiaCalculoDuracionEstimada.calcularDuracionEstimada(this._listaExposicionesTemporalesSeleccionadas);
+            this._duracionEstimada = this._estrategiaCalculoDuracionEstimada.calcularDuracionEstimada(this._listaExposiciones, this._listaExposicionesTemporalesSeleccionadas);
         }
 
         public int getDuracionEstimada()

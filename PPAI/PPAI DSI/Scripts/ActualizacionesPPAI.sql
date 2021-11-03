@@ -125,3 +125,49 @@ insert into DETALLESPOREXPOSICION(Id_DetallesPorExposicion, Id_Exposicion, Id_De
 insert into DETALLESPOREXPOSICION(Id_DetallesPorExposicion, Id_Exposicion, Id_DetalleExposicion) values(53, 8, 9)
 insert into DETALLESPOREXPOSICION(Id_DetallesPorExposicion, Id_Exposicion, Id_DetalleExposicion) values(54, 8, 10)
 set identity_insert DETALLESPOREXPOSICION off
+
+
+--------------------------------------------------------------------------------------------------------------- Actualizaciones 11/02/2021
+-- Estaba mal la llave foránea de Id_Sedes en EXPOSICIONESPORSEDE
+alter table EXPOSICIONESPORSEDE drop constraint FK_SEDES2
+alter table EXPOSICIONESPORSEDE add constraint FK_SEDES2 foreign key (Id_Sede) references SEDES (Id_Sede)
+
+truncate table EXPOSICIONESPORSEDE
+
+-- Se agregan más datos a EXPOSICIONESPORSEDE
+set identity_insert EXPOSICIONESPORSEDE on
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(1, 1, 1)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(2, 2, 2)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(3, 3, 3)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(4, 4, 4)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(5, 5, 5)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(6, 6, 1)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(7, 7, 2)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(8, 8, 3)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(9, 1, 4)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(10, 2, 5)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(11, 3, 1)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(12, 4, 2)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(13, 5, 3)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(14, 6, 4)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(15, 7, 5)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(16, 8, 1)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(17, 1, 2)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(18, 2, 3)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(19, 3, 4)
+insert into EXPOSICIONESPORSEDE	(Id_ExposicionPorSede, Id_Exposicion, Id_Sede) values(20, 4, 5)
+set identity_insert EXPOSICIONESPORSEDE off
+
+-- Se agregan más datos a la tabla EMPLEADOS. Todos guías
+set identity_insert EMPLEADOS on
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (11, 'Damian', 'Galleguillo', '487885', 24190558473, 35458789, 'Las heras 547', '2002-10-21', '1982-05-14', 'DamianP@gmail.com', 'Masculino', 3513697885, 13, 1, 3)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (12, 'Julian', 'Juarez', '487886', 22204926813, 38458789, 'Dean Funes 75', '2005-12-21', '1986-05-10', 'Julian@gmail.com', 'Masculino', 3513697884, 13, 2, 3)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (13, 'Jorge', 'Galleguillo', '487887', 24432113543, 42458789, 'San martin 7', '2020-01-21', '1999-02-11', 'Jorge@gmail.com', 'Masculino', 3513697889, 13, 1, 3)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (14, 'Virginia', 'Rojos', '487888', 24391310363, 36458789, 'Malvinas 57', '2008-05-21', '1989-03-09', 'Virginia@gmail.com', 'Femenino', 3513697881, 13, 2, 4)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (15, 'Jose', 'Perez', '487889', 24332262483, 34458789, 'Salta 557', '2009-10-01', '1992-11-03', 'jose@gmail.com', 'Masculino', 3513697882, 13, 1, 5)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (16, 'Ryan', 'Schultz', '487890', 24430486073, 19055847, 'Uruguay 491', '2015-09-21', '1974-10-13', 'ryan@gmail.com', 'Masculino', 3518956587, 13, 2, 4)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (17, 'Brandon', 'Groetsque', '487891', 22417272343, 20492681, 'San Martin 478', '2010-12-23', '1969-01-06', 'brandon@gmail.com', 'Masculino', 3514568899, 13, 2, 5)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (18, 'Jerri', 'Denzel', '487892', 24309796083, 43211354, 'Roca 896', '2020-01-21', '2002-03-15', 'jerri@gmail.com', 'Masculino', 3512356532, 13, 2, 2)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (19, 'Richard', 'Yvonne', '487893', 24579555963, 39131036, 'Boulevard Illia 455', '2018-05-01', '1997-03-03', 'richard@gmail.com', 'Masculino', 3514785263, 13, 1, 3)
+INSERT INTO EMPLEADOS(Id_Empleado, Nombre, Apellido, CodigoValidacion, Cuit, Dni, Domicilio, FechaIngreso, FechaNacimiento, Email, Sexo, NroTelefono, Id_Cargo, Id_HorarioTrabajo, Id_Sede) VALUES (20, 'Ramona', 'Richards', '487894', 24419671623, 33226248, 'Obispo Oro 758', '2009-10-01', '1985-12-15', 'ramona@gmail.com', 'Femenino', 3511569874, 13, 1, 1)
+set identity_insert EMPLEADOS off

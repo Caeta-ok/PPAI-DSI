@@ -19,7 +19,20 @@ namespace PPAI_DSI.Negocio
         public string Nombre { get => _nombre; set => _nombre = value; }
         public int CantidadMaximaDeVisitantes { get => _cantidadMaximaDeVisitantes; set => _cantidadMaximaDeVisitantes = value; }
         public int CantidadMaximaDeVisitantesPorGuia { get => _cantidadMaximaDeVisitantesPorGuia; set => _cantidadMaximaDeVisitantesPorGuia = value; }
-        public List<Exposicion> ListaExposiciones { get => _listaExposiciones; set => _listaExposiciones = value; }
+        public List<Exposicion> ListaExposiciones 
+        {
+            get 
+            {
+                List<Exposicion> listaRetorno = new List<Exposicion>();
+                foreach (Exposicion expo in _listaExposiciones)
+                {
+                    listaRetorno.Add(expo);
+                }
+                return listaRetorno;
+            }
+
+            set => _listaExposiciones = value; 
+        }
 
         public Sede(SEDES sede) // SEDE es un tipo del ORM
         {
@@ -33,6 +46,35 @@ namespace PPAI_DSI.Negocio
         }
 
         public Sede(){}
+
+        public List<Exposicion> getExposicionesTemporales()
+        {
+            List<Exposicion> listaRetorno = new List<Exposicion>();
+            foreach(Exposicion expo in _listaExposiciones)
+            {
+                if(expo.esVigente())
+                {
+                    if(expo.esTemporal())
+                    {
+                        listaRetorno.Add(expo);
+                    }
+                }
+            }
+            return listaRetorno;
+        }
+
+        public List<Exposicion> getExposicionesVigentes()
+        {
+            List<Exposicion> listaRetorno = new List<Exposicion>();
+            foreach (Exposicion expo in _listaExposiciones)
+            {
+                if (expo.esVigente())
+                {
+                    listaRetorno.Add(expo);
+                }
+            }
+            return listaRetorno;
+        }
 
         public void conocerExposicion(Exposicion exposicion)
         {
@@ -82,8 +124,13 @@ namespace PPAI_DSI.Negocio
 
         public int getCantidadGuiasNecesarios(int alumnos)
         {
-            double cantidadNecesaria = Math.Round(Convert.ToDouble(alumnos / CantidadMaximaDeVisitantesPorGuia));
-            return (int)cantidadNecesaria;
+            double division = Math.Round((double)alumnos / (double)CantidadMaximaDeVisitantes);
+            if(division < 1)
+            {
+                division = 1;
+            }
+            //double cantidadNecesaria = Math.Round(Convert.ToDouble(alumnos / CantidadMaximaDeVisitantesPorGuia));
+            return (int)division;
         }
 
         public bool validarCapacidadVisitantes(DateTime fechaReserva, int cantidadVisitantes, List<Reserva> listaReservas)

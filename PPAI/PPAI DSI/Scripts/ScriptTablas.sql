@@ -166,7 +166,7 @@ create table EXPOSICIONESPORSEDE
 	Id_Exposicion int,
 	Id_Sede int,
 	constraint FK_EXPOSICIONES2 foreign key (Id_Exposicion) references EXPOSICIONES(Id_Exposicion),
-	constraint FK_SEDES2 foreign key (Id_Exposicion) references SEDES(Id_sede))
+	constraint FK_SEDES2 foreign key (Id_Sede) references SEDES(Id_sede))
 
 -------------------------------------------------------------------------------------------------- ASIGNACIONESVISITA
 create table ASIGNACIONESVISITA

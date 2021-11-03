@@ -10,10 +10,10 @@ namespace PPAI_DSI.Negocio
     {
         public EstrategiaCalculoVisitaPorExposicion() { }
 
-        public override int calcularDuracionEstimada(List<Exposicion> listaExposiciones)
+        public override int calcularDuracionEstimada(List<Exposicion> listaExposiciones, List<Exposicion> listaExposicionesTemporalesSeleccionadas)
         {
             int duracionEstimada = 0;
-            foreach(Exposicion expo in listaExposiciones)
+            foreach(Exposicion expo in listaExposicionesTemporalesSeleccionadas)
             {
                 duracionEstimada += expo.calcularDuracionExtendida();
             }
