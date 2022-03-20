@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PPAI_DSI.Negocio
 {
@@ -10,14 +6,22 @@ namespace PPAI_DSI.Negocio
     {
         public EstrategiaCalculoVisitaPorExposicion() { }
 
-        public override int calcularDuracionEstimada(List<Exposicion> listaExposiciones, List<Exposicion> listaExposicionesTemporalesSeleccionadas)
+        public override int calcularDuracionEstimada(List<Exposicion> listaExposicionesSeleccionadas)
         {
+            // Si la visita es POR EXPOSICIÓN se suma la duración extendida de cada obra únicamente de las exposiciones temporales seleccionadas
+       
             int duracionEstimada = 0;
-            foreach(Exposicion expo in listaExposicionesTemporalesSeleccionadas)
+            foreach(Exposicion expo in listaExposicionesSeleccionadas)
             {
                 duracionEstimada += expo.calcularDuracionExtendida();
             }
             return duracionEstimada;
+        }
+
+        public override List<Exposicion> buscarExposiciones(Sede sede)
+        {
+            // Si la visita es POR EXPOSICIÓN se necesitan las exposiciones temporales
+            return sede.getExposicionesTemporales();
         }
     }
 }

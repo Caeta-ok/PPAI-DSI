@@ -36,10 +36,6 @@ namespace PPAI_DSI.Formularios
             solicitarHoraReserva(false);
             solicitarSeleccionGuia(false);
             solicitarSeleccionExposicion(false);
-            //gestorReserva.iniciarSesion();
-            //gestorReserva.nuevaReserva();
-            //mostrarEscuelas();
-            //solicitarSeleccionEscuela();
         }
 
         //Muestra las escuelas

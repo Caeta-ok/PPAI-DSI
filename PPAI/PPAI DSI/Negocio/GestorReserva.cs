@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using PPAI_DSI.Backend;
 
 namespace PPAI_DSI.Negocio
@@ -100,26 +94,19 @@ namespace PPAI_DSI.Negocio
         {
             if (this._tipoVisitaSeleccionada.esPorExposicion())
             {
-                this.buscarExposicionesTemporales();
                 this._estrategiaCalculoDuracionEstimada = new EstrategiaCalculoVisitaPorExposicion();
             }
             else
             {
-                this.buscarExposicionesVigentes();
                 this._estrategiaCalculoDuracionEstimada = new EstrategiaCalculoVisitaCompleta();
             }
+            this.buscarExposiciones();
         }
 
-        public void buscarExposicionesVigentes()
+        public void buscarExposiciones()
         {
             _listaExposiciones.Clear();
-            _listaExposiciones = this._sedeSeleccionada.getExposicionesVigentes();
-        }
-
-        public void buscarExposicionesTemporales()
-        {
-            _listaExposiciones.Clear();
-            _listaExposiciones = this._sedeSeleccionada.getExposicionesTemporales();
+            _listaExposiciones = this._estrategiaCalculoDuracionEstimada.buscarExposiciones(this._sedeSeleccionada);
         }
 
         public void tomarSeleccionExposicion(List<Exposicion> listaExposiciones)
@@ -140,7 +127,7 @@ namespace PPAI_DSI.Negocio
 
         private void calcularDuracionReserva()
         {
-            this._duracionEstimada = this._estrategiaCalculoDuracionEstimada.calcularDuracionEstimada(this._listaExposiciones, this._listaExposicionesTemporalesSeleccionadas);
+            this._duracionEstimada = this._estrategiaCalculoDuracionEstimada.calcularDuracionEstimada(this._listaExposicionesTemporalesSeleccionadas);
         }
 
         public int getDuracionEstimada()

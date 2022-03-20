@@ -8,6 +8,7 @@ namespace PPAI_DSI.Negocio
 {
     public abstract class EstrategiaCalculoDuracionEstimada
     {
-        public abstract int calcularDuracionEstimada(List<Exposicion> listaExposiciones, List<Exposicion>listaExposicionesTemporalesSeleccionadas);
+        public abstract int calcularDuracionEstimada(List<Exposicion> listaExposicionesSeleccionadas);
+        public abstract List<Exposicion> buscarExposiciones(Sede sede);
     }
 }
